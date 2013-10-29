@@ -9,6 +9,11 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>RSALibPhone.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -18,6 +23,16 @@
 			<true/>
 		</dict>
 		<key>D46887691820409F00FCAFC8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D4688784182040B000FCAFC8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D4688792182040B000FCAFC8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
