@@ -1,0 +1,420 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D468875B1820409F00FCAFC8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D468875A1820409F00FCAFC8 /* Cocoa.framework */; };
+		D46887651820409F00FCAFC8 /* RSALib.m in Sources */ = {isa = PBXBuildFile; fileRef = D46887641820409F00FCAFC8 /* RSALib.m */; };
+		D468876C1820409F00FCAFC8 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D468876B1820409F00FCAFC8 /* XCTest.framework */; };
+		D468876D1820409F00FCAFC8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D468875A1820409F00FCAFC8 /* Cocoa.framework */; };
+		D46887701820409F00FCAFC8 /* libRSALib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D46887571820409F00FCAFC8 /* libRSALib.a */; };
+		D46887761820409F00FCAFC8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D46887741820409F00FCAFC8 /* InfoPlist.strings */; };
+		D46887781820409F00FCAFC8 /* RSALibTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D46887771820409F00FCAFC8 /* RSALibTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D468876E1820409F00FCAFC8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D468874F1820409F00FCAFC8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D46887561820409F00FCAFC8;
+			remoteInfo = RSALib;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D46887571820409F00FCAFC8 /* libRSALib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRSALib.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D468875A1820409F00FCAFC8 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		D468875D1820409F00FCAFC8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D468875E1820409F00FCAFC8 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		D468875F1820409F00FCAFC8 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		D46887621820409F00FCAFC8 /* RSALib-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RSALib-Prefix.pch"; sourceTree = "<group>"; };
+		D46887631820409F00FCAFC8 /* RSALib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSALib.h; sourceTree = "<group>"; };
+		D46887641820409F00FCAFC8 /* RSALib.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSALib.m; sourceTree = "<group>"; };
+		D468876A1820409F00FCAFC8 /* RSALibTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RSALibTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D468876B1820409F00FCAFC8 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		D46887731820409F00FCAFC8 /* RSALibTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RSALibTests-Info.plist"; sourceTree = "<group>"; };
+		D46887751820409F00FCAFC8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D46887771820409F00FCAFC8 /* RSALibTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSALibTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D46887541820409F00FCAFC8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D468875B1820409F00FCAFC8 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D46887671820409F00FCAFC8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D46887701820409F00FCAFC8 /* libRSALib.a in Frameworks */,
+				D468876D1820409F00FCAFC8 /* Cocoa.framework in Frameworks */,
+				D468876C1820409F00FCAFC8 /* XCTest.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D468874E1820409F00FCAFC8 = {
+			isa = PBXGroup;
+			children = (
+				D46887601820409F00FCAFC8 /* RSALib */,
+				D46887711820409F00FCAFC8 /* RSALibTests */,
+				D46887591820409F00FCAFC8 /* Frameworks */,
+				D46887581820409F00FCAFC8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D46887581820409F00FCAFC8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D46887571820409F00FCAFC8 /* libRSALib.a */,
+				D468876A1820409F00FCAFC8 /* RSALibTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D46887591820409F00FCAFC8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D468875A1820409F00FCAFC8 /* Cocoa.framework */,
+				D468876B1820409F00FCAFC8 /* XCTest.framework */,
+				D468875C1820409F00FCAFC8 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D468875C1820409F00FCAFC8 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D468875D1820409F00FCAFC8 /* Foundation.framework */,
+				D468875E1820409F00FCAFC8 /* CoreData.framework */,
+				D468875F1820409F00FCAFC8 /* AppKit.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		D46887601820409F00FCAFC8 /* RSALib */ = {
+			isa = PBXGroup;
+			children = (
+				D46887631820409F00FCAFC8 /* RSALib.h */,
+				D46887641820409F00FCAFC8 /* RSALib.m */,
+				D46887611820409F00FCAFC8 /* Supporting Files */,
+			);
+			path = RSALib;
+			sourceTree = "<group>";
+		};
+		D46887611820409F00FCAFC8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D46887621820409F00FCAFC8 /* RSALib-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D46887711820409F00FCAFC8 /* RSALibTests */ = {
+			isa = PBXGroup;
+			children = (
+				D46887771820409F00FCAFC8 /* RSALibTests.m */,
+				D46887721820409F00FCAFC8 /* Supporting Files */,
+			);
+			path = RSALibTests;
+			sourceTree = "<group>";
+		};
+		D46887721820409F00FCAFC8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D46887731820409F00FCAFC8 /* RSALibTests-Info.plist */,
+				D46887741820409F00FCAFC8 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D46887551820409F00FCAFC8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D46887561820409F00FCAFC8 /* RSALib */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D468877B1820409F00FCAFC8 /* Build configuration list for PBXNativeTarget "RSALib" */;
+			buildPhases = (
+				D46887531820409F00FCAFC8 /* Sources */,
+				D46887541820409F00FCAFC8 /* Frameworks */,
+				D46887551820409F00FCAFC8 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RSALib;
+			productName = RSALib;
+			productReference = D46887571820409F00FCAFC8 /* libRSALib.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		D46887691820409F00FCAFC8 /* RSALibTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D468877E1820409F00FCAFC8 /* Build configuration list for PBXNativeTarget "RSALibTests" */;
+			buildPhases = (
+				D46887661820409F00FCAFC8 /* Sources */,
+				D46887671820409F00FCAFC8 /* Frameworks */,
+				D46887681820409F00FCAFC8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D468876F1820409F00FCAFC8 /* PBXTargetDependency */,
+			);
+			name = RSALibTests;
+			productName = RSALibTests;
+			productReference = D468876A1820409F00FCAFC8 /* RSALibTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D468874F1820409F00FCAFC8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "Stephan Bösebeck";
+			};
+			buildConfigurationList = D46887521820409F00FCAFC8 /* Build configuration list for PBXProject "RSALib" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D468874E1820409F00FCAFC8;
+			productRefGroup = D46887581820409F00FCAFC8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D46887561820409F00FCAFC8 /* RSALib */,
+				D46887691820409F00FCAFC8 /* RSALibTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D46887681820409F00FCAFC8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D46887761820409F00FCAFC8 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D46887531820409F00FCAFC8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D46887651820409F00FCAFC8 /* RSALib.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D46887661820409F00FCAFC8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D46887781820409F00FCAFC8 /* RSALibTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D468876F1820409F00FCAFC8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D46887561820409F00FCAFC8 /* RSALib */;
+			targetProxy = D468876E1820409F00FCAFC8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D46887741820409F00FCAFC8 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D46887751820409F00FCAFC8 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D46887791820409F00FCAFC8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		D468877A1820409F00FCAFC8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		D468877C1820409F00FCAFC8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RSALib/RSALib-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D468877D1820409F00FCAFC8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RSALib/RSALib-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		D468877F1820409F00FCAFC8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RSALib/RSALib-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "RSALibTests/RSALibTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		D46887801820409F00FCAFC8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RSALib/RSALib-Prefix.pch";
+				INFOPLIST_FILE = "RSALibTests/RSALibTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D46887521820409F00FCAFC8 /* Build configuration list for PBXProject "RSALib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D46887791820409F00FCAFC8 /* Debug */,
+				D468877A1820409F00FCAFC8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D468877B1820409F00FCAFC8 /* Build configuration list for PBXNativeTarget "RSALib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D468877C1820409F00FCAFC8 /* Debug */,
+				D468877D1820409F00FCAFC8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		D468877E1820409F00FCAFC8 /* Build configuration list for PBXNativeTarget "RSALibTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D468877F1820409F00FCAFC8 /* Debug */,
+				D46887801820409F00FCAFC8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D468874F1820409F00FCAFC8 /* Project object */;
+}
