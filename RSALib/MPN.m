@@ -66,7 +66,7 @@
     for (int64_t j = 0; j < len; j++) {
         carry += (x[j] & 0xffffffffL) * yword;
 
-        dest[j] = (int32_t) carry;
+        dest[j] = ((int32_t) (carry&0xffffffff))&0xffffffff;
         carry >>= 32;
     }
     return (int64_t) carry;
@@ -91,10 +91,10 @@
         for (int64_t j = 0; j < xlen; j++) {
             carry += ((int32_t) x[j] & 0xffffffffL) * yword
                     + ((int32_t) dest[i + j] & 0xffffffffL);
-            dest[i + j] = (int32_t) carry;
+            dest[i + j] = ((int32_t) (carry&0xffffffff))&0xffffffff;
             carry >>= 32;
         }
-        dest[i + xlen] = (int32_t) carry;
+        dest[i + xlen] = ((int32_t) (carry&0xffffffff))&0xffffffff;
     }
 }
 
@@ -103,7 +103,7 @@
  * Assumes (uint64_t)(N>>32) < (uint64_t)D.
  * Code transcribed from gmp-2.0's mpn_udiv_w_sdiv function.
  */
-+ (int64_t)udiv_qrnnd:(uint64_t)N D:(int32_t)D {
++ (uint64_t)udiv_qrnnd:(uint64_t)N D:(int32_t)D {
     uint64_t q = 0, r = 0;
     uint64_t a1 = N >> 32;
     uint64_t a0 = N & 0xffffffffL;
@@ -178,7 +178,7 @@
 
 + (int64_t)divmod_1:(int64_t *)quotient divident:(int64_t *)dividend  len:(int64_t)len divisor:(int64_t)divisor {
     int64_t i = len - 1;
-    int64_t r = dividend[i];
+    uint64_t r = dividend[i];
     if ((r & 0xffffffffL) >= ((int64_t) divisor & 0xffffffffL))
         r = 0;
     else {
@@ -254,7 +254,7 @@
         }  // 0xffffffff
         else {
             int64_t w = (((int64_t) ((int32_t) zds[j])) << 32) + (((int64_t) zds[j - 1]) & 0xffffffffL);
-            qhat = (int32_t) [MPN udiv_qrnnd:w D:(int32_t) y[ny - 1]];
+            qhat = (int32_t) ([MPN udiv_qrnnd:w D:(int32_t) y[ny - 1]] & 0xffffffff);
         }
         if (qhat != 0) {
             int32_t borrow = [MPN submul_1:zds offset:j - ny x:y len:ny y:qhat];
@@ -262,18 +262,21 @@
             int64_t num = ((int64_t) save & 0xffffffffL) - ((int64_t) borrow & 0xffffffffL);
             while (num != 0) {
                 qhat--;
-                int64_t carry = 0;
-                for (int64_t i = 0; i < ny; i++) {
+                uint64_t carry = 0;
+                for (int i = 0; i < ny; i++) {
                     carry += ((int64_t) zds[j - ny + i] & 0xffffffffL)
                             + ((int64_t) y[i] & 0xffffffffL);
-                    zds[j - ny + i] = (int32_t) (carry & 0xffffffffL);
+                    zds[j - ny + i] = ((carry&0xffffffff));
                     carry >>= 32;
                 }
-                zds[j] = (zds[j] + carry) & 0xffffffffL;
+                zds[j] = ((zds[j] + carry) & 0xffffffff);
+                if (zds[j]<0) {
+                    NSLog(@"Alarm");
+                }
                 num = carry - 1;
             }
         }
-        zds[j] = qhat;
+        zds[j] = (qhat & 0xffffffff);
     } while (--j >= ny);
 }
 

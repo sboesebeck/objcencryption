@@ -43,4 +43,16 @@
 }
 
 
+-(void) testMultiplyDivide {
+    BigInteger *int1=[BigInteger randomBigInt:128];
+    BigInteger *int2=[BigInteger randomBigInt:120];
+    BigInteger *prod=[int1 multiply:int2];
+
+    BigInteger *div=[prod divideBy:int2];
+    XCTAssertTrue([[div description] isEqual:[int1 description]], @"Division failed int1: %@, div: %@",int1,div);
+    XCTAssertTrue([div isEqual:int1], @"Division failed int1: %@, div: %@",int1,div);
+
+}
+
+
 @end

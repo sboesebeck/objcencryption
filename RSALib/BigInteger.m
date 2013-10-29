@@ -589,7 +589,7 @@ static const int ROUND = 4;
 //        if (isNull) {
 //            remainder.data = nil;
 //        }
-//        [remainder pack];
+        [remainder pack];
     }
 }
 
@@ -1052,6 +1052,13 @@ static const int ROUND = 4;
     if (_data == nil) {
         return;
     }
+
+    for (int i=0;i<_iVal;i++) {
+        if (_data[i]<0) {
+            _data[i]=_data[i]&0xffffff;
+        }
+    }
+
     while (_data[_iVal - 1] == 0 && _iVal > 0) {
         _iVal--;
         rebuild = YES;
@@ -1272,9 +1279,31 @@ static const int ROUND = 4;
 + (BOOL)equals:(BigInteger *)x y:(BigInteger *)y {
     if (x.isSimple && y.isSimple)
         return x.iVal == y.iVal;
-    if (x.isSimple || y.isSimple || x.iVal != y.iVal)
+    if ((x.isSimple || y.isSimple) && x.iVal != y.iVal)
         return NO;
-    for (int i = (int)x.iVal; --i >= 0;) {
+
+    int end= (int) x.iVal;
+    if (x.iVal != y.iVal) {
+        //check high-bytes==0
+        int start=0;
+        int64_t *data=nil;
+        if (x.iVal>y.iVal) {
+            start= (int) x.iVal;
+            end= (int) y.iVal;
+            data=x.data;
+        } else {
+            start= (int) y.iVal;
+            end= (int) x.iVal;
+            data=y.data;
+        }
+        for (int i=start;--i>=end;) {
+            if (data[i]!=0) {
+                return NO;
+            }
+        }
+    }
+
+    for (int i = end; --i >= 0;) {
         if ((int) x.data[i] != (int) y.data[i])
             return NO;
     }
@@ -1286,6 +1315,15 @@ static const int ROUND = 4;
     if (object == self) return YES;
     if (![object isKindOfClass:[self class]]) return NO;
     return [BigInteger equals:self y:(BigInteger *) object];
+}
+
+- (BOOL)isEqual:(id)other {
+    if (other == self)
+        return YES;
+    if (!other || ![[other class] isEqual:[self class]])
+        return NO;
+
+    return [self isEqualTo:other];
 }
 
 
@@ -1346,6 +1384,7 @@ static const int ROUND = 4;
         }
         if (highBitByteCount > 0)
             free(highBitBytes);
+        [self pack];
     }
 
     return self;
@@ -1881,7 +1920,7 @@ static const int ROUND = 4;
 }
 
 - (BOOL)isNegative {
-    return ((self.isSimple) ? self.iVal : self.data[self.iVal - 1]) < 0;
+    return ((self.isSimple) ? ((int32_t)self.iVal) : ((int32_t)self.data[self.iVal - 1])) < 0;
 }
 
 /** Return the logical (bit-wise) "and" of a BigInteger and an int64_t. */
