@@ -855,14 +855,7 @@ static const int ROUND = 4;
 }
 
 - (BigInteger *)mod:(BigInteger *)m {
-    if ([m isNegative] || [m isZero])
-        @throw [NSException exceptionWithName:@"Arithmeticexception" reason:@"non-positivve modulo" userInfo:nil];
-    BigInteger *rem = [[BigInteger alloc] initWith:0];
-    [BigInteger divideBig:self by:m quotient:nil remainder:rem usingRoundingMode:FLOOR];
-    if (rem == nil) {
-        NSLog(@"Something is wrong!");
-    }
-    return [rem canonicalize];
+   return [self remainder:m];
 }
 
 /** Destructively set the value of this to the given words.

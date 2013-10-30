@@ -32,7 +32,7 @@
 //    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
 //}
 
--(void) bigIntTest {
+-(void) testBigInt {
     BigInteger *int1 = [BigInteger valueOf:@"F0" usingRadix:16];
     BigInteger *int2 = [BigInteger valueOf:@"2" usingRadix:16];
     BigInteger *res=[int1 multiply:int2];
