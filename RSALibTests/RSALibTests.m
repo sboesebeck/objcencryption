@@ -79,15 +79,16 @@
         add=[add add:int1];
     }
     BigInteger *div=[add divideBy:int1];
+
     XCTAssertTrue([[div description] isEqualToString:@"11"]);
 
     BigInteger *int2=[int1 subtract:[BigInteger valueOf:1]];
     add=[add add:int2];
-    NSArray *res=[add divideAndRemainder:int2];
-    XCTAssertTrue(res.count==2);
 
-    XCTAssertTrue([res[0] isEqual:int2]);
-    XCTAssertTrue([res[1] isEqual:div]);
+    NSArray *res=[add divideAndRemainder:int1];
+    XCTAssertTrue(res.count==2);
+    XCTAssertTrue([res[0] isEqual:div],@"Division is wrong %@",res[0]);
+    XCTAssertTrue([res[1] isEqual:int2],@"Remainder is wrong %@",res[1]);
 
 }
 -(void) testAdd {
