@@ -92,35 +92,44 @@
 }
 
 - (void)testAdd {
+//    BigInteger *tst1=[BigInteger valueOf:@"65247DF5E" usingRadix:16];
+//    BigInteger *tst2=[BigInteger valueOf:@"18C5A8DE2" usingRadix:16];
+//    BigInteger *tst3=[tst1 subtract:tst2];
+
     BigInteger *int1 = [BigInteger randomBigInt:128];
     for (int i = 1; i <= 64; i++) {
-        BigInteger *int2 = [BigInteger randomBigInt:64 + i];
+        BigInteger *int2 = [BigInteger randomBigInt:120 + i];
         BigInteger *add = [int1 add:int2];
 //        NSLog(@"Adding %@ + %@ = %@",int1,int2,add);
         BigInteger *dif = [add subtract:int2];
         if (![dif isEqual:int1]) {
-            NSLog(@"RONG!");
-            BOOL eq=[dif isEqual:int1];
+            NSLog(@"WRONG! %d",i);
+            [add subtract:int2];
+            BOOL eq = [dif isEqual:int1];
         }
         XCTAssertEqualObjects(dif, int1, @"Error: %@ != %@", dif, int1);
     }
 }
 
 - (void)testMultiplyDivide {
-    for (int i = 1; i <= 64; i++) {
+    for (int i = 1; i <= 128; i++) {
+        for (int j = 0; j < 5; j++) {
 //        NSLog(@"Test no %d",i);
-        BigInteger *int1 = [BigInteger randomBigInt:128 + i];
-        BigInteger *int2 = [BigInteger randomBigInt:127 + i];
+            BigInteger *int1 = [BigInteger randomBigInt:128 + i];
+            BigInteger *int2 = [BigInteger randomBigInt:127 + i];
 
 
-        BigInteger *prod = [int1 multiply:int2];
+            BigInteger *prod = [int1 multiply:int2];
+            prod = [BigInteger valueOf:[prod description] usingRadix:16];
+            BigInteger *div = [prod divideBy:int2];
 
-        BigInteger *div = [prod divideBy:int2];
-        if (![div isEqual:int1]) {
-            NSLog(@"Error - not equals");
+            if (![div isEqual:int1]) {
+                NSLog(@"Error - not equals");
+                [div isEqual:int1];
+            }
+            XCTAssertTrue([[div description] isEqualTo:[int1 description]], @"Division failed int1: %@, div: %@", int1, div);
+            XCTAssertTrue([div isEqual:int1], @"Division failed int1: %@, div: %@", int1, div);
         }
-        XCTAssertTrue([[div description] isEqualTo:[int1 description]], @"Division failed int1: %@, div: %@", int1, div);
-        XCTAssertTrue([div isEqual:int1], @"Division failed int1: %@, div: %@", int1, div);
     }
 }
 
@@ -136,66 +145,101 @@
 }
 
 - (void)testAddNegative {
-    BigInteger *int1 = [BigInteger randomBigInt:128];
-    BigInteger *int2 = [BigInteger randomBigInt:120];
-    BigInteger *s1 = [int1 subtract:int2];
-    int2 = [int2 negate];
-    BigInteger *s = [int1 add:int2];
-    XCTAssertEqualObjects(s, s1, @"Objects differ? %@,%@", s, s1);
+    for (int i = 0; i < 128; i++) {
+        BigInteger *int1 = [BigInteger randomBigInt:128+i];
+        BigInteger *int2 = [BigInteger randomBigInt:100+i];
+        BigInteger *s1 = [int1 subtract:int2];
+        int2 = [int2 negate];
+        BigInteger *s = [int1 add:int2];
+        XCTAssertEqualObjects(s, s1, @"Objects differ? %@,%@", s, s1);
+    }
 }
 
 - (void)testMultNeg {
-    BigInteger *int1 = [BigInteger randomBigInt:128];
-    BigInteger *int2 = [BigInteger randomBigInt:128];
-    BigInteger *m = [int1 multiply:int2];
-    BigInteger *m2 = [[int1 negate] multiply:[int2 negate]];
-    XCTAssertEqualObjects(m, m2, @"- * - should get +");
+    for (int i = 0; i < 68; i++) {
+        BigInteger *int1 = [BigInteger randomBigInt:126 + i];
+        BigInteger *int2 = [BigInteger randomBigInt:126 + i];
+        BigInteger *m = [int1 multiply:int2];
+        BigInteger *mint1 = [int1 negate];
+        BigInteger *mint2 = [int2 negate];
+        //TODO: fix it here
+        BigInteger *m2 = [mint1 multiply:mint2];
+        XCTAssertEqualObjects(m, m2, @"- * - should get +");
+    }
+
 }
 
 - (void)testOrBig {
-    BigInteger *int1 = [BigInteger randomBigInt:128];
-    BigInteger *int2 = [BigInteger valueOf:0];
-    XCTAssertEqualObjects([int2 or:int1], int1);
+    for (int i = 0; i < 68; i++) {
+        BigInteger *int1 = [BigInteger randomBigInt:126 + i];
+        BigInteger *int2 = [BigInteger valueOf:0];
+        XCTAssertEqualObjects([int2 or:int1], int1);
+        XCTAssertEqualObjects([int1 or:int1], int1);
+        XCTAssertEqualObjects([int1 xor:int1], int2);
+    }
 }
 
 - (void)testCompare {
-    BigInteger *int1 = [BigInteger randomBigInt:128];
-    BigInteger *int2 = [int1 add:[BigInteger valueOf:1]];
-    int cmp = [int1 compareTo:int2];
-    XCTAssertTrue(cmp < 0, @"Cmp value is %d", cmp);
-    int2 = [int2 subtract:[BigInteger valueOf:3]];
-    cmp = [int1 compareTo:int2];
-    XCTAssertTrue(cmp > 0, @"Cmp value of %@ and %@ is %d", int1, int2, cmp);
-    int2 = [int2 add:[BigInteger valueOf:2]];
-    cmp = [int1 compareTo:int2];
-    XCTAssertTrue(cmp == 0, @"'%@' Not equal '%@'? cmp=%d", int1, int2, cmp);
+
+    BigInteger *tst1 = [BigInteger valueOf:@"298DF8C9C767D7DB5AA943694ACD8385552" usingRadix:16];
+    BigInteger *tst2 = [BigInteger valueOf:@"7E36DA5F" usingRadix:16];
+    BigInteger *tst3 = [tst1 add:tst2];
+
+    int c=[tst1 compareTo:tst2];
+
+    for (int i = 0; i < 130; i++) {
+        BigInteger *int1 = [BigInteger randomBigInt:122 + i];
+        NSLog(@"i is %d: %@", i, int1);
+        BigInteger *toAdd = [BigInteger randomBigInt:16 + i];
+        BigInteger *toAdd2=[BigInteger valueOf:[toAdd description] usingRadix:16];
+        BigInteger *int12=[BigInteger valueOf:[int1 description] usingRadix:16];
+        BigInteger *int2 = [int1 add:toAdd];
+        int cmp = [int1 compareTo:int2];
+        if (cmp>=0) {
+            NSLog(@"Wrong %@  %@",int1, int2);
+            [int1 add:toAdd];
+        }
+        XCTAssertTrue(cmp < 0, @"Cmp value is %d", cmp);
+        int2 = [int2 subtract:[toAdd multiply:[BigInteger valueOf:2]]];
+        cmp = [int1 compareTo:int2];
+        XCTAssertTrue(cmp > 0, @"Cmp value of %@ and %@ is %d", int1, int2, cmp);
+        BigInteger *int3 = [int2 add:toAdd];
+        cmp = [int1 compareTo:int3];
+        if (cmp != 0) {
+            NSLog(@"Wrong");
+            [int2 add:toAdd];
+            [int1 add:toAdd];
+        }
+        XCTAssertTrue(cmp == 0, @"'%@' Not equal '%@'? cmp=%d", int1, int3, cmp);
+    }
 
 }
 
--(void) testPrimeCheck {
-    BigInteger *int1=[BigInteger valueOf:@"F1DA144956AFD98AEF578E45D99BF86D" usingRadix:16];
+- (void)testPrimeCheck {
+    BigInteger *int1 = [BigInteger valueOf:@"F1DA144956AFD98AEF578E45D99BF86D" usingRadix:16];
 
-    BigInteger *m=[BigInteger valueOf:@"3C76851255ABF662BBD5E3917666FE1B" usingRadix:16];
-    BigInteger *r1= [[BigInteger valueOf:3] modPow:m modulo:int1];
+    BigInteger *m = [BigInteger valueOf:@"3C76851255ABF662BBD5E3917666FE1B" usingRadix:16];
+    BigInteger *r1 = [[BigInteger valueOf:3] modPow:m modulo:int1];
 
 
-    BOOL prime=[int1 isProbablePrime:100];
+    BOOL prime = [int1 isProbablePrime:100];
     if (!prime) {
         NSLog(@"Something is wrong!");
     }
     XCTAssertTrue(prime);
 
 }
+
 - (void)testProbablePrime {
 
 
-        NSLog(@"Getting prime");
-        BigInteger *int1 = [BigInteger randomProbablePrime:68  primeProbability:100 useThreads:1];
-        NSLog(@"Got one");
-        //check if it's really a prime
-        BigInteger *idx = [BigInteger valueOf:2];
-        BigInteger *end = [int1 shiftRight:1];
-        end = [end subtract:[BigInteger valueOf:1]];
+    NSLog(@"Getting prime");
+    BigInteger *int1 = [BigInteger randomProbablePrime:68 primeProbability:100 useThreads:1];
+    NSLog(@"Got one");
+    //check if it's really a prime
+    BigInteger *idx = [BigInteger valueOf:2];
+    BigInteger *end = [int1 shiftRight:1];
+    end = [end subtract:[BigInteger valueOf:1]];
 
     //Would do... if I had a lot of time...
 //        while ([idx compareTo:end] < 0) {

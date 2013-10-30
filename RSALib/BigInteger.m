@@ -715,15 +715,20 @@ static const int ROUND = 4;
     result.data = [BigInteger allocData:x.iVal + 1];
     int64_t i = y.iVal;
     int64_t carry = [MPN add_n:result.data x:x.data y:y.data len:i];
-    int64_t y_ext = y.data[i - 1] < 0 ? 0xffffffffL : 0;
+    int64_t y_ext = ((int32_t)y.data[i - 1]) < 0 ? 0xffffffffL : 0;
     for (; i < x.iVal; i++) {
-        carry += ((int32_t) x.data[i] & 0xffffffffL) + y_ext;
-        result.data[i] = (int64_t) carry;
+        carry += (x.data[i] & 0xffffffffL) + y_ext;
+        result.data[i] = (carry&0xffffffffL);
         carry >>= 32;
     }
-    if (x.data[i - 1] < 0)
+    if (((int32_t)x.data[i - 1]) < 0)
         y_ext--;
-    result.data[i] = (int32_t) (carry + y_ext);
+//    if ((x.isNegative && !y.isNegative) || (!x.isNegative && y.isNegative)) {
+//        if (carry>0) {
+//            carry--;
+//        }
+//    }
+    result.data[i] = (carry + y_ext)&0xffffffffL;
     result.iVal = i + 1;
     return [result canonicalize];
 }
@@ -758,12 +763,12 @@ static const int ROUND = 4;
     int64_t carry = y;
     for (int i = 0; i < len; i++) {
         carry += ((int64_t) x.data[i] & 0xffffffffL);
-        self.data[i] = (int32_t) carry;
+        self.data[i] = carry&0xffffffffL;
         carry >>= 32;
     }
     if (x.data[len - 1] < 0)
         carry--;
-    self.data[len] = (int32_t) carry;
+    self.data[len] = carry&0xffffffffL;
     self.iVal = [BigInteger wordsNeeded:self.data len:(int) (len + 1)];
 }
 
@@ -784,6 +789,12 @@ static const int ROUND = 4;
 
 
 + (int)compare:(BigInteger *)x to:(BigInteger *)y {
+    if (x.isZero && !y.isZero) {
+        return [y isNegative]?1:-1;
+    }
+    if (y.isZero && !x.isZero) {
+        return [x isNegative]?-1:1;
+    }
     if (x.isSimple && y.isSimple)
         return x.iVal < y.iVal ? -1 : x.iVal > y.iVal ? 1 : 0;
     BOOL x_negative = [x isNegative];
@@ -1050,7 +1061,12 @@ static const int ROUND = 4;
     BOOL neg = [self isNegative];
     BOOL rebuild = NO;
     if (_data == nil) {
+        self.iVal=self.iVal&0xffffffffL;
         return;
+    }
+
+    for (int i=0;i<_iVal;i++) {
+        _data[i]=_data[i]&0xffffffffL;
     }
     while (_data[_iVal - 1] == 0 && _iVal > 0) {
         _iVal--;
@@ -1061,21 +1077,23 @@ static const int ROUND = 4;
         }
     }
     if (_iVal == 1) {
-        _iVal = _data[0];
-        _data = nil;
+        _iVal = _data[0]&0xffffffffL;
+        self.data = nil;
         return;
     }
     if (_iVal == 0) {
-        _data = nil;
+        self.data = nil;
         return;
     }
+
+
     if (rebuild) {
         int64_t *newDat = [BigInteger allocData:_iVal];
         for (int64_t i = 0; i < _iVal; i++) {
-            newDat[i] = _data[i];
+            newDat[i] = _data[i]&0xffffffffL;
         }
         //free(_data);
-        _data = newDat;
+        self.data = newDat;
     }
 
 
@@ -1272,19 +1290,22 @@ static const int ROUND = 4;
 + (BOOL)equals:(BigInteger *)x y:(BigInteger *)y {
     if (x.isSimple && y.isSimple)
         return x.iVal == y.iVal;
-    if ((x.isSimple || y.isSimple) && x.iVal != y.iVal)
+    if ((x.isSimple && y.isSimple) && x.iVal != y.iVal)
         return NO;
-    if (x.isSimple && !y.isSimple) {
-        if (y.iVal==1 && y.data[0]==x.iVal) {
-            return YES;
-        }
-        return NO;
+
+    if (x.isSimple) {
+        BigInteger *tmp= [[BigInteger alloc] init];
+        tmp.data= [BigInteger allocData:1];
+        tmp.data[0]=x.iVal;
+        tmp.iVal=1;
+        x=tmp;
     }
-    if (!x.isSimple && y.isSimple) {
-        if (x.iVal==1 && x.data[0]==y.iVal) {
-            return YES;
-        }
-        return NO;
+    if (y.isSimple) {
+        BigInteger *tmp= [[BigInteger alloc] init];
+        tmp.data= [BigInteger allocData:1];
+        tmp.data[0]=y.iVal;
+        tmp.iVal=1;
+        y=tmp;
     }
 
     int end= (int) x.iVal;
@@ -1369,7 +1390,7 @@ static const int ROUND = 4;
             --nwords;
         }
         if (nwords == 0 && highbits >= 0) {
-            self.iVal = highbits;
+            self.iVal = highbits&0xffffffffL;
             self.data = nil;
         } else {
             self.iVal = highbits < 0 ? nwords + 2 : nwords + 1;
@@ -1384,11 +1405,15 @@ static const int ROUND = 4;
                 self.iVal = -self.iVal;
             } else {
                 //Workaround - somehow negative randoms keep being created
-                self.data[self.iVal - 1] = -self.data[self.iVal - 1];
+                self.iVal++;
+                int64_t *dat= [BigInteger allocData:self.iVal];
+                memccpy(dat, self.data, 0, self.iVal-1);
+                self.data=dat;
             }
         }
         if (highBitByteCount > 0)
             free(highBitBytes);
+        [self pack];
     }
 
     return self;
@@ -1519,7 +1544,7 @@ static const int ROUND = 4;
     BOOL negative = (int32_t) src[len - 1] < 0;
     for (int i = 0; i < len; i++) {
         carry += ((int64_t) (~src[i]) & 0xffffffffL);
-        dest[i] = (int32_t) carry;
+        dest[i] = carry& 0xffffffffL;
         carry >>= 32;
     }
     return (negative && (int32_t) dest[len - 1] < 0);
@@ -1924,7 +1949,7 @@ static const int ROUND = 4;
 }
 
 - (BOOL)isNegative {
-    return ((self.isSimple) ? self.iVal : self.data[self.iVal - 1]) < 0;
+    return ((self.isSimple) ? ((int32_t)self.iVal) : ((int32_t)self.data[self.iVal - 1])) < 0;
 }
 
 /** Return the logical (bit-wise) "and" of a BigInteger and an int64_t. */

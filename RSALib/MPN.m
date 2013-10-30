@@ -15,7 +15,7 @@
     int64_t carry = (int32_t) y & 0xffffffffL;
     for (int64_t i = 0; i < size; i++) {
         carry += (x[i] & 0xffffffffL);
-        dest[i] = carry;
+        dest[i] = carry&0xffffffffL;
         carry >>= 32;
     }
     return (int32_t) carry;
@@ -26,10 +26,10 @@
     for (int64_t i = 0; i < len; i++) {
         carry += (x[i] & 0xffffffffL)
                 + (y[i] & 0xffffffffL);
-        dest[i] = (int32_t) carry;
+        dest[i] = carry&0xffffffffL;
         carry >>= 32;
     }
-    return (int32_t) carry;
+    return (int32_t) carry&0xffffffffL;
 }
 
 + (int64_t)sub_n:(int64_t *)dest x:(int64_t *)X y:(int64_t *)Y size:(int)size {
@@ -344,14 +344,14 @@
             res_digit |= inp_digit << next_bitpos;
             next_bitpos += bits_per_indigit;
             if (next_bitpos >= 32) {
-                dest[size++] = res_digit;
+                dest[size++] = res_digit&0xffffffffL;
                 next_bitpos -= 32;
                 res_digit = ((int64_t) inp_digit) >> (bits_per_indigit - next_bitpos);
             }
         }
 
         if (res_digit != 0)
-            dest[size++] = res_digit;
+            dest[size++] = res_digit&0xffffffffL;
     }
     else {
         // General case.  The base is not a power of 2.
@@ -378,7 +378,7 @@
                 cy_limb += [MPN add_1:dest x:dest size:(int) size y:res_digit];
             }
             if (cy_limb != 0)
-                dest[size++] = cy_limb;
+                dest[size++] = cy_limb&0xffffffffL;
         }
     }
     return size;
@@ -388,7 +388,7 @@
  * @result -1, 0, or 1 depending on if x&lt;y, x==y, or x&gt;y.
  * This is basically the same as gmp's mpn_cmp function.
  */
-+ (int)cmp:(int64_t *)x y:(int64_t *)y size:(int64_t)size {
++ (int) cmp:(int64_t *)x y:(int64_t *)y size:(int64_t)size {
     while (--size >= 0) {
         int64_t x_word = x[size];
         int64_t y_word = y[size];
