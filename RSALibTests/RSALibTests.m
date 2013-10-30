@@ -197,7 +197,7 @@
         BigInteger *end = [int1 shiftRight:1];
         end = [end subtract:[BigInteger valueOf:1]];
 
-
+    //Would do... if I had a lot of time...
 //        while ([idx compareTo:end] < 0) {
 //            NSLog(@"Checking...%@",idx);
 //
