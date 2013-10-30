@@ -234,7 +234,7 @@
 
 
     NSLog(@"Getting prime");
-    BigInteger *int1 = [BigInteger randomProbablePrime:68 primeProbability:100 useThreads:1];
+    BigInteger *int1 = [BigInteger randomProbablePrime:1024 primeProbability:100 useThreads:3];
     NSLog(@"Got one");
     //check if it's really a prime
     BigInteger *idx = [BigInteger valueOf:2];
