@@ -589,7 +589,7 @@ static const int ROUND = 4;
 //        if (isNull) {
 //            remainder.data = nil;
 //        }
-        [remainder pack];
+//        [remainder pack];
     }
 }
 
@@ -855,7 +855,14 @@ static const int ROUND = 4;
 }
 
 - (BigInteger *)mod:(BigInteger *)m {
-   return [self remainder:m];
+    if ([m isNegative] || [m isZero])
+        @throw [NSException exceptionWithName:@"Arithmeticexception" reason:@"non-positivve modulo" userInfo:nil];
+    BigInteger *rem = [[BigInteger alloc] initWith:0];
+    [BigInteger divideBig:self by:m quotient:nil remainder:rem usingRoundingMode:FLOOR];
+    if (rem == nil) {
+        NSLog(@"Something is wrong!");
+    }
+    return [rem canonicalize];
 }
 
 /** Destructively set the value of this to the given words.
@@ -1045,13 +1052,6 @@ static const int ROUND = 4;
     if (_data == nil) {
         return;
     }
-
-    for (int i=0;i<_iVal;i++) {
-        if (_data[i]<0) {
-            _data[i]=_data[i]&0xffffff;
-        }
-    }
-
     while (_data[_iVal - 1] == 0 && _iVal > 0) {
         _iVal--;
         rebuild = YES;
@@ -1274,6 +1274,18 @@ static const int ROUND = 4;
         return x.iVal == y.iVal;
     if ((x.isSimple || y.isSimple) && x.iVal != y.iVal)
         return NO;
+    if (x.isSimple && !y.isSimple) {
+        if (y.iVal==1 && y.data[0]==x.iVal) {
+            return YES;
+        }
+        return NO;
+    }
+    if (!x.isSimple && y.isSimple) {
+        if (x.iVal==1 && x.data[0]==y.iVal) {
+            return YES;
+        }
+        return NO;
+    }
 
     int end= (int) x.iVal;
     if (x.iVal != y.iVal) {
@@ -1290,14 +1302,14 @@ static const int ROUND = 4;
             data=y.data;
         }
         for (int i=start;--i>=end;) {
-            if (data[i]!=0) {
+            if (data[i]&0xffffffff!=0) {
                 return NO;
             }
         }
     }
 
     for (int i = end; --i >= 0;) {
-        if ((int) x.data[i] != (int) y.data[i])
+        if (((int32_t) x.data[i]&0xffffffff) != ((int32_t) y.data[i]&0xffffffff))
             return NO;
     }
     return YES;
@@ -1377,7 +1389,6 @@ static const int ROUND = 4;
         }
         if (highBitByteCount > 0)
             free(highBitBytes);
-        [self pack];
     }
 
     return self;
@@ -1913,7 +1924,7 @@ static const int ROUND = 4;
 }
 
 - (BOOL)isNegative {
-    return ((self.isSimple) ? ((int32_t)self.iVal) : ((int32_t)self.data[self.iVal - 1])) < 0;
+    return ((self.isSimple) ? self.iVal : self.data[self.iVal - 1]) < 0;
 }
 
 /** Return the logical (bit-wise) "and" of a BigInteger and an int64_t. */
