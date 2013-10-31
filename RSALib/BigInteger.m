@@ -102,11 +102,11 @@ static const int FLOOR = 1;
 static const int CEILING = 2;
 static const int TRUNCATE = 3;
 static const int ROUND = 4;
-
-
-- (BOOL)isSimple {
-    return (_data == nil);
-}
+//
+//
+//- (BOOL)isSimple {
+//    return (_data == nil);
+//}
 
 - (void)setData:(int64_t *)data {
     if (_data != nil) {
@@ -162,14 +162,14 @@ static const int ROUND = 4;
     //first 4 bytes == integer show length of this integer
     // eg: 000004 => 4 bytes in length
     // if < then maxValueInt => 4 bytes
-    if (self.data == nil) {
-        //use iVal only
-        [BigInteger fillInteger:4 into:buffer];
-        [dat appendBytes:buffer length:4];
-        [BigInteger fillInteger:self.iVal into:buffer];
-        [dat appendBytes:buffer length:4];
-        return dat;
-    }
+//    if (self.data == nil) {
+//        //use iVal only
+//        [BigInteger fillInteger:4 into:buffer];
+//        [dat appendBytes:buffer length:4];
+//        [BigInteger fillInteger:self.iVal into:buffer];
+//        [dat appendBytes:buffer length:4];
+//        return dat;
+//    }
 
     [BigInteger fillInteger:self.iVal * 4 into:buffer];
     [dat appendBytes:buffer length:4];
@@ -235,10 +235,11 @@ static const int ROUND = 4;
                 break;
             }
         }
-        if (size == 1) {
-            self.iVal = data[0];
-            self.data = nil;
-        } else if (size == 0 || isZero) {
+//        if (size == 1) {
+//            self.iVal = data[0];
+//            self.data = nil;
+//        } else
+        if (size == 0 || isZero) {
             self.iVal = 0;
             self.data = nil;
         } else {
@@ -254,7 +255,9 @@ static const int ROUND = 4;
 - (id)initWith:(int64_t)value {
     self = [super init];
     if (self) {
-        self.iVal = value;
+        self.data = [BigInteger allocData:1];
+        self.data[0] = value;
+        self.iVal = 1;
     }
 
     return self;
@@ -268,14 +271,14 @@ static const int ROUND = 4;
 
 + (BigInteger *)bigIntegerWithBigInteger:(BigInteger *)b {
     BigInteger *ret = [[BigInteger alloc] init];
-    if ([b isSimple]) {
-        ret.iVal = b.iVal;
-        ret.data = nil;
-    } else {
-        ret.data = (int64_t *) [BigInteger allocData:(int) b.iVal];
+//    if ([b isSimple]) {
+//        ret.iVal = b.iVal;
+//        ret.data = nil;
+//    } else {
+    ret.data = (int64_t *) [BigInteger allocData:(int) b.iVal];
         memcpy(ret.data, b.data, (size_t) b.iVal * (sizeof(int64_t)));
         ret.iVal = b.iVal;
-    }
+//    }
 
     return ret;
 }
@@ -359,14 +362,14 @@ static const int ROUND = 4;
 }
 
 - (int)intValue {
-    if (self.isSimple)
-        return (int) self.iVal;
+//    if (self.isSimple)
+//        return (int) self.iVal;
     return (int) self.data[0];
 }
 
 - (int64_t)longValue {
-    if (self.isSimple)
-        return self.iVal;
+//    if (self.isSimple)
+//        return self.iVal;
     if (self.iVal == 1)
         return self.data[0];
     return ((int64_t) self.data[1] << 32) + ((int64_t) self.data[0] & 0xffffffffL);
@@ -378,16 +381,16 @@ static const int ROUND = 4;
  */
 - (void)getAbsolute:(int64_t *)words length:(int)wlen {
     int len;
-    if (self.isSimple) {
-        len = 1;
-        words[0] = self.iVal;
-    }
-    else {
-        len = (int) self.iVal;
+//    if (self.isSimple) {
+//        len = 1;
+//        words[0] = self.iVal;
+//    }
+//    else {
+    len = (int) self.iVal;
         for (int i = len; --i >= 0;)
             words[i] = self.data[i];
 
-    }
+//    }
     if ((int32_t) words[len - 1] < 0)
         [BigInteger negate:words src:words len:len];
     for (int i = wlen; --i > len;)
@@ -404,15 +407,15 @@ static const int ROUND = 4;
     */
 + (void)divideBig:(BigInteger *)x by:(BigInteger *)y quotient:(BigInteger *)quotient remainder:(BigInteger *)remainder usingRoundingMode:(int)rounding_mode {
 //    NSLog(@"Dividing...");
-    if ((x.isSimple || x.iVal <= 2)
-            && (y.isSimple || y.iVal <= 2)) {
-        int64_t x_l = [x longValue];
-        int64_t y_l = [y longValue];
-        if (x_l != LONG_MIN && y_l != LONG_MIN) {
-            [BigInteger divide:x_l by:y_l quotient:quotient remainder:remainder usingRoundingMode:rounding_mode];
-            return;
-        }
-    }
+//    if ((x.isSimple || x.iVal <= 2)
+//            && (y.isSimple || y.iVal <= 2)) {
+//        int64_t x_l = [x longValue];
+//        int64_t y_l = [y longValue];
+//        if (x_l != LONG_MIN && y_l != LONG_MIN) {
+//            [BigInteger divide:x_l by:y_l quotient:quotient remainder:remainder usingRoundingMode:rounding_mode];
+//            return;
+//        }
+//    }
 
     if ([x isEqualTo:y]) {
         if (remainder != nil) {
@@ -421,7 +424,8 @@ static const int ROUND = 4;
         }
         if (quotient != nil) {
             quotient.iVal = 1;
-            quotient.data = nil;
+            quotient.data = [BigInteger allocData:1];
+            quotient.data[0] = 1;
         }
         return;
     }
@@ -429,13 +433,13 @@ static const int ROUND = 4;
     BOOL yNegative = [y isNegative];
     BOOL qNegative = xNegative ^ yNegative;
 
-    int ylen = (int) ((y.isSimple) ? 1 : y.iVal);
+    int ylen = (int) y.iVal; //((y.isSimple) ? 1 : y.iVal);
     int64_t *ywords = [BigInteger allocData:ylen + 1];
     [y getAbsolute:ywords length:ylen];
     while (ylen > 1 && ywords[ylen - 1] == 0) ylen--;
 
 
-    int xlen = (int) ((x.isSimple) ? 1 : x.iVal);
+    int xlen = (int) x.iVal; //((x.isSimple) ? 1 : x.iVal);
     int64_t *xwords = [BigInteger allocData:(xlen + 2)];
     [x getAbsolute:xwords length:xlen];
     while (xlen > 1 && xwords[xlen - 1] == 0) xlen--;
@@ -555,12 +559,12 @@ static const int ROUND = 4;
             // Subtract the remainder from Y:
             // abs(R) = abs(Y) - abs(orig_rem) = -(abs(orig_rem) - abs(Y)).
             BigInteger *tmp;
-            if (y.isSimple) {
-                tmp = remainder;
-                [tmp set:yNegative ? ywords[0] + y.iVal : ywords[0] - y.iVal];
-            }
-            else
-                tmp = [BigInteger add:remainder y:y k:yNegative ? 1 : -1];
+//            if (y.isSimple) {
+//                tmp = remainder;
+//                [tmp set:yNegative ? ywords[0] + y.iVal : ywords[0] - y.iVal];
+//            }
+//            else
+            tmp = [BigInteger add:remainder y:y k:yNegative ? 1 : -1];
             // Now tmp <= 0.
             // In this case, abs(Q) = 1 + floor(abs(X)/abs(Y)).
             // Hence, abs(Q*Y) > abs(X).
@@ -594,8 +598,8 @@ static const int ROUND = 4;
 }
 
 + (BigInteger *)neg:(BigInteger *)x {
-    if (x.isSimple && x.iVal != INT_MIN)
-        return [BigInteger valueOf:(-x.iVal)];
+//    if (x.isSimple && ((int32_t)x.iVal) != INT_MIN)
+//        return [BigInteger valueOf:(-((int32_t)x.iVal))];
     BigInteger *result = [[BigInteger alloc] init];
     [result setNegative:(x)];
     return [result canonicalize];
@@ -639,10 +643,10 @@ static const int ROUND = 4;
 }
 
 + (BigInteger *)times:(BigInteger *)x yBig:(BigInteger *)y {
-    if (y.isSimple)
-        return [BigInteger times:x y:y.iVal];
-    if (x.isSimple)
-        return [BigInteger times:y y:x.iVal];
+//    if (y.isSimple)
+//        return [BigInteger times:x y:y.iVal];
+//    if (x.isSimple)
+//        return [BigInteger times:y y:x.iVal];
     BOOL negative = NO;
     int64_t *xwords;
     int64_t *ywords;
@@ -693,18 +697,18 @@ static const int ROUND = 4;
 
 /** Add two BigIntegers, yielding their sum as another BigInteger. */
 + (BigInteger *)add:(BigInteger *)x y:(BigInteger *)y k:(int64_t)k {
-    if (x.isSimple && y.isSimple)
-        return [BigInteger valueOf:((long) k * (long) y.iVal + (long) x.iVal)];
+//    if (x.isSimple && y.isSimple)
+//        return [BigInteger valueOf:((long) k * (long) y.iVal + (long) x.iVal)];
     if (k != 1) {
         if (k == -1)
             y = [BigInteger neg:(y)];
         else
             y = [BigInteger times:y yBig:[BigInteger valueOf:k]];
     }
-    if (x.isSimple)
-        return [BigInteger addBig:y y:x.iVal];
-    if (y.isSimple)
-        return [BigInteger addBig:x y:y.iVal];
+//    if (x.isSimple)
+//        return [BigInteger addBig:y y:x.iVal];
+//    if (y.isSimple)
+//        return [BigInteger addBig:x y:y.iVal];
     // Both are big
     if (y.iVal > x.iVal) { // Swap so x is longer then y.
         BigInteger *tmp = x;
@@ -744,8 +748,8 @@ static const int ROUND = 4;
 
 /** Add a BigInteger and an int64_t, yielding a new BigInteger. */
 + (BigInteger *)addBig:(BigInteger *)x y:(int64_t)y {
-    if (x.isSimple)
-        return [BigInteger add:(x.iVal) y:y];
+//    if (x.isSimple)
+//        return [BigInteger add:(x.iVal) y:y];
     BigInteger *result = [[BigInteger alloc] init];
     [result setAdd:x y:y];
     return [result canonicalize];
@@ -754,10 +758,10 @@ static const int ROUND = 4;
 /** Set this to the sum of x and y.
  * OK if x==this. */
 - (void)setAdd:(BigInteger *)x y:(int64_t)y {
-    if (x.isSimple) {
-        [self set:((long) x.iVal + (long) y)];
-        return;
-    }
+//    if (x.isSimple) {
+//        [self set:((long) x.iVal + (long) y)];
+//        return;
+//    }
     int64_t len = x.iVal;
     [self realloc:(int) (len + 1)];
     int64_t carry = y;
@@ -779,12 +783,12 @@ static const int ROUND = 4;
 
 
 - (void)setInvert {
-    if (self.isSimple)
-        self.iVal = ~self.iVal;
-    else {
-        for (int64_t i = self.iVal; --i >= 0;)
+//    if (self.isSimple)
+//        self.iVal = ~self.iVal;
+//    else {
+    for (int64_t i = self.iVal; --i >= 0;)
             self.data[i] = ~self.data[i];
-    }
+//    }
 }
 
 
@@ -795,16 +799,16 @@ static const int ROUND = 4;
     if (y.isZero && !x.isZero) {
         return [x isNegative]?-1:1;
     }
-    if (x.isSimple && y.isSimple)
-        return x.iVal < y.iVal ? -1 : x.iVal > y.iVal ? 1 : 0;
+//    if (x.isSimple && y.isSimple)
+//        return x.iVal < y.iVal ? -1 : x.iVal > y.iVal ? 1 : 0;
     BOOL x_negative = [x isNegative];
     BOOL y_negative = [y isNegative];
     if (x_negative != y_negative)
         return x_negative ? -1 : 1;
-    int64_t x_len = x.isSimple ? 1 : x.iVal;
-    int64_t y_len = y.isSimple ? 1 : y.iVal;
-    if (x_len != y_len)
-        return (x_len > y_len) != x_negative ? 1 : -1;
+    int64_t x_len = x.iVal;// x.isSimple ? 1 : x.iVal;
+    int64_t y_len = y.iVal; //y.isSimple ? 1 : y.iVal;
+//    if (x_len != y_len)
+//        return (x_len > y_len) != x_negative ? 1 : -1;
     return [MPN cmp:x.data y:y.data size:x_len];
 }
 
@@ -818,13 +822,13 @@ static const int ROUND = 4;
  * It is OK if x==this.*/
 - (void)setNegative:(BigInteger *)x {
     int64_t len = x.iVal;
-    if (x.isSimple) {
-        if (len == INT_MIN)
-            [self set:-(int64_t) len];
-        else
-            [self set:(-len)];
-        return;
-    }
+//    if (x.isSimple) {
+//        if (len == INT_MIN)
+//            [self set:-(int64_t) len];
+//        else
+//            [self set:(-len)];
+//        return;
+//    }
     [self realloc:(len + 1)];
     if ([BigInteger negate:self.data src:x.data len:len])
         self.data[len++] = 0;
@@ -887,8 +891,8 @@ static const int ROUND = 4;
     * See Common Lisp: the Language, 2nd ed, p. 361.
     */
 - (int)bitLength {
-    if (self.isSimple)
-        return [MPN intLength:(self.iVal)];
+//    if (self.isSimple)
+//        return [MPN intLength:(self.iVal)];
     return [MPN intLength:self.data len:self.iVal];
 }
 
@@ -926,8 +930,8 @@ static const int ROUND = 4;
     BigInteger *rem = [[BigInteger alloc] init];
     int i;
     for (i = 0; i < primeCount; i++) {
-        if (self.isSimple && self.iVal == primes[i])
-            return YES;
+//        if (self.isSimple && self.iVal == primes[i])
+//            return YES;
         // int64_t idx = primes[i] - MINFIXNUMS;
 //        if (idx > fixNum.count - 1) {
         [BigInteger divideBig:self by:[BigInteger valueOf:primes[i]] quotient:nil remainder:rem usingRoundingMode:TRUNCATE];
@@ -1029,14 +1033,14 @@ static const int ROUND = 4;
     // Recursion happens in the following conditional!
 
     // If a just contains an int64_t, then use integer math for the rest.
-    if (a.isSimple) {
-        int64_t *xyInt = [BigInteger euclidInv:b.iVal b:a.iVal % b.iVal preDiv:a.iVal / b.iVal];
-        xy[0] = [BigInteger valueOf:(int32_t) (xyInt[0])];
-        xy[1] = [BigInteger valueOf:(int32_t) (xyInt[1])];
+//    if (a.isSimple) {
+//        int64_t *xyInt = [BigInteger euclidInv:b.iVal b:a.iVal % b.iVal preDiv:a.iVal / b.iVal];
+//        xy[0] = [BigInteger valueOf:(int32_t) (xyInt[0])];
+//        xy[1] = [BigInteger valueOf:(int32_t) (xyInt[1])];
 //        NSLog(@"Euclidinv (simple) returned %@,%@", xy[0], xy[1]);
-    }
-    else {
-        BigInteger *rem = [[BigInteger alloc] init];
+//    }
+//    else {
+    BigInteger *rem = [[BigInteger alloc] init];
         BigInteger *quot = [[BigInteger alloc] init];
 //        BigInteger *tst=[BigInteger valueOf:@"A432A0EC03A42121" usingRadix:16];
 //        if ([[a description] isEqual:@"27F2BB8AF7480D73"]) {
@@ -1049,7 +1053,7 @@ static const int ROUND = 4;
         [quot canonicalize];
         [BigInteger euclidInv:b b:rem preDiv:quot xy:xy];
 //        NSLog(@"Euclidinv returned %@,%@", xy[0], xy[1]);
-    }
+//    }
 
     BigInteger *t = xy[0];
 //    NSLog(@"Processing data: xy1: %@ t:%@ prevdiv: %@", xy[1], t, prevDiv);
@@ -1076,11 +1080,11 @@ static const int ROUND = 4;
             return;
         }
     }
-    if (_iVal == 1) {
-        _iVal = _data[0]&0xffffffffL;
-        self.data = nil;
-        return;
-    }
+//    if (_iVal == 1) {
+//        _iVal = _data[0]&0xffffffffL;
+//        self.data = nil;
+//        return;
+//    }
     if (_iVal == 0) {
         self.data = nil;
         return;
@@ -1118,35 +1122,35 @@ static const int ROUND = 4;
     BigInteger *result = [[BigInteger alloc] init];
     BOOL swapped = NO;
 
-    if (y.isSimple) {
-        // The result is guaranteed to be less than the modulus, y (which is
-        // an int64_t), so simplify this by working with the int64_t result of this
-        // modulo y.  Also, if this is negative, make it positive via modulo
-        // math.  Note that BigInteger.mod() must be used even if this is
-        // already an int64_t as the % operator would provide a negative result if
-        // this is negative, BigInteger.mod() never returns negative values.
-        int64_t xval = (self.data != nil || [self isNegative]) ? [self mod:y].iVal : self.iVal;
-        int64_t yval = y.iVal;
-
-        // Swap values so x > y.
-        if (yval > xval) {
-            int64_t tmp = xval;
-            xval = yval;
-            yval = tmp;
-            swapped = YES;
-        }
-        // Normally, the result is in the 2nd element of the array, but
-        // if originally x < y, then x and y were swapped and the result
-        // is in the 1st element of the array.
-        result.iVal = [BigInteger euclidInv:yval b:xval % yval preDiv:xval / yval][swapped ? 0 : 1];
-
-        // Result can't be negative, so make it positive by adding the
-        // original modulus, y.ival (not the possibly "swapped" yval).
-        if ((int32_t) result.iVal < 0)
-            result.iVal += y.iVal;
-    }
-    else {
-        // As above, force this to be a positive value via modulo math.
+//    if (y.isSimple) {
+//        // The result is guaranteed to be less than the modulus, y (which is
+//        // an int64_t), so simplify this by working with the int64_t result of this
+//        // modulo y.  Also, if this is negative, make it positive via modulo
+//        // math.  Note that BigInteger.mod() must be used even if this is
+//        // already an int64_t as the % operator would provide a negative result if
+//        // this is negative, BigInteger.mod() never returns negative values.
+//        int64_t xval = (self.data != nil || [self isNegative]) ? [self mod:y].iVal : self.iVal;
+//        int64_t yval = y.iVal;
+//
+//        // Swap values so x > y.
+//        if (yval > xval) {
+//            int64_t tmp = xval;
+//            xval = yval;
+//            yval = tmp;
+//            swapped = YES;
+//        }
+//        // Normally, the result is in the 2nd element of the array, but
+//        // if originally x < y, then x and y were swapped and the result
+//        // is in the 1st element of the array.
+//        result.iVal = [BigInteger euclidInv:yval b:xval % yval preDiv:xval / yval][swapped ? 0 : 1];
+//
+//        // Result can't be negative, so make it positive by adding the
+//        // original modulus, y.ival (not the possibly "swapped" yval).
+//        if ((int32_t) result.iVal < 0)
+//            result.iVal += y.iVal;
+//    }
+//    else {
+    // As above, force this to be a positive value via modulo math.
         BigInteger *x = [self isNegative] ? [self mod:y] : self;
 
         // Swap values so x > y.
@@ -1172,7 +1176,7 @@ static const int ROUND = 4;
         // original modulus, y (which is now x if they were swapped).
         if ([result isNegative])
             result = [BigInteger add:result y:swapped ? x : y k:1];
-    }
+//    }
 
     return result;
 }
@@ -1255,24 +1259,24 @@ static const int ROUND = 4;
 - (BigInteger *)gcd:(BigInteger *)y {
     int64_t xval = self.iVal;
     int64_t yval = y.iVal;
-    if (self.isSimple) {
-        if (xval == 0)
-            return [BigInteger abs:y];
-        if (y.isSimple
-                && xval != INT_MIN && yval != INT_MIN) {
-            if (xval < 0)
-                xval = -xval;
-            if (yval < 0)
-                yval = -yval;
-            return [BigInteger valueOf:[BigInteger gcdInt:xval b:yval]];
-        }
-        xval = 1;
-    }
-    if (y.isSimple) {
-        if (yval == 0)
-            return [BigInteger abs:self];
-        yval = 1;
-    }
+//    if (self.isSimple) {
+//        if (xval == 0)
+//            return [BigInteger abs:y];
+//        if (y.isSimple
+//                && xval != INT_MIN && yval != INT_MIN) {
+//            if (xval < 0)
+//                xval = -xval;
+//            if (yval < 0)
+//                yval = -yval;
+//            return [BigInteger valueOf:[BigInteger gcdInt:xval b:yval]];
+//        }
+//        xval = 1;
+//    }
+//    if (y.isSimple) {
+//        if (yval == 0)
+//            return [BigInteger abs:self];
+//        yval = 1;
+//    }
     int64_t len = (xval > yval ? xval : yval) + 1;
     int64_t *xwords = [BigInteger allocData:(int) len];
     int64_t *ywords = [BigInteger allocData:(int) len];
@@ -1288,25 +1292,25 @@ static const int ROUND = 4;
 
 /* Assumes x and y are both canonicalized. */
 + (BOOL)equals:(BigInteger *)x y:(BigInteger *)y {
-    if (x.isSimple && y.isSimple)
-        return x.iVal == y.iVal;
-    if ((x.isSimple && y.isSimple) && x.iVal != y.iVal)
-        return NO;
-
-    if (x.isSimple) {
-        BigInteger *tmp= [[BigInteger alloc] init];
-        tmp.data= [BigInteger allocData:1];
-        tmp.data[0]=x.iVal;
-        tmp.iVal=1;
-        x=tmp;
-    }
-    if (y.isSimple) {
-        BigInteger *tmp= [[BigInteger alloc] init];
-        tmp.data= [BigInteger allocData:1];
-        tmp.data[0]=y.iVal;
-        tmp.iVal=1;
-        y=tmp;
-    }
+//    if (x.isSimple && y.isSimple)
+//        return x.iVal == y.iVal;
+//    if ((x.isSimple && y.isSimple) && x.iVal != y.iVal)
+//        return NO;
+//
+//    if (x.isSimple) {
+//        BigInteger *tmp= [[BigInteger alloc] init];
+//        tmp.data= [BigInteger allocData:1];
+//        tmp.data[0]=x.iVal;
+//        tmp.iVal=1;
+//        x=tmp;
+//    }
+//    if (y.isSimple) {
+//        BigInteger *tmp= [[BigInteger alloc] init];
+//        tmp.data= [BigInteger allocData:1];
+//        tmp.data[0]=y.iVal;
+//        tmp.iVal=1;
+//        y=tmp;
+//    }
 
     int end= (int) x.iVal;
     if (x.iVal != y.iVal) {
@@ -1389,31 +1393,32 @@ static const int ROUND = 4;
             highbits = (uint64_t) [BigInteger nexRand];
             --nwords;
         }
-        if (nwords == 0 && highbits >= 0) {
-            self.iVal = highbits&0xffffffffL;
-            self.data = nil;
-        } else {
-            self.iVal = highbits < 0 ? nwords + 2 : nwords + 1;
+//        if (nwords == 0 && highbits >= 0) {
+//            self.iVal = highbits&0xffffffffL;
+//            self.data = nil;
+//        } else {
+        self.iVal = highbits < 0 ? nwords + 2 : nwords + 1;
             self.data = [BigInteger allocData:(int) self.iVal];
             self.data[nwords] = highbits;
             while (--nwords >= 0) {
                 self.data[nwords] = [BigInteger nexRand];
             }
-        }
-        if ([self isNegative]) {
-            if ([self isSimple]) {
-                self.iVal = -self.iVal;
-            } else {
-                //Workaround - somehow negative randoms keep being created
-                self.iVal++;
-                int64_t *dat= [BigInteger allocData:self.iVal];
-                memccpy(dat, self.data, 0, self.iVal-1);
-                self.data=dat;
-            }
-        }
-        if (highBitByteCount > 0)
-            free(highBitBytes);
+//        }
         [self pack];
+        if ([self isNegative]) {
+//            if ([self isSimple]) {
+//                self.iVal = -self.iVal;
+//            } else {
+            //Workaround - somehow negative randoms keep being created
+            self.iVal++;
+            int64_t *dat = [BigInteger allocData:self.iVal];
+            memcpy(dat, self.data, (size_t) ((self.iVal - 1) * (sizeof(int64_t))));
+            self.data = dat;
+//            }
+        }
+        if (highBitByteCount > 0) {
+            free(highBitBytes);
+        }
     }
 
     return self;
@@ -1690,11 +1695,11 @@ static const int ROUND = 4;
 }
 
 - (BigInteger *)canonicalize {
-    if (self.data != nil && (self.iVal = [BigInteger wordsNeeded:self.data len:(int) self.iVal]) <= 1) {
-        if (self.iVal == 1)
-            self.iVal = self.data[0];
-        self.data = nil;
-    }
+//    if (self.data != nil && (self.iVal = [BigInteger wordsNeeded:self.data len:(int) self.iVal]) <= 1) {
+//        if (self.iVal == 1)
+//            self.iVal = self.data[0];
+//        self.data = nil;
+//    }
 //    if (self.isSimple && self.iVal >= MINFIXNUMS && self.iVal < MAXFIXNUMS)
 //        return fixNum[self.iVal - MINFIXNUMS];
     return self;
@@ -1704,28 +1709,28 @@ static const int ROUND = 4;
  * We allow words.length to be upto nwords+2 without reallocating.
  */
 - (void)realloc:(int)nwords {
-    if (nwords == 0) {
-        if (self.data != nil) {
-            if (self.iVal > 0)
-                self.iVal = self.data[0];
-            self.data = nil;
-        }
-    }
-    else if (self.isSimple) {
-        int64_t *new_words = [BigInteger allocData:nwords];
-        if (self.isSimple) {
-            new_words[0] = self.iVal;
-            self.iVal = 1;
-        } else {
-            if (nwords < self.iVal)
+//    if (nwords == 0) {
+//        if (self.data != nil) {
+//            if (self.iVal > 0)
+//                self.iVal = self.data[0];
+//            self.data = nil;
+//        }
+//    }
+//    else if (self.isSimple) {
+    int64_t *new_words = [BigInteger allocData:nwords];
+//        if (self.isSimple) {
+//            new_words[0] = self.iVal;
+//            self.iVal = 1;
+//        } else {
+    if (nwords < self.iVal)
                 self.iVal = nwords;
             //System.arraycopy(words, 0, new_words, 0, ival);
             memcpy(new_words, self.data, (size_t) self.iVal * sizeof(int64_t));
 
-        }
-        //free(self.data);
+//        }
+    //free(self.data);
         self.data = new_words;
-    }
+//    }
 }
 
 
@@ -1754,7 +1759,7 @@ static const int ROUND = 4;
 
 /** Do one the the 16 possible bit-wise operations of two BigIntegers. */
 + (void)setBitOp:(BigInteger *)result op:(int)op x:(BigInteger *)x y:(BigInteger *)y {
-    if ((y.data != nil) && (x.isSimple || x.iVal < y.iVal)) {
+    if ((y.data != nil) && (x.data == nil || x.iVal < y.iVal)) {
         BigInteger *temp = x;
         x = y;
         y = temp;
@@ -1763,15 +1768,15 @@ static const int ROUND = 4;
     int64_t xi;
     int64_t yi;
     int64_t xlen, ylen;
-    if (y.isSimple) {
-        yi = y.iVal;
+    if (y.data == nil) {
+        yi = 0;
         ylen = 1;
     }
     else {
         yi = y.data[0];
         ylen = y.iVal;
     }
-    if (x.isSimple) {
+    if (x.data == nil) {
         xi = x.iVal;
         xlen = 1;
     }
@@ -1781,6 +1786,9 @@ static const int ROUND = 4;
     }
     if (xlen > 1)
         [result realloc:(int) xlen];
+    if (result.data == nil) {
+        result.data = [BigInteger allocData:ylen];
+    }
     int64_t *w = result.data;
     int64_t i = 0;
     // Code for how to handle the remainder of x.
@@ -1949,13 +1957,14 @@ static const int ROUND = 4;
 }
 
 - (BOOL)isNegative {
-    return ((self.isSimple) ? ((int32_t)self.iVal) : ((int32_t)self.data[self.iVal - 1])) < 0;
+    if (self.iVal == 0) return NO;
+    return ((int32_t) self.data[self.iVal - 1]) < 0;//((self.isSimple) ? ((int32_t)self.iVal) : ((int32_t)self.data[self.iVal - 1])) < 0;
 }
 
 /** Return the logical (bit-wise) "and" of a BigInteger and an int64_t. */
 + (BigInteger *)and:(BigInteger *)x y:(int64_t)y {
-    if (x.isSimple)
-        return [BigInteger valueOf:x.iVal & y];
+//    if (x.isSimple)
+//        return [BigInteger valueOf:x.iVal & y];
     if (y >= 0) {
         if (x.iVal == 0) {
             return [BigInteger valueOf:0];
@@ -1972,10 +1981,10 @@ static const int ROUND = 4;
 
 /** Return the logical (bit-wise) "and" of two BigIntegers. */
 - (BigInteger *)and:(BigInteger *)y {
-    if (y.isSimple)
-        return [BigInteger and:self y:y.iVal];
-    else if (self.isSimple)
-        return [BigInteger and:y y:self.iVal];
+//    if (y.isSimple)
+//        return [BigInteger and:self y:y.iVal];
+//    else if (self.isSimple)
+//        return [BigInteger and:y y:self.iVal];
 
     BigInteger *x = self;
     if (self.iVal < y.iVal) {
@@ -2048,12 +2057,12 @@ static const int ROUND = 4;
 }
 
 + (BigInteger *)shift:(BigInteger *)x count:(int64_t)count {
-    if (x.isSimple) {
-        if (count <= 0)
-            return [BigInteger valueOf:(count > -32 ? x.iVal >> (-count) : x.iVal < 0 ? -1 : 0)];
-        if (count < 32)
-            return [BigInteger valueOf:((int64_t) x.iVal << count)];
-    }
+//    if (x.isSimple) {
+//        if (count <= 0)
+//            return [BigInteger valueOf:(count > -32 ? x.iVal >> (-count) : x.iVal < 0 ? -1 : 0)];
+//        if (count < 32)
+//            return [BigInteger valueOf:((int64_t) x.iVal << count)];
+//    }
     if (count == 0)
         return x;
     BigInteger *result = [[BigInteger alloc] init];
@@ -2071,34 +2080,34 @@ static const int ROUND = 4;
 
 - (void)set:(int64_t)y {
     int32_t i = (int32_t) y;
-    if ((int64_t) i == y) {
-        self.iVal = i;
-        self.data = nil;
-    }
-    else {
-        [self realloc:2];
+//    if ((int64_t) i == y) {
+//        self.iVal = i;
+//        self.data = nil;
+//    }
+//    else {
+    [self realloc:2];
         self.data[0] = (int32_t) i;
         self.data[1] = (int64_t) (y >> 32);
         self.iVal = 2;
-    }
+//    }
 }
 
 - (void)setShiftLeft:(BigInteger *)x count:(int)count {
     int64_t *xwords;
     int64_t xlen;
-    if (x.isSimple) {
-        if (count < 32) {
-            [self set:((long) x.iVal << count)];
-            return;
-        }
-        xwords = [BigInteger allocData:1];
-        xwords[0] = x.iVal;
-        xlen = 1;
-    }
-    else {
-        xwords = x.data;
+//    if (x.isSimple) {
+//        if (count < 32) {
+//            [self set:((long) x.iVal << count)];
+//            return;
+//        }
+//        xwords = [BigInteger allocData:1];
+//        xwords[0] = x.iVal;
+//        xlen = 1;
+//    }
+//    else {
+    xwords = x.data;
         xlen = x.iVal;
-    }
+//    }
     int word_count = count >> 5;
     count &= 31;
     int new_len = (int) (xlen + word_count);
@@ -2122,9 +2131,10 @@ static const int ROUND = 4;
 }
 
 - (void)setShiftRight:(BigInteger *)x count:(int)count {
-    if (x.isSimple)
-        [self set:count < 32 ? x.iVal >> count : x.iVal < 0 ? -1 : 0];
-    else if (count == 0) {
+//    if (x.isSimple)
+//        [self set:count < 32 ? x.iVal >> count : x.iVal < 0 ? -1 : 0];
+//    else
+    if (count == 0) {
         self.data = x.data;
         self.iVal = x.iVal;
     } else {
@@ -2135,7 +2145,7 @@ static const int ROUND = 4;
         if (d_len <= 0)
             [self set:neg ? -1 : 0];
         else {
-            if (self.isSimple || self.iVal < d_len)
+            if (self.data == nil || self.iVal < d_len)
                 [self realloc:d_len];
             [MPN rshift0:self.data x:x.data x_start:(int) word_count len:(int) d_len count:count];
             self.iVal = d_len;
@@ -2154,18 +2164,31 @@ static const int ROUND = 4;
     if ([self isZero])
         return -1;
 
-    if (self.isSimple)
-        return [MPN findLowestBit:self.iVal];
-    else
-        return [MPN findLowestBitInArr:self.data];
+//    if (self.isSimple)
+//        return [MPN findLowestBit:self.iVal];
+//    else
+    return [MPN findLowestBitInArr:self.data];
 }
 
 - (BOOL)isZero {
-    return (self.isSimple) && self.iVal == 0;
+    if (self.iVal == 0) {
+        return YES;
+    }
+    for (int i = 0; i < self.iVal; i++) {
+        if (self.data[i] != 0) return NO;
+    }
+    return YES;
+//    return (self.isSimple) && self.iVal == 0;
 }
 
 - (BOOL)isOne {
-    return (self.isSimple) && self.iVal == 1;
+    if (self.iVal == 0) return NO;
+    if ((int32_t) self.data[0] != 1) return NO;
+    for (int i = 1; i < self.iVal; i++) {
+        if (self.data[i] != 0) return NO;
+    }
+    return YES;
+//    return (self.isSimple) && self.iVal == 1;
 }
 
 

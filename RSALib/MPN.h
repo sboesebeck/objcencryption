@@ -52,7 +52,7 @@
 
 + (int64_t)gcd:(int64_t *)x y:(int64_t *)y len:(int)len;
 
-+ (int64_t)intLength:(int64_t)i;
++ (int)intLength:(int64_t)i;
 
-+ (int64_t)intLength:(int64_t *)words len:(int64_t)len;
++ (int)intLength:(int64_t *)words len:(int64_t)len;
 @end

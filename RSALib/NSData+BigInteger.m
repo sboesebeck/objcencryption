@@ -32,11 +32,11 @@
         BOOL skip = YES;
         for (int j = (int) (integer.iVal - 1); j >= 0; j--) {
             int64_t v = 0;
-            if (!integer.isSimple) {
-                v = integer.data[j];
-            } else {
-                v = integer.iVal;
-            }
+//            if (!integer.isSimple) {
+//                v = integer.data[j];
+//            } else {
+            v = integer.iVal;
+//            }
             if (v == 0 && skip) continue; //leading zeros
             int idx = 0;
             char val = (char) ((v >> 24) & 0xff);
@@ -69,7 +69,7 @@
                 skipBytes++;
             }
             [ret appendBytes:buffer length:(NSUInteger) (4 - skipBytes)];
-            if (integer.isSimple) break;
+//            if (integer.isSimple) break;
         }
 
 

@@ -43,11 +43,11 @@
             count++;
             int length = bits / 2;
             _bitLen = length * 2;
-            NSLog(@"%d => Creating p... with %d threads", count, self.threads);
+//            NSLog(@"%d => Creating p... with %d threads", count, self.threads);
             BigInteger *p = [BigInteger randomProbablePrime:length primeProbability:100 useThreads:self.threads];
-            NSLog(@"Found it: %@\n Creating q...", p);
+//            NSLog(@"Found it: %@\n Creating q...", p);
             BigInteger *q = [BigInteger randomProbablePrime:length primeProbability:100 useThreads:self.threads];
-            NSLog(@"Got q.. %@\nnow n...", q);
+//            NSLog(@"Got q.. %@\nnow n...", q);
             self.n = [p multiply:q];
             BigInteger *m = [[p subtract:[BigInteger valueOf:1]] multiply:[q subtract:[BigInteger valueOf:1]]];
             while (true) {
@@ -56,20 +56,19 @@
                     self.e = [self.e add:[BigInteger randomBigInt:bits]];
                 }
 //                NSLog(@"Got: e: %@ m: %@", self.e, m);
-                NSLog(@"%@", self);
+//                NSLog(@"%@", self);
                 @try {
                     self.d = [self.e modInverse:m];
-                    if ([self.d bitLength] > bits) {
+//                    if ([self.d bitLength] > bits) {
 //                        NSLog(@"Bitlength of d is too big? %d vs %d", [self.d bitLength], length);
-                        continue;
-                    }
-//                    if ([self.d isZero]) {
-//                        NSLog(@"%@ modinverse: %@ ====> 0!!!", self.e, m);
-//
+//                        continue;
 //                    }
+                    if ([self.d isZero]) {
+//                        NSLog(@"%@ modinverse: %@ ====> 0!!!", self.e, m);
+                    }
                     break;
                 } @catch (NSException *ex) {
-                    //ignoring... as it's expected
+//                   NSLog(@"Can't inverse %@ modinverse %@",self.e,m);
                 }
             }
 
@@ -82,7 +81,7 @@
                 _e = nil;
                 _n = nil;
             } else {
-                NSLog(@"done!");
+//                NSLog(@"done!");
             }
         }
     }

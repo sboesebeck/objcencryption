@@ -23,7 +23,7 @@
     * Otherwise, the first ival elements of words make the value
     * of this BigInteger, stored in little-endian order, 2's-complement form. */
 @property(nonatomic) int64_t iVal;
-@property(nonatomic, readonly) BOOL isSimple;
+//@property(nonatomic, readonly) BOOL isSimple;
 
 + (int64_t *)allocData:(int)size;
 
