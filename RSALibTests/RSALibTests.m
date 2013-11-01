@@ -10,6 +10,8 @@
 #include "BigInteger.h"
 #import "RSA.h"
 #import "NSData+HexDump.h"
+#import "NSData+MD5.h"
+#import "NSData+BigInteger.h"
 
 @interface RSALibTests : XCTestCase
 
@@ -57,12 +59,13 @@
 }
 
 - (void)testRandomBigInt {
-    BigInteger *int1 = [BigInteger randomBigInt:128];
-    BigInteger *int2 = [BigInteger valueOf:[int1 description] usingRadix:16];
-    if (int1.iVal != int2.iVal) {
-        NSLog(@"Something's wrong!");
-    }
-    XCTAssertTrue(int1.iVal == int2.iVal);
+    for (int i = 0; i < 512; i++) {
+        BigInteger *int1 = [BigInteger randomBigInt:128];
+        BigInteger *int2 = [BigInteger valueOf:[int1 description] usingRadix:16];
+        if (int1.iVal != int2.iVal) {
+            NSLog(@"Something's wrong!");
+        }
+        XCTAssertTrue(int1.iVal == int2.iVal);
 //    BOOL s1=int1.isSimple;
 //    BOOL s2=int2.isSimple;
 //    XCTAssertTrue(s1==s2);
@@ -70,34 +73,37 @@
 //        return;
 //    }
 
-    for (int i = 0; i < int1.iVal; i++) {
-        if ((int32_t) int1.data[i] != (int32_t) int2.data[i]) {
-            XCTFail(@"Error: %d != %d", int1.data[i], int2.data[i]);
+        for (int i = 0; i < int1.iVal; i++) {
+            if ((int32_t) int1.data[i] != (int32_t) int2.data[i]) {
+                XCTFail(@"Error: %d != %d", int1.data[i], int2.data[i]);
+            }
         }
     }
 
 }
 
 - (void)testRemainder {
-    BigInteger *int1 = [BigInteger randomBigInt:128];
-    BigInteger *add = [BigInteger valueOf:0];
-    for (int i = 1; i <= 17; i++) {
-        add = [add add:int1];
+    for (int i = 0; i < 512; i++) {
+        BigInteger *int1 = [BigInteger randomBigInt:128 + i];
+        BigInteger *add = [BigInteger valueOf:0];
+        for (int i = 1; i <= 17; i++) {
+            add = [add add:int1];
+        }
+        BigInteger *div = [add divideBy:int1];
+
+        XCTAssertTrue([[div description] isEqualToString:@"11"]);
+
+        BigInteger *int2 = [int1 subtract:[BigInteger valueOf:1]];
+        add = [add add:int2];
+
+        NSArray *res = [add divideAndRemainder:int1];
+        XCTAssertTrue(res.count == 2);
+        XCTAssertTrue([res[0] isEqual:div], @"Division is wrong %@", res[0]);
+        XCTAssertTrue([res[1] isEqual:int2], @"Remainder is wrong %@", res[1]);
+
+        BigInteger *rem = [add remainder:int1];
+        XCTAssertEqualObjects(rem, int2, @"REmainder is wrong %@", rem);
     }
-    BigInteger *div = [add divideBy:int1];
-
-    XCTAssertTrue([[div description] isEqualToString:@"11"]);
-
-    BigInteger *int2 = [int1 subtract:[BigInteger valueOf:1]];
-    add = [add add:int2];
-
-    NSArray *res = [add divideAndRemainder:int1];
-    XCTAssertTrue(res.count == 2);
-    XCTAssertTrue([res[0] isEqual:div], @"Division is wrong %@", res[0]);
-    XCTAssertTrue([res[1] isEqual:int2], @"Remainder is wrong %@", res[1]);
-
-    BigInteger *rem = [add remainder:int1];
-    XCTAssertEqualObjects(rem, int2, @"REmainder is wrong %@", rem);
 }
 
 - (void)testAdd {
@@ -106,7 +112,7 @@
 //    BigInteger *tst3=[tst1 subtract:tst2];
 
     BigInteger *int1 = [BigInteger randomBigInt:128];
-    for (int i = 1; i <= 64; i++) {
+    for (int i = 1; i <= 512; i++) {
         BigInteger *int2 = [BigInteger randomBigInt:120 + i];
         BigInteger *add = [int1 add:int2];
 //        NSLog(@"Adding %@ + %@ = %@",int1,int2,add);
@@ -121,7 +127,7 @@
 }
 
 - (void)testMultiplyDivide {
-    for (int i = 1; i <= 128; i++) {
+    for (int i = 1; i <= 512; i++) {
         for (int j = 0; j < 5; j++) {
 //        NSLog(@"Test no %d",i);
             BigInteger *int1 = [BigInteger randomBigInt:128 + i];
@@ -144,7 +150,7 @@
 
 
 - (void)testMultShift {
-    for (int i = 0; i < 64; i++) {
+    for (int i = 0; i < 512; i++) {
         BigInteger *int1 = [BigInteger randomBigInt:126 + i];
         BigInteger *int2 = [BigInteger valueOf:2];
         BigInteger *prod = [int1 multiply:int2];
@@ -154,7 +160,7 @@
 }
 
 - (void)testAddNegative {
-    for (int i = 0; i < 128; i++) {
+    for (int i = 0; i < 512; i++) {
         BigInteger *int1 = [BigInteger randomBigInt:128 + i];
         BigInteger *int2 = [BigInteger randomBigInt:100 + i];
         BigInteger *s1 = [int1 subtract:int2];
@@ -165,7 +171,7 @@
 }
 
 - (void)testMultNeg {
-    for (int i = 0; i < 68; i++) {
+    for (int i = 0; i < 512; i++) {
         BigInteger *int1 = [BigInteger randomBigInt:126 + i];
         BigInteger *int2 = [BigInteger randomBigInt:126 + i];
         BigInteger *m = [int1 multiply:int2];
@@ -192,7 +198,7 @@
 }
 
 - (void)testOrBig {
-    for (int i = 0; i < 68; i++) {
+    for (int i = 0; i < 512; i++) {
         BigInteger *int1 = [BigInteger randomBigInt:126 + i];
         BigInteger *int2 = [BigInteger valueOf:0];
         XCTAssertEqualObjects([int2 or:int1], int1);
@@ -209,7 +215,7 @@
 
     int c = [tst1 compareTo:tst2];
 
-    for (int i = 0; i < 130; i++) {
+    for (int i = 0; i < 512; i++) {
         BigInteger *int1 = [BigInteger randomBigInt:122 + i];
         NSLog(@"i is %d: %@", i, int1);
         BigInteger *toAdd = [BigInteger randomBigInt:16 + i];
@@ -263,7 +269,7 @@
 - (void)testModInvert {
     BigInteger *int1 = [BigInteger valueOf:@"E10271E7CFF5BD11EC53B5D5C6718E486A8154148488546192672A6E7D700D08ABB3D08E973DC612ACBFD12FF0AA2802B737C74EE599423D4789FD55EA0C080649567EBBA7F791F10C5CD90124D67157E0E0B69519BF1135A295E985137A67C0" usingRadix:16];
     BigInteger *int2 = [BigInteger valueOf:@"18FF86790796D5B318D6C11EAEF5AA20E8D9F4875513624ECA5C5A50D00387707D3D65C971B7F8FFDF5F1E47896C1080072B48FF793233D8EEB784A7C066513EF030146619F974AA6BB1DB564A1D23C67176CE588BC92F0A476C30B276D130E5" usingRadix:16];
-    BigInteger *d = [int1 modInverse:int2];
+    BigInteger *d = [int1 modInverse:int2]; //no Exception
 }
 
 - (void)testProbablePrime {
@@ -276,13 +282,14 @@
         BigInteger *idx = [BigInteger valueOf:2];
         BigInteger *end = [int1 shiftRight:1];
         end = [end subtract:[BigInteger valueOf:1]];
+        //could count to end and divide... takes way too long
     }
 
 }
 
 
 - (void)testEncryptionBigInteger {
-    for (int i = 0; i < 256; i += 17) {
+    for (int i = 0; i < 512; i += 19) {
         RSA *rsa = [[RSA alloc] initWithBitLen:126 + i andThreads:4];
         BigInteger *int1 = [BigInteger randomBigInt:rsa.bitLen - 2];
         NSLog(@"N.length: %d d: %d e: %d   int: %d", rsa.n.bitLength, rsa.d.bitLength, rsa.e.bitLength, int1.bitLength);
@@ -292,34 +299,65 @@
     }
 }
 
-- (void)testEncryptText {
+- (void)testStringConversion {
     NSString *clear = @"Cleartext to encrypt....";
-    for (int i = 0; i < 0; i++) {
+    for (int i = 0; i < 6; i++) {
         clear = [clear stringByAppendingString:clear];
     }
-    for (int i = 0; i < 256; i += 17) {
-        RSA *rsa = [[RSA alloc] initWithBitLen:126 + i andThreads:4];
-        BigInteger *int1 = [BigInteger randomBigInt:rsa.bitLen - 2];
-//        NSLog(@"N.length: %d d: %d e: %d   int: %d",rsa.n.bitLength,rsa.d.bitLength,rsa.e.bitLength,int1.bitLength);
+    for (int i = 126; i < 512; i += 17) {
         NSData *data = [clear dataUsingEncoding:NSUTF8StringEncoding];
-        NSData *enc = [rsa encrypt:data];
-        NSData *dec = [rsa decrypt:enc];
-        NSString *string = [data hexDump:NO];
-        NSString *stringEnc = [enc hexDump:NO];
-        NSString *stringDec = [dec hexDump:NO];
-        NSLog(@"Encrypted: %@", stringEnc);
+//        NSLog(@"Dat md5: %@", [data md5]);
+        NSArray *ints = [data getIntegersofBitLength:i];
+        NSData *ret = [NSData dataFromBigIntArray:ints];
 
-
-        XCTAssertEqualObjects(string, stringDec, @"decoding failed! '%@' != '%@'", string, stringDec);
-
-        if (![string isEqualToString:stringDec]) {
-            return;
-        }
-
-
-        NSString *decStr = [[NSString alloc] initWithData:dec encoding:NSUTF8StringEncoding];
-        XCTAssertEqualObjects(clear, decStr, @"decoding failed: %@ != %@", clear, decStr);
+//        NSLog(@"Ret md5: %@", [ret md5]);
+        XCTAssertEqualObjects([ret md5], [data md5], "Ret: %@  data %@", [ret md5], [data md5]);
     }
+
+    NSLog(@"Done string conversions");
+
+
+}
+
+- (void)testEncryptText {
+    NSString *clear = @"Cleartext to encrypt....";
+    for (int i = 0; i < 6; i++) {
+        clear = [clear stringByAppendingString:clear];
+    }
+    NSData *data = [clear dataUsingEncoding:NSUTF8StringEncoding];
+    for (int i = 0; i < 512; i += 17) {
+        NSLog(@"i=%d", i);
+        RSA *rsa = [[RSA alloc] initWithBitLen:i + 126 andThreads:1];
+        NSLog(@"got RSA bitLen %d", rsa.bitLen);
+
+        for (int t = 1; t < 10; t *= 2) {
+            rsa.threads = t;
+            NSDate *start = [NSDate date];
+            NSData *enc = [rsa encrypt:data];
+            NSData *dec = [rsa decrypt:enc];
+            double timePassed_ms = [start timeIntervalSinceNow] * -1000.0;
+            NSLog(@"En- and decryption of %d bytes with %d threads took %f ms in total", (int) data.length, t, timePassed_ms);
+
+            NSString *string = [data hexDump:NO];
+//            NSString *stringEnc = [enc hexDump:NO];
+            NSString *stringDec = [dec hexDump:NO];
+
+
+            XCTAssertEqualObjects(string, stringDec, @"decoding failed!");
+
+            if (![string isEqualToString:stringDec]) {
+                return;
+            }
+
+
+            NSString *decStr = [[NSString alloc] initWithData:dec encoding:NSUTF8StringEncoding];
+            XCTAssertEqualObjects(clear, decStr, @"decoding failed");
+        }
+    }
+}
+
+- (void)testCommunication {
+
 }
 
 

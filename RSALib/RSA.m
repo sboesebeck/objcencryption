@@ -195,7 +195,7 @@
 }
 
 - (NSData *)encrypt:(NSData *)data withModPow:mp andMod:mod {
-    __block NSArray *bi = [data getIntegersofBitLength:self.bitLen - 4];
+    __block NSArray *bi = [data getIntegersofBitLength:self.bitLen - 2];
     NSMutableArray *encryptedBis = [[NSMutableArray alloc] init];
     int threads = self.threads;
     int thrCount = bi.count / threads;
@@ -321,7 +321,7 @@
     NSMutableData *ret = [[NSMutableData alloc] init];
     for (int i = 0; i < decryptedBIs.count; i++) {
         NSMutableArray *d = decryptedBIs[i];
-        [ret appendData:[NSData dataFromBigIntArray:d withBitLength:self.bitLen - 4]];
+        [ret appendData:[NSData dataFromBigIntArray:d]];
     }
 //    NSLog(@"Created Data %@", [ret hexDump:NO]);
     return ret;

@@ -12,7 +12,7 @@
 
 + (NSData *)serializeInts:(NSArray *)bigInts;
 
-+ (NSData *)dataFromBigIntArray:(NSArray *)bigInts withBitLength:(int)bitLen;
++ (NSData *)dataFromBigIntArray:(NSArray *)bigInts;
 
 - (NSArray *)deSerializeInts;
 

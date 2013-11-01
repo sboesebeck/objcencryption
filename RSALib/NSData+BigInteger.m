@@ -21,7 +21,7 @@
 }
 
 
-+ (NSData *)dataFromBigIntArray:(NSArray *)bigInts withBitLength:(int)bitLen {
++ (NSData *)dataFromBigIntArray:(NSArray *)bigInts {
     char *buffer = malloc(sizeof(char) * 4); //4byte = 1int
     NSMutableData *ret = [[NSMutableData alloc] init];
     for (int i = 0; i < bigInts.count; i++) {
@@ -33,9 +33,9 @@
         for (int j = (int) (integer.iVal - 1); j >= 0; j--) {
             int64_t v = 0;
 //            if (!integer.isSimple) {
-//                v = integer.data[j];
+            v = integer.data[j];
 //            } else {
-            v = integer.iVal;
+//            v = integer.iVal;
 //            }
             if (v == 0 && skip) continue; //leading zeros
             int idx = 0;
@@ -94,13 +94,13 @@
 //    //padding?
 //    //
 //
-    bitLen -= 32;
-    int dataSize = (bitLen - 1) / 31; //bytes for this bitlength allowdd
+//    bitLen -= 32;
+    int dataSize = (bitLen - 1) / 32; //bytes for this bitlength allowdd
+    int numBis = self.length / dataSize / 4;
     if ((bitLen - 1) % 31 != 0) {
-        dataSize++;
+        numBis++;
     }
     int skip = 0;
-    int numBis = self.length / dataSize / 4;
     if (self.length % (dataSize * 4) != 0) {
         numBis++;
 
@@ -117,8 +117,8 @@
     NSRange range = NSMakeRange(0, self.length);
 
     [self getBytes:buffer range:range];
-    while (ret.count < numBis) {
-        //creating numBis integers
+//    while (ret.count < numBis) {
+    //creating numBis integers
         for (int loc = 0; loc < self.length; loc += (dataSize * 4)) {
             int64_t *numDat = [BigInteger allocData:dataSize];
             int numDatIdx = dataSize - 1;
@@ -180,7 +180,7 @@
         }
 
 
-    }
+//    }
     BigInteger *bi = [ret lastObject];
     if (skip > 0) {
 
