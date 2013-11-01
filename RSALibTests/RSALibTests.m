@@ -356,8 +356,31 @@
     }
 }
 
-- (void)testCommunication {
+- (void)testSigning {
+    //TODO implement
+}
 
+- (void)testCommunication {
+    RSA *serverKeys = [[RSA alloc] initWithBitLen:256 andThreads:3];
+    RSA *clientKeys = [[RSA alloc] initWithBitLen:256 andThreads:3];
+
+    NSData *clientPubKeyDat = [clientKeys publicKey];
+    NSData *serverPubKeyDat = [serverKeys publicKey];
+
+    //client gets Server PublicKey
+    RSA *serverKey = [[RSA alloc] init];
+    serverKey.publicKey = serverPubKeyDat;
+    //client encrypts his pubkey and sends it
+    NSData *encryptedPubKey = [serverKey encrypt:clientPubKeyDat];
+
+    //server gets encrypted pub key, decrypts it
+    NSData *decryptedClientKey = [serverKeys decrypt:encryptedPubKey];
+    //now there is the clients key...
+
+    RSA *clientKey = [[RSA alloc] init];
+    clientKey.publicKey = decryptedClientKey;
+
+    XCTAssertEqualObjects(clientKey.n, clientKeys.n);
 }
 
 
