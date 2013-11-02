@@ -195,7 +195,7 @@
 }
 
 - (NSData *)encrypt:(NSData *)data withModPow:mp andMod:mod {
-    __block NSArray *bi = [data getIntegersofBitLength:self.bitLen - 2];
+    __block NSArray *bi = [data getIntegersofBitLength:self.bitLen - 8]; //PAdding problem - prefixed. Might be a problem, when biginteger > 255 ints
     NSMutableArray *encryptedBis = [[NSMutableArray alloc] init];
     int threads = self.threads;
     int thrCount = bi.count / threads;

@@ -325,9 +325,9 @@
         clear = [clear stringByAppendingString:clear];
     }
     NSData *data = [clear dataUsingEncoding:NSUTF8StringEncoding];
-    for (int i = 0; i < 512; i += 17) {
+    for (int i = 0; i < 1024; i += 59) {
         NSLog(@"i=%d", i);
-        RSA *rsa = [[RSA alloc] initWithBitLen:i + 126 andThreads:1];
+        RSA *rsa = [[RSA alloc] initWithBitLen:i + 126 andThreads:4];
         NSLog(@"got RSA bitLen %d", rsa.bitLen);
 
         for (int t = 1; t < 10; t *= 2) {
@@ -346,6 +346,8 @@
             XCTAssertEqualObjects(string, stringDec, @"decoding failed!");
 
             if (![string isEqualToString:stringDec]) {
+                enc = [rsa encrypt:data];
+                dec = [rsa decrypt:enc];
                 return;
             }
 

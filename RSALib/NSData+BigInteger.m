@@ -90,7 +90,6 @@
     int skip = 0;
     if (self.length % (dataSize * 4) != 0) {
         numBis++;
-
     }
 
     NSMutableArray *ret = [[NSMutableArray alloc] initWithCapacity:(NSUInteger) numBis];
@@ -103,7 +102,7 @@
 //    while (ret.count < numBis) {
     //creating numBis integers
     for (int loc = 0; loc < self.length; loc += (dataSize * 4)) {
-        int numDatIdx =0;
+        int numDatIdx = 0;
 
         range.location = (NSUInteger) loc;
         if (loc + dataSize * 4 > self.length) {
