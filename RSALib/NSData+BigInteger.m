@@ -35,12 +35,8 @@
 //        NSLog(@"processing %@",integer);
         buffer[0] = buffer[1] = buffer[2] = buffer[3] = 0;
         //stepping through integers
-        if (prefix) {
-            if (!integer.data[0] == 0) {
-                NSLog(@"WARNING: prefix is set, but value differs!");
-            }
-        }
-        for (int j = (int) (integer.iVal - prefix ? 2 : 1); j >= 0; j--) {
+
+        for (int j = (int) (integer.iVal - (prefix ? 2 : 1)); j >= 0; j--) {
             int64_t v = 0;
             v = integer.data[j];
             int idx = 0;
@@ -86,7 +82,7 @@
 //
 //    bitLen -= 32;
     int dataSize = (bitLen - 1) / 32; //bytes for this bitlength allowdd
-    dataSize++; //PREFIXING
+
     int numBis = self.length / dataSize / 4;
     if ((bitLen - 1) % 31 != 0) {
         numBis++;
@@ -97,10 +93,6 @@
 
     }
 
-//    skip = self.length % sizeof (int64_t);
-
-
-//    NSLog(@"ints allowed %d, own key length %d Bit, number of BigIntegers %d => Length of self to decode %d byte", dataSize, bitLen, numBis, (int) self.length);
     NSMutableArray *ret = [[NSMutableArray alloc] initWithCapacity:(NSUInteger) numBis];
 
     char *buffer = malloc(self.length);
@@ -111,21 +103,22 @@
 //    while (ret.count < numBis) {
     //creating numBis integers
     for (int loc = 0; loc < self.length; loc += (dataSize * 4)) {
-        int64_t *numDat = [BigInteger allocData:dataSize + 1];
-
-        //prefixing all bis - to make 00000000 possible
-        int numDatIdx = dataSize - 1;
-        numDat[numDatIdx--] = dataSize; //prefix number of ints
+        int numDatIdx =0;
 
         range.location = (NSUInteger) loc;
         if (loc + dataSize * 4 > self.length) {
             range.length = self.length - loc;
-            numDatIdx = range.length / 4;
-            if (range.length % 4 == 0) numDatIdx--;
+            dataSize = range.length / 4;
         } else {
             range.length = (NSUInteger) dataSize * 4;
         }
 
+        int64_t *numDat = [BigInteger allocData:dataSize + 1];
+
+
+        //prefixing all bis - to make 00000000 possible
+        numDat[dataSize] = dataSize; //prefix number of ints
+        numDatIdx = dataSize - 1;
 
 //            NSLog(@"Got buffer %d, %d    %@", range.location, range.length, [[NSData dataWithBytes:(buffer + range.location) length:range.length] hexDump:NO]);
 
@@ -161,7 +154,7 @@
             skip = 0;
         }
 
-        BigInteger *bi = [[BigInteger alloc] initWithData:numDat iVal:dataSize];
+        BigInteger *bi = [[BigInteger alloc] initWithData:numDat iVal:dataSize + 1];
         if (numDatIdx > -1) {
             //need to skip bytes
             numDatIdx += 1;

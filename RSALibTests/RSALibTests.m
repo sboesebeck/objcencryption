@@ -361,23 +361,15 @@
     char *bytes = (char *) [BigInteger allocData:4];
     //to bigIntArray and back
     for (int l = 0; l < 100; l++) {
-        int len = 16;
+        int len = 16 + l;
         NSLog(@"Round %d - %d bytes", l, len);
 
         NSMutableData *dat = [[NSMutableData alloc] init];
         for (int i = 1; i <= len; i++) {
-//            bytes[0] = (char)([BigInteger nextRand] & 0xff);
-//            bytes[1] = (char)([BigInteger nextRand] & 0xff);
-//            if (i!=len-1) {
-//                bytes[2] = (char)([BigInteger nextRand] & 0xff);
-//                bytes[3] = (char)([BigInteger nextRand] & 0xff);
-//            } else {
-            bytes[0] = i * 4;
-            bytes[1] = i * 4 + 1;
-            bytes[2] = i * 4 + 2;
-            bytes[3] = i * 4 + 3;
-
-//            }
+            bytes[0] = (char) ([BigInteger nextRand] & 0xff);
+            bytes[1] = (char) ([BigInteger nextRand] & 0xff);
+            bytes[2] = (char) ([BigInteger nextRand] & 0xff);
+            bytes[3] = (char) ([BigInteger nextRand] & 0xff);
             [dat appendBytes:bytes length:4];
         }
 
