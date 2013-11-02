@@ -29,7 +29,7 @@
 
 + (BigInteger *)fromBytes:(NSData *)dat atOffset:(int *)offset;
 
-- (NSData *)bytes;
+- (NSData *)seralize;
 
 - (id)initWithData:(int64_t *)data iVal:(int64_t)size;
 
@@ -88,6 +88,8 @@
 + (BOOL)equals:(BigInteger *)x y:(BigInteger *)y;
 
 - (BOOL)isEqualTo:(id)other;
+
++ (int64_t)nextRand;
 
 - (id)initWithRandomBits:(int)numBits;
 

@@ -155,7 +155,7 @@ static const int ROUND = 4;
 }
 
 
-- (NSData *)bytes {
+- (NSData *)seralize {
     [self pack];
     NSMutableData *dat = [[NSMutableData alloc] init];
     char buffer[] = {0, 0, 0, 0};
@@ -1357,7 +1357,7 @@ static const int ROUND = 4;
 }
 
 
-+ (int64_t)nexRand {
++ (int64_t)nextRand {
     return arc4random();
 //    return rand();
 }
@@ -1381,7 +1381,7 @@ static const int ROUND = 4;
         }
         if (highbits > 0) {
             for (int64_t i = 0; i < highBitByteCount; i++) {
-                highBitBytes[i] = (unsigned char) ([BigInteger nexRand]) & 0xFF;
+                highBitBytes[i] = (unsigned char) ([BigInteger nextRand]) & 0xFF;
             }
             highbits = (((unsigned char) highBitBytes[(NSUInteger) (highBitByteCount - 1)]) & 0xFF) >> discardedBitCount;
             for (int64_t i = highBitByteCount - 2; i >= 0; i--)
@@ -1390,7 +1390,7 @@ static const int ROUND = 4;
         int64_t nwords = numBits / 32;
 
         while (highbits == 0 && nwords > 0) {
-            highbits = (uint64_t) [BigInteger nexRand];
+            highbits = (uint64_t) [BigInteger nextRand];
             --nwords;
         }
 //        if (nwords == 0 && highbits >= 0) {
@@ -1401,7 +1401,7 @@ static const int ROUND = 4;
             self.data = [BigInteger allocData:(int) self.iVal];
             self.data[nwords] = highbits;
             while (--nwords >= 0) {
-                self.data[nwords] = [BigInteger nexRand];
+                self.data[nwords] = [BigInteger nextRand];
             }
 //        }
         [self pack];

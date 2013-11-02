@@ -130,9 +130,9 @@
 - (NSData *)privateKey {
     NSMutableData *ret = [[NSMutableData alloc] init];
     BigInteger *bitLen = [BigInteger valueOf:self.bitLen];
-    [ret appendData:[bitLen bytes]];
-    [ret appendData:[self.n bytes]];
-    [ret appendData:[self.d bytes]];
+    [ret appendData:[bitLen seralize]];
+    [ret appendData:[self.n seralize]];
+    [ret appendData:[self.d seralize]];
     return ret;
 }
 
@@ -157,9 +157,9 @@
 - (NSData *)publicKey {
     NSMutableData *ret = [[NSMutableData alloc] init];
     BigInteger *bitLen = [BigInteger valueOf:self.bitLen];
-    [ret appendData:[bitLen bytes]];
-    [ret appendData:[self.n bytes]];
-    [ret appendData:[self.e bytes]];
+    [ret appendData:[bitLen seralize]];
+    [ret appendData:[self.n seralize]];
+    [ret appendData:[self.e seralize]];
     return ret;
 }
 
@@ -175,10 +175,10 @@
     NSMutableData *ret = [[NSMutableData alloc] init];
 
     BigInteger *r = [BigInteger valueOf:self.bitLen];
-    [ret appendData:[r bytes]];
-    [ret appendData:[self.n bytes]];
-    [ret appendData:[self.e bytes]];
-    [ret appendData:[self.d bytes]];
+    [ret appendData:[r seralize]];
+    [ret appendData:[self.n seralize]];
+    [ret appendData:[self.e seralize]];
+    [ret appendData:[self.d seralize]];
     return ret;
 }
 
@@ -346,7 +346,9 @@
 }
 
 - (BigInteger *)cryptBigInteger:(BigInteger *)message withModPow:mp andMod:mod {
-    return [message modPow:mp modulo:mod];
+    BigInteger *b = [message modPow:mp modulo:mod];
+    [b pack];
+    return b;
 }
 
 - (BigInteger *)decryptBigInteger:(BigInteger *)message {

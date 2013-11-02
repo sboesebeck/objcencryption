@@ -356,31 +356,90 @@
     }
 }
 
+
+- (void)testConversions {
+    char *bytes = (char *) [BigInteger allocData:4];
+    //to bigIntArray and back
+    for (int l = 0; l < 100; l++) {
+        int len = 16;
+        NSLog(@"Round %d - %d bytes", l, len);
+
+        NSMutableData *dat = [[NSMutableData alloc] init];
+        for (int i = 1; i <= len; i++) {
+//            bytes[0] = (char)([BigInteger nextRand] & 0xff);
+//            bytes[1] = (char)([BigInteger nextRand] & 0xff);
+//            if (i!=len-1) {
+//                bytes[2] = (char)([BigInteger nextRand] & 0xff);
+//                bytes[3] = (char)([BigInteger nextRand] & 0xff);
+//            } else {
+            bytes[0] = i * 4;
+            bytes[1] = i * 4 + 1;
+            bytes[2] = i * 4 + 2;
+            bytes[3] = i * 4 + 3;
+
+//            }
+            [dat appendBytes:bytes length:4];
+        }
+
+        NSArray *ints = [dat getIntegersofBitLength:128];
+
+        NSData *data = [NSData dataFromBigIntArray:ints];
+
+        NSString *dataHex = [data hexDump:NO];
+        NSLog(@"Data HEx: %@", dataHex);
+        NSString *origHex = [dat hexDump:NO];
+        NSLog(@"orig HEx: %@", origHex);
+        XCTAssertEqualObjects(dataHex, origHex);
+        if (![origHex isEqualToString:dataHex]) {
+            return;
+        }
+    }
+    free(bytes);
+}
+
 - (void)testSigning {
     //TODO implement
 }
 
 - (void)testCommunication {
-    RSA *serverKeys = [[RSA alloc] initWithBitLen:256 andThreads:3];
-    RSA *clientKeys = [[RSA alloc] initWithBitLen:256 andThreads:3];
+    RSA *serverKeys = [[RSA alloc] initWithBitLen:256 andThreads:1];
+    RSA *clientKeys = [[RSA alloc] initWithBitLen:256 andThreads:1];
 
     NSData *clientPubKeyDat = [clientKeys publicKey];
     NSData *serverPubKeyDat = [serverKeys publicKey];
 
     //client gets Server PublicKey
-    RSA *serverKey = [[RSA alloc] init];
-    serverKey.publicKey = serverPubKeyDat;
+    RSA *serverKeyAtClient = [[RSA alloc] init];
+    serverKeyAtClient.publicKey = serverPubKeyDat;
     //client encrypts his pubkey and sends it
-    NSData *encryptedPubKey = [serverKey encrypt:clientPubKeyDat];
+    NSData *encryptedPubKeyClient = [serverKeyAtClient encrypt:clientPubKeyDat];
 
     //server gets encrypted pub key, decrypts it
-    NSData *decryptedClientKey = [serverKeys decrypt:encryptedPubKey];
+    NSData *decryptedClientKey = [serverKeys decrypt:encryptedPubKeyClient];
     //now there is the clients key...
+    if (![[decryptedClientKey md5] isEqualToString:clientPubKeyDat.md5]) {
+        NSLog(@"orig MD5: %@", [clientPubKeyDat hexDump:NO]);
+        NSLog(@"dec  MD5: %@", [decryptedClientKey hexDump:NO]);
+        XCTFail(@"conversion byte array error");
+        return;
+    }
+    RSA *keyFromClient = [[RSA alloc] init];
+    keyFromClient.publicKey = decryptedClientKey;
+    if (![keyFromClient.n isEqual:clientKeys.n]) {
+        NSLog(@"ClientKey.n: %@", keyFromClient.n);
+        NSLog(@"Original  n: %@", clientKeys.n);
+        XCTAssertEqualObjects(keyFromClient.n, clientKeys.n, @"N is wrong!");
+        return;
+    }
 
-    RSA *clientKey = [[RSA alloc] init];
-    clientKey.publicKey = decryptedClientKey;
+    if (![keyFromClient.n isEqual:clientKeys.n]) {
+        NSLog(@"ClientKey.e: %@", keyFromClient.e);
+        NSLog(@"Original  e: %@", clientKeys.e);
+        XCTAssertEqualObjects(keyFromClient.e, clientKeys.e, @"E wrong!");
 
-    XCTAssertEqualObjects(clientKey.n, clientKeys.n);
+    }
+
+
 }
 
 

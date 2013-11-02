@@ -14,6 +14,8 @@
 
 + (NSData *)dataFromBigIntArray:(NSArray *)bigInts;
 
++ (NSData *)dataFromBigIntArray:(NSArray *)bigInts hasPrefix:(BOOL)prefix;
+
 - (NSArray *)deSerializeInts;
 
 - (NSArray *)getIntegersofBitLength:(int)bitLen;
