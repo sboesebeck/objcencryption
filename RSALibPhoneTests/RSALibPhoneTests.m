@@ -435,4 +435,12 @@
 }
 
 
+- (void)testRSAFromBytes {
+    RSA *r1 = [[RSA alloc] initWithBitLen:512];
+    NSData *r1Bytes = r1.bytes;
+    RSA *r2 = [RSA RSAFromBytes:r1Bytes];
+    XCTAssertEqualObjects(r1.description, r2.description);
+}
+
+
 @end

@@ -15,7 +15,6 @@
 		D46887761820409F00FCAFC8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D46887741820409F00FCAFC8 /* InfoPlist.strings */; };
 		D46887781820409F00FCAFC8 /* RSALibTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D46887771820409F00FCAFC8 /* RSALibTests.m */; };
 		D4688787182040B000FCAFC8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4688786182040B000FCAFC8 /* Foundation.framework */; };
-		D468878C182040B000FCAFC8 /* RSALibPhone.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D468878B182040B000FCAFC8 /* RSALibPhone.h */; };
 		D468878E182040B000FCAFC8 /* RSALibPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = D468878D182040B000FCAFC8 /* RSALibPhone.m */; };
 		D4688794182040B000FCAFC8 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D468876B1820409F00FCAFC8 /* XCTest.framework */; };
 		D4688795182040B000FCAFC8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4688786182040B000FCAFC8 /* Foundation.framework */; };
@@ -58,6 +57,12 @@
 		D46887D7182040BF00FCAFC8 /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = D46887B5182040BF00FCAFC8 /* NSData+MD5.m */; };
 		D46887D8182040BF00FCAFC8 /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = D46887B5182040BF00FCAFC8 /* NSData+MD5.m */; };
 		D46887D9182040BF00FCAFC8 /* NSData+MD5.h in Headers */ = {isa = PBXBuildFile; fileRef = D46887B6182040BF00FCAFC8 /* NSData+MD5.h */; };
+		D4F6F53B1826990300984625 /* BigInteger.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D46887AC182040BF00FCAFC8 /* BigInteger.h */; };
+		D4F6F53C1826990300984625 /* NSData+Base64.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D46887B0182040BF00FCAFC8 /* NSData+Base64.h */; };
+		D4F6F53D1826990300984625 /* NSData+HexDump.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D46887B2182040BF00FCAFC8 /* NSData+HexDump.h */; };
+		D4F6F53E1826990300984625 /* NSData+BigInteger.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D46887B4182040BF00FCAFC8 /* NSData+BigInteger.h */; };
+		D4F6F53F1826990300984625 /* NSData+MD5.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D46887B6182040BF00FCAFC8 /* NSData+MD5.h */; };
+		D4F6F5401826990300984625 /* RSALib.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D46887631820409F00FCAFC8 /* RSALib.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,7 +89,12 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				D468878C182040B000FCAFC8 /* RSALibPhone.h in CopyFiles */,
+				D4F6F53B1826990300984625 /* BigInteger.h in CopyFiles */,
+				D4F6F53C1826990300984625 /* NSData+Base64.h in CopyFiles */,
+				D4F6F53D1826990300984625 /* NSData+HexDump.h in CopyFiles */,
+				D4F6F53E1826990300984625 /* NSData+BigInteger.h in CopyFiles */,
+				D4F6F53F1826990300984625 /* NSData+MD5.h in CopyFiles */,
+				D4F6F5401826990300984625 /* RSALib.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,6 +138,12 @@
 		D46887B4182040BF00FCAFC8 /* NSData+BigInteger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+BigInteger.h"; sourceTree = "<group>"; };
 		D46887B5182040BF00FCAFC8 /* NSData+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+MD5.m"; sourceTree = "<group>"; };
 		D46887B6182040BF00FCAFC8 /* NSData+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+MD5.h"; sourceTree = "<group>"; };
+		D4F6F51D1826970C00984625 /* rsaLibTouch-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "rsaLibTouch-Prefix.pch"; sourceTree = "<group>"; };
+		D4F6F51E1826970C00984625 /* rsaLibTouch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rsaLibTouch.h; sourceTree = "<group>"; };
+		D4F6F5201826970C00984625 /* rsaLibTouch.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = rsaLibTouch.m; sourceTree = "<group>"; };
+		D4F6F52F1826970D00984625 /* rsaLibTouchTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "rsaLibTouchTests-Info.plist"; sourceTree = "<group>"; };
+		D4F6F5311826970D00984625 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D4F6F5331826970D00984625 /* rsaLibTouchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = rsaLibTouchTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +194,8 @@
 				D46887711820409F00FCAFC8 /* RSALibTests */,
 				D4688788182040B000FCAFC8 /* RSALibPhone */,
 				D468879B182040B000FCAFC8 /* RSALibPhoneTests */,
+				D4F6F51B1826970C00984625 /* rsaLibTouch */,
+				D4F6F52D1826970D00984625 /* rsaLibTouchTests */,
 				D46887591820409F00FCAFC8 /* Frameworks */,
 				D46887581820409F00FCAFC8 /* Products */,
 			);
@@ -298,6 +316,42 @@
 			children = (
 				D468879D182040B000FCAFC8 /* RSALibPhoneTests-Info.plist */,
 				D468879E182040B000FCAFC8 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D4F6F51B1826970C00984625 /* rsaLibTouch */ = {
+			isa = PBXGroup;
+			children = (
+				D4F6F51E1826970C00984625 /* rsaLibTouch.h */,
+				D4F6F5201826970C00984625 /* rsaLibTouch.m */,
+				D4F6F51C1826970C00984625 /* Supporting Files */,
+			);
+			path = rsaLibTouch;
+			sourceTree = "<group>";
+		};
+		D4F6F51C1826970C00984625 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D4F6F51D1826970C00984625 /* rsaLibTouch-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D4F6F52D1826970D00984625 /* rsaLibTouchTests */ = {
+			isa = PBXGroup;
+			children = (
+				D4F6F5331826970D00984625 /* rsaLibTouchTests.m */,
+				D4F6F52E1826970D00984625 /* Supporting Files */,
+			);
+			path = rsaLibTouchTests;
+			sourceTree = "<group>";
+		};
+		D4F6F52E1826970D00984625 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D4F6F52F1826970D00984625 /* rsaLibTouchTests-Info.plist */,
+				D4F6F5301826970D00984625 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -533,6 +587,14 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
+		D4F6F5301826970D00984625 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D4F6F5311826970D00984625 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -567,6 +629,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -599,6 +662,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				SDKROOT = macosx;
 			};
@@ -673,8 +737,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Debug;
 		};
@@ -689,6 +755,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
@@ -761,6 +828,7 @@
 				D468877D1820409F00FCAFC8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D468877E1820409F00FCAFC8 /* Build configuration list for PBXNativeTarget "RSALibTests" */ = {
 			isa = XCConfigurationList;
@@ -769,6 +837,7 @@
 				D46887801820409F00FCAFC8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D46887A3182040B000FCAFC8 /* Build configuration list for PBXNativeTarget "RSALibPhone" */ = {
 			isa = XCConfigurationList;
@@ -777,6 +846,7 @@
 				D46887A5182040B000FCAFC8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D46887A6182040B000FCAFC8 /* Build configuration list for PBXNativeTarget "RSALibPhoneTests" */ = {
 			isa = XCConfigurationList;
@@ -785,6 +855,7 @@
 				D46887A8182040B000FCAFC8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
