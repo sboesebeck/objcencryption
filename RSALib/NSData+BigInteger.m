@@ -49,32 +49,34 @@
         for (; j >= 0; j--) {
             int64_t v = integer.data[j];
             int idx = 0;
-            char val = (char) ((v >> 24) & 0xff);
+            char val;
             if (skip > 0) {
                 skip--;
             } else {
+                val= = (char) ((v >> 24) & 0xff);
                 buffer[idx++] = val;
             }
 
-            val = (char) ((v >> 16) & 0xff);
+            
             if (skip > 0) {
                 skip--;
             } else {
+                val = (char) ((v >> 16) & 0xff);
                 buffer[idx++] = val;
             }
 
-            val = (char) ((v >> 8) & 0xff);
             if (skip > 0) {
                 skip--;
             } else {
+                val = (char) ((v >> 8) & 0xff);
                 buffer[idx++] = val;
             }
 
-            val = (char) ((v) & 0xff);
             if (skip > 0) {
                 skip--;
             } else {
                 buffer[idx++] = val;
+                val = (char) ((v) & 0xff);
             }
 
             if (skipBytes > 4) {

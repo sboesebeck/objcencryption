@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>C3635181-EE6D-41DD-B192-4C0E41853E93</string>
+	<key>IDESourceControlProjectName</key>
+	<string>RSALib</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>E637B3C5-A946-4543-85CC-C9E147D2D6A8</key>
+		<string>file:///Volumes/devel/git/RSALib/</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>RSALib.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>E637B3C5-A946-4543-85CC-C9E147D2D6A8</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>file:///Volumes/devel/git/RSALib/</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>E637B3C5-A946-4543-85CC-C9E147D2D6A8</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>E637B3C5-A946-4543-85CC-C9E147D2D6A8</string>
+			<key>IDESourceControlWCCName</key>
+			<string>RSALib</string>
+		</dict>
+	</array>
+</dict>
+</plist>
