@@ -53,7 +53,7 @@
             if (skip > 0) {
                 skip--;
             } else {
-                val= = (char) ((v >> 24) & 0xff);
+                val = (char) ((v >> 24) & 0xff);
                 buffer[idx++] = val;
             }
 
@@ -75,8 +75,8 @@
             if (skip > 0) {
                 skip--;
             } else {
-                buffer[idx++] = val;
                 val = (char) ((v) & 0xff);
+                buffer[idx++] = val;
             }
 
             if (skipBytes > 4) {

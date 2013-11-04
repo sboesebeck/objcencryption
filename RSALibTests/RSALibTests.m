@@ -363,7 +363,7 @@
     char *bytes = (char *) [BigInteger allocData:4];
     //to bigIntArray and back
     for (int l = 0; l < 100; l++) {
-        int len = 16 + l;
+        int len = 7 + l;
         NSLog(@"Round %d - %d bytes", l, len);
 
         NSMutableData *dat = [[NSMutableData alloc] init];
@@ -396,8 +396,8 @@
 }
 
 - (void)testCommunication {
-    RSA *serverKeys = [[RSA alloc] initWithBitLen:256 andThreads:1];
-    RSA *clientKeys = [[RSA alloc] initWithBitLen:256 andThreads:1];
+    RSA *serverKeys = [[RSA alloc] initWithBitLen:2048 andThreads:3];
+    RSA *clientKeys = [[RSA alloc] initWithBitLen:512 andThreads:3];
 
     NSData *clientPubKeyDat = [clientKeys publicKey];
     NSData *serverPubKeyDat = [serverKeys publicKey];
