@@ -28,6 +28,8 @@
 
 - (id)initWithBitLen:(int)bits andThreads:(int)thr;
 
+- (id)initWithBitLen:(int)bits andThreads:(int)thr andProgressBlock:(void (^)(int))callbackBlock;
+
 - (id)initWithN:(BigInteger *)n d:(BigInteger *)d e:(BigInteger *)e bitLen:(int)len;
 
 + (id)RSAFromBytes:(NSData *)data;
@@ -38,7 +40,15 @@
 
 - (NSData *)encrypt:(NSData *)data;
 
+- (NSData *)encrypt:(NSData *)data progressCallback:(void (^)(int))callbackBlock;
+
+- (NSData *)encrypt:(NSData *)data withModPow:(id)mp andMod:(id)mod progressCallback:(void (^)(int))callbackBlock;
+
+- (NSData *)decrypt:(NSData *)data progressCallback:(void (^)(int))callbackBlock;
+
 - (NSData *)decrypt:(NSData *)data;
+
+- (NSData *)decrypt:(NSData *)data withModPow:(id)mp andMod:(id)mod progressCallback:(void (^)(int))callbackBlock;
 
 - (BigInteger *)encryptBigInteger:(BigInteger *)message;
 

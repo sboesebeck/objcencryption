@@ -478,5 +478,24 @@
 
 }
 
+- (void)testRsaLargeCallback {
+
+    void (^callback)(int) = ^(int prz) {
+        NSLog(@"Perzentage %d %%", prz);
+    };
+    RSA *rsa = [[RSA alloc] initWithBitLen:2048 andThreads:8 andProgressBlock:callback];
+
+    NSString *longTxt = @"abcdefghijklmopqurstuvwxyz";
+    for (int i = 0; i < 10; i++) {
+        longTxt = [longTxt stringByAppendingString:longTxt];
+    }
+
+    NSLog(@"\n\nEncryption");
+    NSData *enc = [rsa encrypt:[longTxt dataUsingEncoding:NSUTF8StringEncoding] progressCallback:callback];
+    NSLog(@"\n\nDecryption");
+    NSData *dec = [rsa decrypt:enc progressCallback:callback];
+
+}
+
 
 @end
