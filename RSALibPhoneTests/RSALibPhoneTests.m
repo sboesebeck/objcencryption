@@ -19,14 +19,12 @@
 
 @implementation RSALibPhoneTests
 
-- (void)setUp
-{
+- (void)setUp {
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
 }
 
-- (void)tearDown
-{
+- (void)tearDown {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
 }
@@ -361,7 +359,7 @@
     char *bytes = (char *) [BigInteger allocData:4];
     //to bigIntArray and back
     for (int l = 0; l < 100; l++) {
-        int len = 16 + l;
+        int len = 10 + l;
         NSLog(@"Round %d - %d bytes", l, len);
 
         NSMutableData *dat = [[NSMutableData alloc] init];
@@ -372,18 +370,19 @@
             bytes[3] = (char) ([BigInteger nextRand] & 0xff);
             [dat appendBytes:bytes length:4];
         }
+        for (int b = 0; b < 2248; b += 64) {
+            NSArray *ints = [dat getIntegersofBitLength:128 + b];
 
-        NSArray *ints = [dat getIntegersofBitLength:128];
+            NSData *data = [NSData dataFromBigIntArray:ints];
 
-        NSData *data = [NSData dataFromBigIntArray:ints];
-
-        NSString *dataHex = [data hexDump:NO];
-        NSLog(@"Data HEx: %@", dataHex);
-        NSString *origHex = [dat hexDump:NO];
-        NSLog(@"orig HEx: %@", origHex);
-        XCTAssertEqualObjects(dataHex, origHex);
-        if (![origHex isEqualToString:dataHex]) {
-            return;
+            NSString *dataHex = [data hexDump:NO];
+            NSString *origHex = [dat hexDump:NO];
+            XCTAssertEqualObjects(dataHex, origHex);
+            if (![origHex isEqualToString:dataHex]) {
+                NSLog(@"orig HEx: %@", origHex);
+                NSLog(@"Data HEx: %@", dataHex);
+                return;
+            }
         }
     }
     free(bytes);
@@ -442,5 +441,38 @@
     XCTAssertEqualObjects(r1.description, r2.description);
 }
 
+
+- (void)testEncryptLarge {
+    for (int r = 1; r <= 3; r++) {
+        int bits = r * 1024;
+        NSLog(@"Generating keys for round %d - bits: %d", r, bits);
+        RSA *rsa = [[RSA alloc] initWithBitLen:bits andThreads:4];
+        NSString *text = @"asdfg";
+        for (int i = 0; i < 10; i++) {
+            NSLog(@"Round %d", i + 1);
+            text = [text stringByAppendingFormat:@"...%d", i];
+            NSData *txtDat = [text dataUsingEncoding:NSUTF8StringEncoding];
+            NSArray *txtArr = [txtDat getIntegersofBitLength:bits - 8];
+            NSData *decodedData = [NSData dataFromBigIntArray:txtArr];
+            NSString *text2 = [[NSString alloc] initWithData:decodedData encoding:NSUTF8StringEncoding];
+            if (![text isEqualToString:text2]) {
+                NSLog(@"Text  : %@", text);
+                NSLog(@"Text2 : %@", text2);
+                NSLog(@"txtDat: %@", [txtDat hexDump:NO]);
+                NSLog(@"BigInt: %@", txtArr[0]);
+
+                txtArr = [txtDat getIntegersofBitLength:bits - 8];
+                decodedData = [NSData dataFromBigIntArray:txtArr];
+                XCTAssertEqualObjects(text, text2, "%@ != %@", text, text2);
+                return;
+            }
+            NSData *enc = [rsa encrypt:txtDat];
+            NSData *dec = [rsa decrypt:enc];
+            NSString *decText = [[NSString alloc] initWithData:dec encoding:NSUTF8StringEncoding];
+            XCTAssertEqualObjects(text, decText, "%@ != %@", text, decText);
+        }
+    }
+
+}
 
 @end

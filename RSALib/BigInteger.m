@@ -2248,21 +2248,11 @@ static const int ROUND = 4;
     NSMutableString *ret = [[NSMutableString alloc] init];
     int64_t *arc = self.data;
     int64_t arcCnt = self.iVal;
-    BOOL toFree = NO;
     if ([self isNegative]) {
         [ret appendString:@"-"];
         arc = [self negate].data;
     }
-    if (arc == nil) {
-        arc = [BigInteger allocData:1];
-        if ([self isNegative]) {
-            arc[0] = -self.iVal;
-        } else {
-            arc[0] = self.iVal;
-        }
-        toFree = YES;
-        arcCnt = 1;
-    }
+
     BOOL skip = YES;
     for (long i = arcCnt - 1; i >= 0; i--) {
 //    for (long i = 0; i<[arc count]; i++) {
@@ -2328,9 +2318,6 @@ static const int ROUND = 4;
         if (!skip)
             [ret appendString:c[idx]];
 
-    }
-    if (toFree) {
-        //free(arc);
     }
     return ret;
 }

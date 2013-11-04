@@ -35,27 +35,54 @@
 //        NSLog(@"processing %@",integer);
         buffer[0] = buffer[1] = buffer[2] = buffer[3] = 0;
         //stepping through integers
-
-        for (int j = (int) (integer.iVal - (prefix ? 2 : 1)); j >= 0; j--) {
-            int64_t v = 0;
-            v = integer.data[j];
+        int j = (int) (integer.iVal - (prefix ? 2 : 1));
+        int skipBytes = 0;
+        if (prefix) {
+            //read prefix, add bytes if not enough in BigInteger
+            int pr = (int) integer.data[integer.iVal - 1];
+            if (pr < (integer.iVal - 1) * 4) {
+                //too many 000
+                skipBytes = (int) ((integer.iVal - 1) * 4 - pr);
+            }
+        }
+        int skip = skipBytes;
+        for (; j >= 0; j--) {
+            int64_t v = integer.data[j];
             int idx = 0;
             char val = (char) ((v >> 24) & 0xff);
-            buffer[idx++] = val;
+            if (skip > 0) {
+                skip--;
+            } else {
+                buffer[idx++] = val;
+            }
 
             val = (char) ((v >> 16) & 0xff);
-            buffer[idx++] = val;
+            if (skip > 0) {
+                skip--;
+            } else {
+                buffer[idx++] = val;
+            }
 
             val = (char) ((v >> 8) & 0xff);
-            buffer[idx++] = val;
+            if (skip > 0) {
+                skip--;
+            } else {
+                buffer[idx++] = val;
+            }
 
             val = (char) ((v) & 0xff);
-            buffer[idx++] = val;
+            if (skip > 0) {
+                skip--;
+            } else {
+                buffer[idx++] = val;
+            }
 
-//            if (v==0) {
-//                NSLog(@"null value"); //TODO: need to check this - some null values are not good!
-//            }
-            [ret appendBytes:buffer length:(NSUInteger) (4)];
+            if (skipBytes > 4) {
+                skipBytes = skipBytes - 4;
+            } else {
+                [ret appendBytes:buffer length:(NSUInteger) (4 - skipBytes)];
+                skipBytes = 0;
+            }
         }
 
 
@@ -109,6 +136,9 @@
         if (loc + dataSize * 4 > self.length) {
             range.length = self.length - loc;
             dataSize = range.length / 4;
+            if (range.length % 4 != 0) {
+                dataSize++;
+            }
         } else {
             range.length = (NSUInteger) dataSize * 4;
         }
@@ -117,7 +147,7 @@
 
 
         //prefixing all bis - to make 00000000 possible
-        numDat[dataSize] = dataSize; //prefix number of ints
+        numDat[dataSize] = dataSize * 4; //prefix number of bytes
         numDatIdx = dataSize - 1;
 
 //            NSLog(@"Got buffer %d, %d    %@", range.location, range.length, [[NSData dataWithBytes:(buffer + range.location) length:range.length] hexDump:NO]);
@@ -171,14 +201,27 @@
 
 
 //    }
-    BigInteger *bi = [ret lastObject];
     if (skip > 0) {
-
+        BigInteger *bi = [ret lastObject];
         [ret removeLastObject];
+        //remove prefix :/
+        int64_t len = bi.data[bi.iVal - 1];
+        len = len - skip / 8;
+        bi.data[bi.iVal - 1] = 0;
+
         if (![bi isZero]) {
             bi = [bi shiftRight:skip];
 //            bi=[bi or:[BigInteger valueOf:last]];
             [bi pack];
+            int64_t *dat = [BigInteger allocData:(int) (bi.iVal + 1)];
+            dat[bi.iVal] = len;
+
+            for (int i = (int) (bi.iVal - 1); i >= 0; i--) {
+                dat[i] = bi.data[i];
+            }
+            bi.data = dat;
+            bi.iVal += 1;
+
             if (![bi isZero])
                 [ret addObject:bi];
         }
