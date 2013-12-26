@@ -42,49 +42,42 @@
     if (self) {
         self.threads = thr;
         self.d = [BigInteger valueOf:0];
-//        int count = 0;
+
         int prz = 0;
         while ([self.d isZero]) {
             if (callbackBlock != nil) callbackBlock(prz);
-//            count++;
+
             int length = bits / 2;
             _bitLen = length * 2;
-//            NSLog(@"%d => Creating p... with %d threads", count, self.threads);
+
             BigInteger *p = [BigInteger randomProbablePrime:length primeProbability:100 useThreads:self.threads];
             prz += 20;
             if (callbackBlock != nil) callbackBlock(prz);
 
-//            NSLog(@"Found it: %@\n Creating q...", p);
+
             BigInteger *q = [BigInteger randomProbablePrime:length primeProbability:100 useThreads:self.threads];
             prz += 20;
             if (callbackBlock != nil) callbackBlock(prz);
-//            NSLog(@"Got q.. %@\nnow n...", q);
+
             self.n = [p multiply:q];
-            BigInteger *m = [[p subtract:[BigInteger valueOf:1]] multiply:[q subtract:[BigInteger valueOf:1]]];
+            BigInteger *m = [[p subtract:[[BigInteger alloc] initWith:1]] multiply:[q subtract:[[BigInteger alloc] initWith:1]]];
             while (true) {
-                self.e = [BigInteger randomBigInt:bits];
-                prz++;
-                if (callbackBlock != nil) callbackBlock(prz);
-                while ([[m gcd:self.e] intValue] > 1) {
-                    self.e = [self.e add:[BigInteger randomBigInt:bits]];
-                }
-                if (callbackBlock != nil) callbackBlock(++prz);
-//                NSLog(@"Got: e: %@ m: %@", self.e, m);
-//                NSLog(@"%@", self);
-                @try {
-                    self.d = [self.e modInverse:m];
+                @autoreleasepool {
+                    self.e = [BigInteger randomBigInt:bits];
+                    prz++;
+                    if (callbackBlock != nil) callbackBlock(prz);
+                    while ([[m gcd:self.e] intValue] > 1) {
+                        self.e = [self.e add:[BigInteger randomBigInt:bits]];
+                    }
                     if (callbackBlock != nil) callbackBlock(++prz);
-//                    if ([self.d bitLength] > bits) {
-//                        NSLog(@"Bitlength of d is too big? %d vs %d", [self.d bitLength], length);
-//                        continue;
-//                    }
-//                    if ([self.d isZero]) {
-//                        NSLog(@"%@ modinverse: %@ ====> 0!!!", self.e, m);
-//                    }
-                    break;
-                } @catch (NSException *ex) {
-//                   NSLog(@"Can't inverse %@ modinverse %@",self.e,m);
-                    prz -= 10;
+                    @try {
+                        self.d = [self.e modInverse:m];
+                        if (callbackBlock != nil) callbackBlock(++prz);
+                        break;
+                    } @catch (NSException *ex) {
+//                        NSLog(@"Exception...");
+                        prz -= 10;
+                    }
                 }
             }
 
@@ -93,7 +86,7 @@
             BigInteger *tst = [BigInteger randomBigInt:length - 1];
             if (![[self decryptBigInteger:[self encryptBigInteger:tst]] isEqualTo:tst]) {
 //                NSLog(@"Decryption test failed - retrying");
-                _d = [BigInteger valueOf:0];
+                _d = [[BigInteger alloc] initWith:0];
                 _e = nil;
                 _n = nil;
                 prz -= 20;
@@ -147,7 +140,7 @@
 
 - (NSData *)privateKey {
     NSMutableData *ret = [[NSMutableData alloc] init];
-    BigInteger *bitLen = [BigInteger valueOf:self.bitLen];
+    BigInteger *bitLen = [[BigInteger alloc] initWith:self.bitLen];
     [ret appendData:[bitLen seralize]];
     [ret appendData:[self.n seralize]];
     [ret appendData:[self.d seralize]];
@@ -174,7 +167,7 @@
 
 - (NSData *)publicKey {
     NSMutableData *ret = [[NSMutableData alloc] init];
-    BigInteger *bitLen = [BigInteger valueOf:self.bitLen];
+    BigInteger *bitLen = [[BigInteger alloc] initWith:self.bitLen];
     [ret appendData:[bitLen seralize]];
     [ret appendData:[self.n seralize]];
     [ret appendData:[self.e seralize]];
@@ -192,7 +185,7 @@
 - (NSData *)bytes {
     NSMutableData *ret = [[NSMutableData alloc] init];
 
-    BigInteger *r = [BigInteger valueOf:self.bitLen];
+    BigInteger *r = [[BigInteger alloc] initWith:self.bitLen];
     [ret appendData:[r seralize]];
     [ret appendData:[self.n seralize]];
     [ret appendData:[self.e seralize]];
@@ -230,10 +223,7 @@
     int rest = bi.count % threads;
 
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-//    NSLog(@"size %d,  BIs per thread %d, rest %d",bi.count,thrCount,rest);
     if (bi.count < threads) {
-        //less then one per thread???
-//        NSLog(@"not enough data (%d) for threads %d ",bi.count,self.threads);
         rest = 0;
         threads = bi.count;
         thrCount = 1;
@@ -244,21 +234,18 @@
         [encryptedBis addObject:thrDat];
 
         dispatch_block_t block = (dispatch_block_t) ^{
-//                NSLog(@"Processing");
             for (int i = t * thrCount; i < (t + 1) * thrCount; i++) {
-//                    NSLog(@"... %d", i);
-                BigInteger *enc = [self cryptBigInteger:bi[i] withModPow:mp andMod:mod];
-                progress++;
-                if (callbackBlock != nil) callbackBlock(progress * 90 / bi.count);
-//                    NSLog(@"Encrypting: %@",bi[i]);
-                [thrDat addObject:enc];
+                @autoreleasepool {
+                    BigInteger *enc = [self cryptBigInteger:bi[i] withModPow:mp andMod:mod];
+                    progress++;
+                    if (callbackBlock != nil) callbackBlock(progress * 90 / bi.count);
+                    [thrDat addObject:enc];
+                }
             }
             dispatch_semaphore_signal(semaphore);
-//                NSLog(@"Finished");
-
         };
 
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, NULL), block);
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, NULL), block);
 
 
     }
@@ -269,16 +256,13 @@
     //process "rest"
     for (int i = 0; i < rest; i++) {
         BigInteger *enc = [self encryptBigInteger:bi[(NSUInteger) (threads * thrCount + i)]];
-//        NSLog(@"Processing in main %d: %@ => %@", i, bi[threads * thrCount + i], enc);
         if (callbackBlock != nil) callbackBlock(progress * 90 / bi.count);
         [thrDat addObject:enc];
 
     }
 
     for (int i = 0; i < threads; i++) {
-//        NSLog(@"Waiting for threads to finish");
         dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-//        NSLog(@"=>done");
     }
     NSMutableData *ret = [[NSMutableData alloc] init];
     if (callbackBlock != nil) callbackBlock(progress * 90 / bi.count);
@@ -287,7 +271,7 @@
         [ret appendData:[NSData serializeInts:d]];
     }
     if (callbackBlock != nil) callbackBlock(100);
-//    NSLog(@"Created Data %@", [ret hexDump:NO]);
+    thrDat = nil;
     return ret;
 }
 
@@ -313,11 +297,9 @@
     int rest = bi.count % threads;
 
     __block int progress = 0;
-//    NSLog(@"size %d,  BIs per thread %d, rest %d",bi.count,thrCount,rest);
+
 
     if (bi.count < threads) {
-        //less then one per thread???
-//        NSLog(@"No threadding - not enough data");
         rest = 0;
         threads = bi.count;
         thrCount = 1;
@@ -329,20 +311,17 @@
         [decryptedBIs addObject:thrDat];
 
         dispatch_block_t block = (dispatch_block_t) ^{
-//            NSLog(@"Processing");
             for (int i = t * thrCount; i < (t + 1) * thrCount; i++) {
-//                NSLog(@"... %d", i);
                 BigInteger *enc = [self cryptBigInteger:bi[i] withModPow:mp andMod:mod];
                 progress++;
                 if (callbackBlock != nil) callbackBlock(100 * progress / bi.count);
                 [thrDat addObject:enc];
             }
             dispatch_semaphore_signal(semaphore);
-//            NSLog(@"Finished");
 
         };
 
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, (unsigned long) NULL), block);
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, (unsigned long) NULL), block);
 
     }
 
@@ -369,17 +348,8 @@
         [ret appendData:[NSData dataFromBigIntArray:d]];
     }
     if (callbackBlock != nil) callbackBlock(100);
-//    NSLog(@"Created Data %@", [ret hexDump:NO]);
+    thrDat = nil;
     return ret;
-//    NSArray *bi = [data deSerializeInts];
-//    NSMutableArray *decryptedBis = [[NSMutableArray alloc] init];
-//
-//
-//    for (int i = 0; i < bi.count; i++) {
-//        BigInteger *dec = [self decryptBigInteger:bi[i]];
-//        [decryptedBis addObject:dec];
-//    }
-//    return [NSData dataFromBigIntArray:decryptedBis withBitLength:self.bitLen-1];
 }
 
 - (BigInteger *)encryptBigInteger:(BigInteger *)message {
@@ -387,7 +357,6 @@
         @throw [NSException exceptionWithName:@"IllegalArgument" reason:@"No public key" userInfo:nil];
 
     }
-//    return [message modPow:self.e modulo:self.n];
     return [self cryptBigInteger:message withModPow:self.e andMod:self.n];
 }
 

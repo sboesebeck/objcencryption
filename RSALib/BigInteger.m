@@ -87,11 +87,6 @@ static int primes[] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43,
 /*Primes*/       5393, 5399, 5407, 5413, 5417, 5419, 5431, 5437, 5441, 5443,
 /*Primes*/       5449, 5471, 5477, 5479, 5483, 5501, 5503, 5507, 5519, 5521, -1};
 
-static BigInteger *zero;
-static BigInteger *one;
-static BigInteger *two;
-static BigInteger *ten;
-
 //int64_t bitLength=0;
 //int64_t certainty=100;
 
@@ -102,6 +97,13 @@ static const int FLOOR = 1;
 static const int CEILING = 2;
 static const int TRUNCATE = 3;
 static const int ROUND = 4;
+
+static int64_t instances = 0;
+static int64_t dealloc = 0;
+
++ (int64_t)getDealloc {
+    return dealloc;
+}
 //
 //
 //- (BOOL)isSimple {
@@ -109,19 +111,25 @@ static const int ROUND = 4;
 //}
 
 - (void)setData:(int64_t *)data {
-    if (_data != nil) {
-//        NSLog(@"Resetting -> Deallocating %x, iVal %d, sz=%d", _data,_iVal,_iVal* sizeof(int32_t));
-        free(_data);
-    }
+//    if (_data) {
+//        NSLog(@"Resetting -> Deallocating %x, iVal %lld, sz=%lld", _data,_iVal,_iVal* sizeof(int32_t));
+    free(_data);
+//    }
     _data = data;
 }
 
 - (void)dealloc {
-    if (_data != nil) {
-//        NSLog(@"Deallocating %x iVal=%d  sz=%d", _data,_iVal,_iVal* sizeof(int32_t));
-        free(_data);
-        _data = nil;
-    }
+//    if (_data) {
+//       NSLog(@"Deallocating iVal=%lld  sz=%lld", _iVal,_iVal* sizeof(int32_t));
+    free(_data);
+    _data = nil;
+    dealloc++;
+//    } else {
+//        NSLog(@"Deallocating nil object");
+//        free(_data);
+//    }
+
+
 }
 
 + (int64_t *)allocData:(int)size {
@@ -130,7 +138,7 @@ static const int ROUND = 4;
     for (int64_t i = 0; i < size; i++) {
         ptr[i] = 0;
     }
-//    NSLog(@"Allocated: %x size: %d iVal: %d",ptr,sz,size);
+//    NSLog(@"Allocated: %x size: %zu iVal: %d",ptr,sz,size);
     return ptr;
 }
 
@@ -151,6 +159,7 @@ static const int ROUND = 4;
     }
     *offset = *offset + length + sizeT;
     BigInteger *ret = [[BigInteger alloc] initWithData:nums iVal:length / sizeT];
+    nums = nil;
     return ret;
 }
 
@@ -228,6 +237,7 @@ static const int ROUND = 4;
 - (id)initWithData:(int64_t *)data iVal:(int64_t)size {
     self = [super init];
     if (self) {
+        instances++;
         BOOL isZero = YES;
         for (int64_t i = 0; i < size; i++) {
             if (data[i] != 0) {
@@ -242,6 +252,7 @@ static const int ROUND = 4;
         if (size == 0 || isZero) {
             self.iVal = 0;
             self.data = nil;
+            NSLog(@"WARNING: data with zeroes - need to be freed by caller!");
         } else {
             self.data = data;
             self.iVal = size;
@@ -258,6 +269,7 @@ static const int ROUND = 4;
         self.data = [BigInteger allocData:1];
         self.data[0] = value;
         self.iVal = 1;
+        instances++;
     }
 
     return self;
@@ -271,15 +283,12 @@ static const int ROUND = 4;
 
 + (BigInteger *)bigIntegerWithBigInteger:(BigInteger *)b {
     BigInteger *ret = [[BigInteger alloc] init];
-//    if ([b isSimple]) {
-//        ret.iVal = b.iVal;
-//        ret.data = nil;
-//    } else {
-    ret.data = (int64_t *) [BigInteger allocData:(int) b.iVal];
-        memcpy(ret.data, b.data, (size_t) b.iVal * (sizeof(int64_t)));
-        ret.iVal = b.iVal;
-//    }
 
+    ret.data = (int64_t *) [BigInteger allocData:(int) b.iVal];
+    int64_t *d = ret.data;
+    memcpy(d, b.data, (size_t) b.iVal * (sizeof(int64_t)));
+    ret.iVal = b.iVal;
+    d = nil;
     return ret;
 }
 
@@ -288,7 +297,11 @@ static const int ROUND = 4;
     if (x < 0) {
         xNegative = YES;
         if (x == LONG_MIN) {
-            [BigInteger divideBig:[BigInteger valueOf:x] by:[BigInteger valueOf:y] quotient:quotient remainder:remainder usingRoundingMode:rounding_mode];
+            [BigInteger divideBig:[[BigInteger alloc] initWith:x]
+                               by:[[BigInteger alloc] initWith:y]
+                         quotient:quotient
+                        remainder:remainder
+                usingRoundingMode:rounding_mode];
             return;
         }
         x = -x;
@@ -306,7 +319,11 @@ static const int ROUND = 4;
                     [remainder set:x];
             }
             else
-                [BigInteger divideBig:[BigInteger valueOf:x] by:[BigInteger valueOf:y] quotient:quotient remainder:remainder usingRoundingMode:rounding_mode];
+                [BigInteger divideBig:[[BigInteger alloc] initWith:x]
+                                   by:[[BigInteger alloc] initWith:y]
+                             quotient:quotient
+                            remainder:remainder
+                    usingRoundingMode:rounding_mode];
             return;
         }
         y = -y;
@@ -381,16 +398,11 @@ static const int ROUND = 4;
  */
 - (void)getAbsolute:(int64_t *)words length:(int)wlen {
     int len;
-//    if (self.isSimple) {
-//        len = 1;
-//        words[0] = self.iVal;
-//    }
-//    else {
-    len = (int) self.iVal;
-        for (int i = len; --i >= 0;)
-            words[i] = self.data[i];
 
-//    }
+    len = (int) self.iVal;
+    for (int i = len; --i >= 0;)
+        words[i] = self.data[i];
+
     if ((int32_t) words[len - 1] < 0)
         [BigInteger negate:words src:words len:len];
     for (int i = wlen; --i > len;)
@@ -406,17 +418,6 @@ static const int ROUND = 4;
     * @param rounding_mode one of FLOOR, CEILING, TRUNCATE, or ROUND.
     */
 + (void)divideBig:(BigInteger *)x by:(BigInteger *)y quotient:(BigInteger *)quotient remainder:(BigInteger *)remainder usingRoundingMode:(int)rounding_mode {
-//    NSLog(@"Dividing...");
-//    if ((x.isSimple || x.iVal <= 2)
-//            && (y.isSimple || y.iVal <= 2)) {
-//        int64_t x_l = [x longValue];
-//        int64_t y_l = [y longValue];
-//        if (x_l != LONG_MIN && y_l != LONG_MIN) {
-//            [BigInteger divide:x_l by:y_l quotient:quotient remainder:remainder usingRoundingMode:rounding_mode];
-//            return;
-//        }
-//    }
-
     if ([x isEqualTo:y]) {
         if (remainder != nil) {
             remainder.data = nil;
@@ -433,13 +434,12 @@ static const int ROUND = 4;
     BOOL yNegative = [y isNegative];
     BOOL qNegative = xNegative ^ yNegative;
 
-    int ylen = (int) y.iVal; //((y.isSimple) ? 1 : y.iVal);
+    int ylen = (int) y.iVal;
     int64_t *ywords = [BigInteger allocData:ylen + 1];
     [y getAbsolute:ywords length:ylen];
     while (ylen > 1 && ywords[ylen - 1] == 0) ylen--;
 
-
-    int xlen = (int) x.iVal; //((x.isSimple) ? 1 : x.iVal);
+    int xlen = (int) x.iVal;
     int64_t *xwords = [BigInteger allocData:(xlen + 2)];
     [x getAbsolute:xwords length:xlen];
     while (xlen > 1 && xwords[xlen - 1] == 0) xlen--;
@@ -447,23 +447,21 @@ static const int ROUND = 4;
     int qlen, rlen;
 
     int cmpval = [MPN cmp:xwords xlen:xlen y:ywords ylen:ylen];
-    if (cmpval < 0)  // abs(x) < abs(y)
-    { // quotient = 0;  remainder = num.
+    if (cmpval < 0) { // abs(x) < abs(y)
+        // quotient = 0;  remainder = num.
         int64_t *rwords = xwords;
         xwords = ywords;
         ywords = rwords;
         rlen = xlen;
         qlen = 1;
         xwords[0] = 0;
-    }
-    else if (cmpval == 0)  // abs(x) == abs(y)
-    {
+        rwords = nil;
+    } else if (cmpval == 0) { // abs(x) == abs(y)
         xwords[0] = 1;
         qlen = 1;  // quotient = 1
         ywords[0] = 0;
         rlen = 1;  // remainder = 0;
-    }
-    else if (ylen == 1) {
+    } else if (ylen == 1) {
         qlen = xlen;
         // Need to leave room for a word of leading zeros if dividing by 1
         // and the dividend has the high bit set.  It might be safe to
@@ -473,9 +471,7 @@ static const int ROUND = 4;
             qlen++;
         rlen = 1;
         ywords[0] = [MPN divmod_1:xwords divident:xwords len:xlen divisor:ywords[0]];
-    }
-    else  // abs(x) > abs(y)
-    {
+    } else { // abs(x) > abs(y)
         // Normalize the denominator, i.e. make its most significant bit set by
         // shifting it normalization_steps bits to the left.  Also shift the
         // numerator the same number of steps (to keep the quotient the same!).
@@ -513,7 +509,7 @@ static const int ROUND = 4;
     // Now the quotient is in xwords, and the remainder is in ywords.
 
     BOOL add_one = NO;
-    BigInteger *tmp;
+    BigInteger *tmp = nil;
     if (rlen > 1 || ywords[0] != 0) { // Non-zero remainder i.e. in-exact quotient.
         switch (rounding_mode) {
             case TRUNCATE:
@@ -535,6 +531,7 @@ static const int ROUND = 4;
                 if (yNegative)
                     cmp = -cmp;
                 add_one = (cmp == 1) || (cmp == 0 && (xwords[0] & 1) != 0);
+                tmp = nil;
             default:
                 break;
         }
@@ -546,9 +543,11 @@ static const int ROUND = 4;
                 [quotient setInvert];
             else
                 [quotient setNegative];
-        }
-        else if (add_one)
+        } else if (add_one)
             [quotient setAdd:1];
+    } else {
+        free(xwords);
+        xwords = nil;
     }
 
     if (remainder != nil) {
@@ -558,24 +557,18 @@ static const int ROUND = 4;
         if (add_one) {
             // Subtract the remainder from Y:
             // abs(R) = abs(Y) - abs(orig_rem) = -(abs(orig_rem) - abs(Y)).
-            BigInteger *tmp;
-//            if (y.isSimple) {
-//                tmp = remainder;
-//                [tmp set:yNegative ? ywords[0] + y.iVal : ywords[0] - y.iVal];
-//            }
-//            else
             tmp = [BigInteger add:remainder y:y k:yNegative ? 1 : -1];
-            // Now tmp <= 0.
-            // In this case, abs(Q) = 1 + floor(abs(X)/abs(Y)).
-            // Hence, abs(Q*Y) > abs(X).
-            // So sign(remainder) = -sign(X).
+
             if (xNegative)
                 [remainder setNegative:tmp];
             else {
                 remainder.iVal = tmp.iVal;
                 remainder.data = (int64_t *) [BigInteger allocData:(int) tmp.iVal];
-                memcpy(remainder.data, tmp.data, (size_t) tmp.iVal * (sizeof(int64_t)));
+                int64_t *d = remainder.data;
+                memcpy(d, tmp.data, (size_t) tmp.iVal * (sizeof(int64_t)));
+                d = nil;
             }
+            tmp = nil;
         }
         else {
             // If !add_one, then: abs(Q*Y) <= abs(X).
@@ -583,17 +576,10 @@ static const int ROUND = 4;
             if (xNegative)
                 [remainder setNegative];
         }
-//        BOOL isNull = YES;
-//        for (int srch = 0; srch < rlen; srch++) {
-//            if (remainder.data[srch] != 0) {
-//                isNull = NO;
-//                break;
-//            }
-//        }
-//        if (isNull) {
-//            remainder.data = nil;
-//        }
-//        [remainder pack];
+
+    } else {
+        free(ywords);
+        ywords = nil;
     }
 }
 
@@ -611,13 +597,13 @@ static const int ROUND = 4;
 
 + (BigInteger *)times:(BigInteger *)x y:(int64_t)y {
     if (y == 0)
-        return [BigInteger valueOf:0];
+        return [[BigInteger alloc] initWith:0];
     if (y == 1)
         return x;
     int64_t *xwords = x.data;
     int64_t xlen = x.iVal;
     if (xwords == nil)
-        return [BigInteger valueOf:((int64_t) xlen * (int64_t) y)];
+        return [[BigInteger alloc] initWith:((int64_t) xlen * (int64_t) y)];
     BOOL negative;
     BigInteger *result = [[BigInteger alloc] init];
     if (xwords[xlen - 1] < 0) {
@@ -652,9 +638,12 @@ static const int ROUND = 4;
     int64_t *ywords;
     int64_t xlen = x.iVal;
     int64_t ylen = y.iVal;
+    BOOL freeXwords = NO;
+    BOOL freeYWords = NO;
     if ([x isNegative]) {
         negative = YES;
         xwords = [BigInteger allocData:(int) xlen];
+        freeXwords = YES;
         [BigInteger negate:xwords src:x.data len:xlen];
     }
     else {
@@ -665,25 +654,43 @@ static const int ROUND = 4;
         negative = !negative;
         ywords = [BigInteger allocData:(int) ylen];
         [BigInteger negate:ywords src:y.data len:ylen];
+        freeYWords = YES;
     }
     else
         ywords = y.data;
     // Swap if x is shorter then y.
     if (xlen < ylen) {
+        BOOL t = freeXwords;
+        freeXwords = freeYWords;
+        freeYWords = t;
+
         int64_t *twords = xwords;
         xwords = ywords;
         ywords = twords;
         int64_t tlen = xlen;
         xlen = ylen;
         ylen = tlen;
+        twords = nil;
     }
     BigInteger *result = [[BigInteger alloc] init];
-    result.data = [BigInteger allocData:(int) (xlen + ylen)];
+    int64_t *d = [BigInteger allocData:(int) (xlen + ylen)];
 
-    [MPN mul:result.data x:xwords xlen:xlen y:ywords ylen:ylen];
+    [MPN mul:d x:xwords xlen:xlen y:ywords ylen:ylen];
+    result.data = d;
+    d = nil;
+
     result.iVal = xlen + ylen;
+
     if (negative)
         [result setNegative];
+    if (freeYWords) {
+        free(ywords);
+        ywords = nil;
+    }
+    if (freeXwords) {
+        free(xwords);
+        xwords = nil;
+    }
     return [result canonicalize];
 }
 
@@ -703,7 +710,7 @@ static const int ROUND = 4;
         if (k == -1)
             y = [BigInteger neg:(y)];
         else
-            y = [BigInteger times:y yBig:[BigInteger valueOf:k]];
+            y = [BigInteger times:y yBig:[[BigInteger alloc] initWith:k]];
     }
 //    if (x.isSimple)
 //        return [BigInteger addBig:y y:x.iVal];
@@ -714,25 +721,26 @@ static const int ROUND = 4;
         BigInteger *tmp = x;
         x = y;
         y = tmp;
+        tmp = nil;
     }
     BigInteger *result = [[BigInteger alloc] init];
     result.data = [BigInteger allocData:x.iVal + 1];
     int64_t i = y.iVal;
     int64_t carry = [MPN add_n:result.data x:x.data y:y.data len:i];
-    int64_t y_ext = ((int32_t)y.data[i - 1]) < 0 ? 0xffffffffL : 0;
+    int64_t y_ext = ((int32_t) y.data[i - 1]) < 0 ? 0xffffffffL : 0;
     for (; i < x.iVal; i++) {
         carry += (x.data[i] & 0xffffffffL) + y_ext;
-        result.data[i] = (carry&0xffffffffL);
+        result.data[i] = (carry & 0xffffffffL);
         carry >>= 32;
     }
-    if (((int32_t)x.data[i - 1]) < 0)
+    if (((int32_t) x.data[i - 1]) < 0)
         y_ext--;
 //    if ((x.isNegative && !y.isNegative) || (!x.isNegative && y.isNegative)) {
 //        if (carry>0) {
 //            carry--;
 //        }
 //    }
-    result.data[i] = (carry + y_ext)&0xffffffffL;
+    result.data[i] = (carry + y_ext) & 0xffffffffL;
     result.iVal = i + 1;
     return [result canonicalize];
 }
@@ -743,7 +751,7 @@ static const int ROUND = 4;
 
 /** Add two ints, yielding a BigInteger. */
 + (BigInteger *)add:(int64_t)x y:(int64_t)y {
-    return [BigInteger valueOf:((long) x + (long) y)];
+    return [[BigInteger alloc] initWith:((long) x + (long) y)];
 }
 
 /** Add a BigInteger and an int64_t, yielding a new BigInteger. */
@@ -767,12 +775,12 @@ static const int ROUND = 4;
     int64_t carry = y;
     for (int i = 0; i < len; i++) {
         carry += ((int64_t) x.data[i] & 0xffffffffL);
-        self.data[i] = carry&0xffffffffL;
+        self.data[i] = carry & 0xffffffffL;
         carry >>= 32;
     }
     if (x.data[len - 1] < 0)
         carry--;
-    self.data[len] = carry&0xffffffffL;
+    self.data[len] = carry & 0xffffffffL;
     self.iVal = [BigInteger wordsNeeded:self.data len:(int) (len + 1)];
 }
 
@@ -787,17 +795,17 @@ static const int ROUND = 4;
 //        self.iVal = ~self.iVal;
 //    else {
     for (int64_t i = self.iVal; --i >= 0;)
-            self.data[i] = ~self.data[i];
+        self.data[i] = ~self.data[i];
 //    }
 }
 
 
 + (int)compare:(BigInteger *)x to:(BigInteger *)y {
     if (x.isZero && !y.isZero) {
-        return [y isNegative]?1:-1;
+        return [y isNegative] ? 1 : -1;
     }
     if (y.isZero && !x.isZero) {
-        return [x isNegative]?-1:1;
+        return [x isNegative] ? -1 : 1;
     }
 //    if (x.isSimple && y.isSimple)
 //        return x.iVal < y.iVal ? -1 : x.iVal > y.iVal ? 1 : 0;
@@ -806,7 +814,7 @@ static const int ROUND = 4;
     if (x_negative != y_negative)
         return x_negative ? -1 : 1;
     int64_t x_len = x.iVal;// x.isSimple ? 1 : x.iVal;
-    int64_t y_len = y.iVal; //y.isSimple ? 1 : y.iVal;
+//    int64_t y_len = y.iVal; //y.isSimple ? 1 : y.iVal;
 //    if (x_len != y_len)
 //        return (x_len > y_len) != x_negative ? 1 : -1;
     return [MPN cmp:x.data y:y.data size:x_len];
@@ -844,7 +852,7 @@ static const int ROUND = 4;
     if ([val isZero])
         @throw [NSException exceptionWithName:@"Arithmeticexception" reason:@"division by zero" userInfo:nil];
 
-    BigInteger *quot = [BigInteger valueOf:0];
+    BigInteger *quot = [[BigInteger alloc] initWith:0];
     [BigInteger divideBig:self by:val quotient:quot remainder:nil usingRoundingMode:TRUNCATE];
     return [quot canonicalize];
 }
@@ -930,16 +938,16 @@ static const int ROUND = 4;
     BigInteger *rem = [[BigInteger alloc] init];
     int i;
     for (i = 0; i < primeCount; i++) {
-//        if (self.isSimple && self.iVal == primes[i])
-//            return YES;
-        // int64_t idx = primes[i] - MINFIXNUMS;
-//        if (idx > fixNum.count - 1) {
-        [BigInteger divideBig:self by:[BigInteger valueOf:primes[i]] quotient:nil remainder:rem usingRoundingMode:TRUNCATE];
-//        } else {
-//            [BigInteger divideBig:self by:fixNum[idx] quotient:nil remainder:rem usingRoundingMode:TRUNCATE];
-//        }
-        if ([[rem canonicalize] isZero])
+        [BigInteger divideBig:self
+                           by:[[BigInteger alloc] initWith:primes[i]]
+                     quotient:nil
+                    remainder:rem
+            usingRoundingMode:TRUNCATE];
+
+        if ([[rem canonicalize] isZero]) {
+            rem = nil;
             return NO;
+        }
     }
 
     // Now perform the Rabin-Miller test.
@@ -951,7 +959,7 @@ static const int ROUND = 4;
 
     // Set m such that this = 1 + 2^b * m.
     int64_t val = ((int64_t) 2L) << (b - 1);
-    BigInteger *m = [pMinus1 divideBy:[BigInteger valueOf:val]];
+    BigInteger *m = [pMinus1 divideBy:[[BigInteger alloc] initWith:val]];
     if ([m isNegative]) {
         m = [m negate];
 //        @throw [NSException exceptionWithName:@"Arithmeticexception" reason:@"non-positivve modulo" userInfo:nil];
@@ -971,48 +979,113 @@ static const int ROUND = 4;
         trials *= 2;
     BigInteger *z;
     for (int t = 0; t < trials; t++) {
-        // The HAC (Handbook of Applied Cryptography), Alfred Menezes & al.
-        // Remark 4.28 states: "...A strategy that is sometimes employed
-        // is to fix the bases a to be the first few primes instead of
-        // choosing them at random.
-        z = [[BigInteger valueOf:primes[t]] modPow:m modulo:self];
-        if ([z isOne] || [z isEqualTo:pMinus1])
-            continue;            // Passes the test; may be prime.
+        @autoreleasepool {
+            // The HAC (Handbook of Applied Cryptography), Alfred Menezes & al.
+            // Remark 4.28 states: "...A strategy that is sometimes employed
+            // is to fix the bases a to be the first few primes instead of
+            // choosing them at random.
+            z = [[[BigInteger alloc] initWith:primes[t]] modPow:m modulo:self];
+            if ([z isOne] || [z isEqualTo:pMinus1])
+                continue;            // Passes the test; may be prime.
 
-        for (i = 0; i < b;) {
-            if ([z isOne])
+            for (i = 0; i < b;) {
+                if ([z isOne]) {
+                    rem = nil;
+                    z = nil;
+                    m = nil;
+                    pMinus1 = nil;
+                    return NO;
+                }
+                i++;
+                if ([z isEqualTo:pMinus1])
+                    break;            // Passes the test; may be prime.
+
+                z = [z modPow:[[BigInteger alloc] initWith:2] modulo:self];
+            }
+
+            if (i == b && ![z isEqualTo:pMinus1]) {
+                rem = nil;
+                z = nil;
+                m = nil;
+                pMinus1 = nil;
                 return NO;
-            i++;
-            if ([z isEqualTo:pMinus1])
-                break;            // Passes the test; may be prime.
-
-            z = [z modPow:[BigInteger valueOf:2] modulo:self];
+            }
         }
-
-        if (i == b && ![z isEqualTo:pMinus1])
-            return NO;
     }
+    rem = nil;
+    z = nil;
+    m = nil;
+    pMinus1 = nil;
     return YES;
 }
+//
+//+ (int64_t *)euclidInv:(int64_t)a b:(int64_t)b preDiv:(int64_t)prevDiv {
+//    if (b == 0) {
+//        @throw [NSException exceptionWithName:@"ArithmeticException" reason:@"not invertible" userInfo:nil];
+//    }
+//
+//    if (b == 1) {
+//        // Success:  values are indeed invertible!
+//        // Bottom of the recursion reached; start unwinding.
+//        int64_t *ret = [BigInteger allocData:2];
+//        ret[0] = -prevDiv;
+//        ret[1] = 1;
+//        return ret;
+//    }
+//    int64_t *xy = [BigInteger euclidInv:b b:a % b preDiv:a / b];    // Recursion happens here.
+//    a = xy[0]; // use our local copy of 'a' as a work var
+//    xy[0] = a * -prevDiv + xy[1];
+//    xy[1] = a;
+//    return xy;
+//}
 
-+ (int64_t *)euclidInv:(int64_t)a b:(int64_t)b preDiv:(int64_t)prevDiv {
-    if (b == 0) {
+//Non-Recursive implementation: result[0]=GCD, result[1]=coefficient of a, result[2]: coefficient of b
++ (NSArray *)euclidInv:(BigInteger *)a b:(BigInteger *)b {
+    //Throw an exception if either argument is not positive
+    if ([a isZero] || [b isZero] || [a isNegative] || [b isNegative]) {
         @throw [NSException exceptionWithName:@"ArithmeticException" reason:@"not invertible" userInfo:nil];
     }
+    NSMutableArray *answer = [[NSMutableArray alloc] initWithCapacity:3];
 
-    if (b == 1) {
-        // Success:  values are indeed invertible!
-        // Bottom of the recursion reached; start unwinding.
-        int64_t *ret = [BigInteger allocData:2];
-        ret[0] = -prevDiv;
-        ret[1] = 1;
-        return ret;
+    //Set up all the initial table entries
+    BigInteger *r0 = [BigInteger bigIntegerWithBigInteger:a];
+    BigInteger *r1 = [BigInteger bigIntegerWithBigInteger:b];
+    BigInteger *s0 = [[BigInteger alloc] initWith:1];
+    BigInteger *s1 = [[BigInteger alloc] initWith:0];
+    BigInteger *t0 = [[BigInteger alloc] initWith:0];
+    BigInteger *t1 = [[BigInteger alloc] initWith:1];
+    BigInteger *q1 = [r0 divideBy:r1];
+    BigInteger *r2 = [r0 mod:r1];
+    BigInteger *s2;
+    BigInteger *t2;
+
+    //if r2 is zero, last runs results contain answer
+    while (![r2 isZero]) {
+        s2 = [s0 subtract:[q1 multiply:s1]];
+        s0 = s1;
+        s1 = s2;
+        t2 = [t0 subtract:[q1 multiply:t1]];
+        t0 = t1;
+        t1 = t2;
+        r0 = r1;
+        r1 = r2;
+        q1 = [r0 divideBy:r1];
+        r2 = [r0 mod:r1];
     }
-    int64_t *xy = [BigInteger euclidInv:b b:a % b preDiv:a / b];    // Recursion happens here.
-    a = xy[0]; // use our local copy of 'a' as a work var
-    xy[0] = a * -prevDiv + xy[1];
-    xy[1] = a;
-    return xy;
+    answer[0] = r1;
+    answer[1] = s1;
+    answer[2] = t1;
+    r0 = nil;
+    r1 = nil;
+    r2 = nil;
+    s0 = nil;
+    s1 = nil;
+    s2 = nil;
+    t0 = nil;
+    t1 = nil;
+    t2 = nil;
+    return answer;
+
 }
 
 + (void)euclidInv:(BigInteger *)a b:(BigInteger *)b preDiv:(BigInteger *)prevDiv xy:(NSMutableArray *)xy {
@@ -1023,35 +1096,20 @@ static const int ROUND = 4;
 //    NSLog(@"in euclidInv a: %@ b: %@ preDiv:%@",a,b,prevDiv);
 
     if ([b isOne]) {
-        // Success:  values are indeed invertible!
-        // Bottom of the recursion reached; start unwinding.
         xy[0] = [BigInteger neg:prevDiv];
-        xy[1] = [BigInteger valueOf:1];
+        xy[1] = [[BigInteger alloc] initWith:1];
         return;
     }
 
-    // Recursion happens in the following conditional!
 
-    // If a just contains an int64_t, then use integer math for the rest.
-//    if (a.isSimple) {
-//        int64_t *xyInt = [BigInteger euclidInv:b.iVal b:a.iVal % b.iVal preDiv:a.iVal / b.iVal];
-//        xy[0] = [BigInteger valueOf:(int32_t) (xyInt[0])];
-//        xy[1] = [BigInteger valueOf:(int32_t) (xyInt[1])];
-//        NSLog(@"Euclidinv (simple) returned %@,%@", xy[0], xy[1]);
-//    }
-//    else {
     BigInteger *rem = [[BigInteger alloc] init];
-        BigInteger *quot = [[BigInteger alloc] init];
-//        BigInteger *tst=[BigInteger valueOf:@"A432A0EC03A42121" usingRadix:16];
-//        if ([[a description] isEqual:@"27F2BB8AF7480D73"]) {
-//            NSLog(@"Found it!");
-//        }
-        [BigInteger divideBig:a by:b quotient:quot remainder:rem usingRoundingMode:FLOOR];
-        // quot and rem may not be in canonical form. ensure
-//        NSLog(@"Divide %@ / %@ = %@ rem %@ ival=%d",a,b,quot,rem,rem.iVal);
-        [rem canonicalize];
-        [quot canonicalize];
-        [BigInteger euclidInv:b b:rem preDiv:quot xy:xy];
+    BigInteger *quot = [[BigInteger alloc] init];
+
+    [BigInteger divideBig:a by:b quotient:quot remainder:rem usingRoundingMode:FLOOR];
+
+    [rem canonicalize];
+    [quot canonicalize];
+    [BigInteger euclidInv:b b:rem preDiv:quot xy:xy];
 //        NSLog(@"Euclidinv returned %@,%@", xy[0], xy[1]);
 //    }
 
@@ -1059,18 +1117,21 @@ static const int ROUND = 4;
 //    NSLog(@"Processing data: xy1: %@ t:%@ prevdiv: %@", xy[1], t, prevDiv);
     xy[0] = [BigInteger add:xy[1] y:[BigInteger times:t yBig:prevDiv] k:-1];
     xy[1] = t;
+    t = nil;
+    rem = nil;
+    quot = nil;
 }
 
 - (void)pack {
     BOOL neg = [self isNegative];
     BOOL rebuild = NO;
     if (_data == nil) {
-        self.iVal=self.iVal&0xffffffffL;
+        self.iVal = self.iVal & 0xffffffffL;
         return;
     }
 
-    for (int i=0;i<_iVal;i++) {
-        _data[i]=_data[i]&0xffffffffL;
+    for (int i = 0; i < _iVal; i++) {
+        _data[i] = _data[i] & 0xffffffffL;
     }
     while (_data[_iVal - 1] == 0 && _iVal > 0) {
         _iVal--;
@@ -1094,14 +1155,15 @@ static const int ROUND = 4;
     if (rebuild) {
         int64_t *newDat = [BigInteger allocData:_iVal];
         for (int64_t i = 0; i < _iVal; i++) {
-            newDat[i] = _data[i]&0xffffffffL;
+            newDat[i] = _data[i] & 0xffffffffL;
         }
-        //free(_data);
         self.data = newDat;
+        newDat = nil;
     }
 
 
 }
+
 
 - (BigInteger *)modInverse:(BigInteger *)y {
     if ([y isNegative] || [y isZero]) {
@@ -1111,72 +1173,57 @@ static const int ROUND = 4;
 
     // Degenerate cases.
     if ([y isOne])
-        return zero;
+        return [[BigInteger alloc] initWith:0];
     if ([self isOne])
-        return [BigInteger valueOf:1];
+        return [[BigInteger alloc] initWith:1];
+
 
     // Use Euclid's algorithm as in gcd() but do this recursively
     // rather than in a loop so we can use the intermediate results as we
     // unwind from the recursion.
     // Used http://www.math.nmsu.edu/~crypto/EuclideanAlgo.html as reference.
-    BigInteger *result = [[BigInteger alloc] init];
+    BigInteger *result = nil; //[[BigInteger alloc] init];
+//    result = swapped ? xy2[1] : xy2[2];
     BOOL swapped = NO;
 
-//    if (y.isSimple) {
-//        // The result is guaranteed to be less than the modulus, y (which is
-//        // an int64_t), so simplify this by working with the int64_t result of this
-//        // modulo y.  Also, if this is negative, make it positive via modulo
-//        // math.  Note that BigInteger.mod() must be used even if this is
-//        // already an int64_t as the % operator would provide a negative result if
-//        // this is negative, BigInteger.mod() never returns negative values.
-//        int64_t xval = (self.data != nil || [self isNegative]) ? [self mod:y].iVal : self.iVal;
-//        int64_t yval = y.iVal;
-//
-//        // Swap values so x > y.
-//        if (yval > xval) {
-//            int64_t tmp = xval;
-//            xval = yval;
-//            yval = tmp;
-//            swapped = YES;
-//        }
-//        // Normally, the result is in the 2nd element of the array, but
-//        // if originally x < y, then x and y were swapped and the result
-//        // is in the 1st element of the array.
-//        result.iVal = [BigInteger euclidInv:yval b:xval % yval preDiv:xval / yval][swapped ? 0 : 1];
-//
-//        // Result can't be negative, so make it positive by adding the
-//        // original modulus, y.ival (not the possibly "swapped" yval).
-//        if ((int32_t) result.iVal < 0)
-//            result.iVal += y.iVal;
-//    }
-//    else {
     // As above, force this to be a positive value via modulo math.
-        BigInteger *x = [self isNegative] ? [self mod:y] : self;
+    BigInteger *x = [self isNegative] ? [self mod:y] : self;
 
-        // Swap values so x > y.
-        if ([x compareTo:y] < 0) {
-            result = x;
-            x = y;
-            y = result; // use 'result' as a work var
-            swapped = YES;
-        }
-        // As above (for ints), result will be in the 2nd element unless
-        // the original x and y were swapped.
-        BigInteger *rem = [[BigInteger alloc] init];
-        BigInteger *quot = [[BigInteger alloc] init];
-        [BigInteger divideBig:x by:y quotient:quot remainder:rem usingRoundingMode:FLOOR];
-        // quot and rem may not be in canonical form. ensure
-        [rem canonicalize];
-        [quot canonicalize];
-        NSMutableArray *xy = [[NSMutableArray alloc] initWithCapacity:2];
-        [BigInteger euclidInv:y b:rem preDiv:quot xy:xy];
-        result = swapped ? xy[0] : xy[1];
+    // Swap values so x > y.
+    if ([x compareTo:y] < 0) {
+        result = x;
+        x = y;
+        y = result; // use 'result' as a work var
+        swapped = YES;
+    }
+    // As above (for ints), result will be in the 2nd element unless
+    // the original x and y were swapped.
+    NSArray *xy2 = [BigInteger euclidInv:x b:y];
+    result = swapped ? xy2[2] : xy2[1];
 
-        // Result can't be negative, so make it positive by adding the
-        // original modulus, y (which is now x if they were swapped).
-        if ([result isNegative])
-            result = [BigInteger add:result y:swapped ? x : y k:1];
+//    BigInteger *rem = [[BigInteger alloc] init];
+//    BigInteger *quot = [[BigInteger alloc] init];
+//    [BigInteger divideBig:x by:y quotient:quot remainder:rem usingRoundingMode:FLOOR];
+//    // quot and rem may not be in canonical form. ensure
+//    [rem canonicalize];
+//    [quot canonicalize];
+//    NSMutableArray *xy = [[NSMutableArray alloc] initWithCapacity:2];
+//    [BigInteger euclidInv:y b:rem preDiv:quot xy:xy];
+//    BigInteger *res=result = swapped ? xy[0] : xy[1];
+//    if (![res isEqual:result]) {
+//        NSLog(@"WRONG!");
+//    } else {
+//        NSLog(@"All ok!");
 //    }
+
+
+    // Result can't be negative, so make it positive by adding the
+    // original modulus, y (which is now x if they were swapped).
+    if ([result isNegative])
+        result = [BigInteger add:result y:swapped ? x : y k:1];
+//    rem=nil;
+//    quot=nil;
+    x = nil;
 
     return result;
 }
@@ -1199,31 +1246,20 @@ static const int ROUND = 4;
     //
     // We'll use the algorithm for Additive Chaining which can be found on
     // p. 244 of "Applied Cryptography, Second Edition" by Bruce Schneier.
-    BigInteger *s = [BigInteger valueOf:1];
+    BigInteger *s = [[BigInteger alloc] initWith:1];
     BigInteger *t = self;
     BigInteger *u = exponent;
     int runcounter = 0;
     while (![u isZero]) {
         runcounter++;
-//        NSLog(@"\n\n Round: %d", runcounter);
-        if ([[u and:[BigInteger valueOf:1]] isOne]) {
-            BigInteger *tmp = [BigInteger times:s yBig:t];
-            s = [tmp mod:m];
-//            NSLog(@"%@ mod %@ = %@", tmp, m, s);
+        if (u.data[0] & 1) {
+            s = [[BigInteger times:s yBig:t] mod:m];
         }
         u = [u shiftRight:1];
-//        NSLog(@"U: %@",u);
-
-        BigInteger *res = [BigInteger times:t yBig:t];
-//        NSLog(@"%@ times %@ = %@ ", t, t, res);
-        BigInteger *res2 = [res mod:m];
-//        NSLog(@"%@ mod %@  = %@", res, m, res2);
-//        if ([res2 isZero]) {
-//            NSLog(@"WAAA???");
-//        }
-        t = res2;
+        t = [[BigInteger times:t yBig:t] mod:m];
     }
-
+    t = nil;
+    u = nil;
     return s;
 }
 
@@ -1286,6 +1322,9 @@ static const int ROUND = 4;
     BigInteger *result = [[BigInteger alloc] initWith:0];
     result.iVal = len;
     result.data = xwords;
+    free(ywords);
+    ywords = nil;
+    xwords = nil;
     return [result canonicalize];
 }
 
@@ -1312,29 +1351,29 @@ static const int ROUND = 4;
 //        y=tmp;
 //    }
 
-    int end= (int) x.iVal;
+    int end = (int) x.iVal;
     if (x.iVal != y.iVal) {
         //check high-bytes==0
-        int start=0;
-        int64_t *data=nil;
-        if (x.iVal>y.iVal) {
-            start= (int) x.iVal;
-            end= (int) y.iVal;
-            data=x.data;
+        int start = 0;
+        int64_t *data = nil;
+        if (x.iVal > y.iVal) {
+            start = (int) x.iVal;
+            end = (int) y.iVal;
+            data = x.data;
         } else {
-            start= (int) y.iVal;
-            end= (int) x.iVal;
-            data=y.data;
+            start = (int) y.iVal;
+            end = (int) x.iVal;
+            data = y.data;
         }
-        for (int i=start;--i>=end;) {
-            if (data[i]&0xffffffff!=0) {
+        for (int i = start; --i >= end;) {
+            if ((data[i] & 0xffffffff) != 0) {
                 return NO;
             }
         }
     }
 
     for (int i = end; --i >= 0;) {
-        if (((int32_t) x.data[i]&0xffffffff) != ((int32_t) y.data[i]&0xffffffff))
+        if (((int32_t) x.data[i] & 0xffffffff) != ((int32_t) y.data[i] & 0xffffffff))
             return NO;
     }
     return YES;
@@ -1356,6 +1395,9 @@ static const int ROUND = 4;
     return [self isEqualTo:other];
 }
 
++ (int64_t)getInstances {
+    return instances;
+}
 
 + (int64_t)nextRand {
     return arc4random();
@@ -1365,6 +1407,7 @@ static const int ROUND = 4;
 - (id)initWithRandomBits:(int)numBits {
     self = [super init];
     if (self) {
+        instances++;
         uint64_t highbits = (uint64_t) (numBits & 31);
         // minimum number of bytes to store the above number of bits
         int64_t highBitByteCount = (highbits + 7) / 8;
@@ -1398,22 +1441,20 @@ static const int ROUND = 4;
 //            self.data = nil;
 //        } else {
         self.iVal = highbits < 0 ? nwords + 2 : nwords + 1;
-            self.data = [BigInteger allocData:(int) self.iVal];
-            self.data[nwords] = highbits;
-            while (--nwords >= 0) {
-                self.data[nwords] = [BigInteger nextRand];
-            }
+        self.data = [BigInteger allocData:(int) self.iVal];
+        self.data[nwords] = highbits;
+        while (--nwords >= 0) {
+            self.data[nwords] = [BigInteger nextRand];
+        }
 //        }
         [self pack];
         if ([self isNegative]) {
-//            if ([self isSimple]) {
-//                self.iVal = -self.iVal;
-//            } else {
             //Workaround - somehow negative randoms keep being created
             self.iVal++;
             int64_t *dat = [BigInteger allocData:self.iVal];
             memcpy(dat, self.data, (size_t) ((self.iVal - 1) * (sizeof(int64_t))));
             self.data = dat;
+            dat = nil;
 //            }
         }
         if (highBitByteCount > 0) {
@@ -1428,6 +1469,7 @@ static const int ROUND = 4;
 - (id)init {
     self = [super init];
     if (self) {
+        instances++;
         _data = nil;
         _iVal = 0;
     }
@@ -1448,6 +1490,7 @@ static const int ROUND = 4;
     result.data = [BigInteger allocData:2];
     result.data[0] = (int32_t) i;
     result.data[1] = (int64_t) (val >> 32);
+    instances++;
     return result;
 }
 
@@ -1492,7 +1535,10 @@ static const int ROUND = 4;
         bytes[byte_len++] = digit;
     }
 
-    return [BigInteger valueOfArr:bytes len:byte_len negative:negative radix:radix];
+    BigInteger *ret = [BigInteger valueOfArr:bytes len:byte_len negative:negative radix:radix];
+    free(bytes);
+    bytes = nil;
+    return ret;
 
 }
 
@@ -1507,18 +1553,22 @@ static const int ROUND = 4;
         words[size++] = 0;
     if (negative)
         [BigInteger negate:words src:words len:size];
-    return [BigInteger make:words len:size];
+    BigInteger *ret = [BigInteger make:words len:size];
+    words = nil;
+    instances++;
+    return ret;
 }
 
 + (BigInteger *)make:(int64_t *)words len:(int64_t)len {
     if (words == nil)
-        return [BigInteger valueOf:(long) len];
+        return [[BigInteger alloc] initWith:(long) len];
     len = [BigInteger wordsNeeded:words len:(int) len];
     if (len <= 1)
-        return len == 0 ? [BigInteger valueOf:0] : [BigInteger valueOf:words[0]];
+        return len == 0 ? [[BigInteger alloc] initWith:0] : [[BigInteger alloc] initWith:words[0]];
     BigInteger *num = [[BigInteger alloc] init];
     num.data = words;
     num.iVal = len;
+    instances++;
     return num;
 }
 
@@ -1549,7 +1599,7 @@ static const int ROUND = 4;
     BOOL negative = (int32_t) src[len - 1] < 0;
     for (int i = 0; i < len; i++) {
         carry += ((int64_t) (~src[i]) & 0xffffffffL);
-        dest[i] = carry& 0xffffffffL;
+        dest[i] = carry & 0xffffffffL;
         carry >>= 32;
     }
     return (negative && (int32_t) dest[len - 1] < 0);
@@ -1709,28 +1759,12 @@ static const int ROUND = 4;
  * We allow words.length to be upto nwords+2 without reallocating.
  */
 - (void)realloc:(int)nwords {
-//    if (nwords == 0) {
-//        if (self.data != nil) {
-//            if (self.iVal > 0)
-//                self.iVal = self.data[0];
-//            self.data = nil;
-//        }
-//    }
-//    else if (self.isSimple) {
     int64_t *new_words = [BigInteger allocData:nwords];
-//        if (self.isSimple) {
-//            new_words[0] = self.iVal;
-//            self.iVal = 1;
-//        } else {
     if (nwords < self.iVal)
-                self.iVal = nwords;
-            //System.arraycopy(words, 0, new_words, 0, ival);
-            memcpy(new_words, self.data, (size_t) self.iVal * sizeof(int64_t));
-
-//        }
-    //free(self.data);
-        self.data = new_words;
-//    }
+        self.iVal = nwords;
+    memcpy(new_words, self.data, (size_t) self.iVal * sizeof(int64_t));
+    self.data = new_words;
+    new_words = nil;
 }
 
 
@@ -1741,7 +1775,7 @@ static const int ROUND = 4;
 + (BigInteger *)bitOp:(int)op x:(BigInteger *)x y:(BigInteger *)y {
     switch (op) {
         case 0:
-            return [BigInteger valueOf:0];
+            return [[BigInteger alloc] initWith:0];
         case 1:
             return [x and:y];
         case 3:
@@ -1764,6 +1798,7 @@ static const int ROUND = 4;
         x = y;
         y = temp;
         op = (int) [BigInteger swappedOp:op];
+        temp = nil;
     }
     int64_t xi;
     int64_t yi;
@@ -1953,6 +1988,7 @@ static const int ROUND = 4;
             while (++i < xlen) w[i] = ~x.data[i];
             break;
     }
+    w = nil;
     result.iVal = i;
 }
 
@@ -1967,16 +2003,18 @@ static const int ROUND = 4;
 //        return [BigInteger valueOf:x.iVal & y];
     if (y >= 0) {
         if (x.iVal == 0) {
-            return [BigInteger valueOf:0];
+            return [[BigInteger alloc] initWith:0];
         }
-        return [BigInteger valueOf:x.data[0] & y];
+        return [[BigInteger alloc] initWith:x.data[0] & y];
     }
     int64_t len = x.iVal;
     int64_t *words = [BigInteger allocData:len];
     words[0] = x.data[0] & y;
     while (--len > 0)
         words[len] = x.data[len];
-    return [BigInteger make:words len:x.iVal];
+    BigInteger *ret = [BigInteger make:words len:x.iVal];
+    words = nil;
+    return ret;
 }
 
 /** Return the logical (bit-wise) "and" of two BigIntegers. */
@@ -1991,6 +2029,7 @@ static const int ROUND = 4;
         BigInteger *temp = self;
         x = y;
         y = temp;
+        temp = nil;
     }
     int64_t i;
     int64_t len = [y isNegative] ? x.iVal : y.iVal;
@@ -2000,7 +2039,9 @@ static const int ROUND = 4;
         words[i] = x.data[i] & y.data[i];
     for (; i < len; i++)
         words[i] = x.data[i];
-    return [BigInteger make:words len:len];
+    BigInteger *ret = [BigInteger make:words len:len];
+    words = nil;
+    return ret;
 }
 
 /** Return the logical (bit-wise) "(inclusive) or" of two BigIntegers. */
@@ -2015,7 +2056,7 @@ static const int ROUND = 4;
 
 /** Return the logical (bit-wise) negation of a BigInteger. */
 - (BigInteger *)not {
-    return [BigInteger bitOp:12 x:self y:[BigInteger valueOf:0]];
+    return [BigInteger bitOp:12 x:self y:[[BigInteger alloc] initWith:0]];
 }
 
 - (BigInteger *)andNot:(BigInteger *)val {
@@ -2026,26 +2067,26 @@ static const int ROUND = 4;
     if (n < 0) {
         @throw [NSException exceptionWithName:@"Arithmeticexception" reason:@"negative bit number?" userInfo:nil];
     }
-    return [self and:[[[BigInteger valueOf:1] shiftLeft:n] not]];
+    return [self and:[[[[BigInteger alloc] initWith:1] shiftLeft:n] not]];
 }
 
 - (BigInteger *)setBit:(int64_t)n {
     if (n < 0)
         @throw [NSException exceptionWithName:@"Arithmeticexception" reason:@"negative bit number" userInfo:nil];
-    return [self or:[[BigInteger valueOf:1] shiftLeft:n]];
+    return [self or:[[[BigInteger alloc] initWith:1] shiftLeft:n]];
 }
 
 - (BOOL)testBit:(int64_t)n {
     if (n < 0)
         @throw [NSException exceptionWithName:@"Arithmeticexception" reason:@"negative bit number" userInfo:nil];
-    return ![[self and:[[BigInteger valueOf:1] shiftLeft:n]] isZero];
+    return ![[self and:[[[BigInteger alloc] initWith:1] shiftLeft:n]] isZero];
 }
 
 
 - (BigInteger *)flipBit:(int64_t)n {
     if (n < 0)
         @throw [NSException exceptionWithName:@"Arithmeticexception" reason:@"negative bit number" userInfo:nil];
-    return [self xor:[[BigInteger valueOf:1] shiftLeft:n]];
+    return [self xor:[[[BigInteger alloc] initWith:1] shiftLeft:n]];
 }
 
 
@@ -2086,9 +2127,9 @@ static const int ROUND = 4;
 //    }
 //    else {
     [self realloc:2];
-        self.data[0] = (int32_t) i;
-        self.data[1] = (int64_t) (y >> 32);
-        self.iVal = 2;
+    self.data[0] = (int32_t) i;
+    self.data[1] = (int64_t) (y >> 32);
+    self.iVal = 2;
 //    }
 }
 
@@ -2106,7 +2147,7 @@ static const int ROUND = 4;
 //    }
 //    else {
     xwords = x.data;
-        xlen = x.iVal;
+    xlen = x.iVal;
 //    }
     int word_count = count >> 5;
     count &= 31;
@@ -2210,24 +2251,28 @@ static const int ROUND = 4;
         }
         BigInteger *r = nil;
         while (running) {
-            r = [s setBit:bitLength - 1];
-            s = [BigInteger bigIntegerWithBigInteger:r];
+            @autoreleasepool {
+                r = [s setBit:bitLength - 1];
+                s = [BigInteger bigIntegerWithBigInteger:r];
 
-            if ([s isProbablePrime:certainty]) {
-//                NSLog(@"found %@", s);
+                if ([s isProbablePrime:certainty]) {
+                    //                NSLog(@"found %@", s);
 
-                running = NO;
-                result = s;
-                break;
+                    running = NO;
+                    result = s;
+                    break;
+                }
+                //            NSLog(@"new test");
+                s = [BigInteger randomBigInt:bitLength];
             }
-//            NSLog(@"new test");
-            s = [BigInteger randomBigInt:bitLength];
         }
+        s = nil;
+        r = nil;
         dispatch_semaphore_signal(semaphore);
 
     };
     for (int64_t i = 0; i < threads; i++) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), block);
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), block);
     }
 
 //    NSLog(@"Waiting...");
@@ -2258,25 +2303,6 @@ static const int ROUND = 4;
 //    for (long i = 0; i<[arc count]; i++) {
         int64_t value = arc[i];
         int64_t idx;
-//        idx=value>>60&0x0000000f;
-//        [ret appendString:c[idx]];
-//        idx=value>>56&0x0000000f;
-//        [ret appendString:c[idx]];
-//
-//        idx=value>>52&0x0000000f;
-//        [ret appendString:c[idx]];
-//        idx=value>>48&0x0000000f;
-//        [ret appendString:c[idx]];
-//
-//        idx=value>>44&0x0000000f;
-//        [ret appendString:c[idx]];
-//        idx=value>>40&0x0000000f;
-//        [ret appendString:c[idx]];
-//
-//        idx=value>>36&0x0000000f;
-//        [ret appendString:c[idx]];
-//        idx=value>>32&0x0000000f;
-//        [ret appendString:c[idx]];
 
         idx = value >> 28 & 0x0000000f;
         skip = (idx == 0) && skip;

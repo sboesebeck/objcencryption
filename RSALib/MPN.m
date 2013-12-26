@@ -15,7 +15,7 @@
     int64_t carry = (int32_t) y & 0xffffffffL;
     for (int64_t i = 0; i < size; i++) {
         carry += (x[i] & 0xffffffffL);
-        dest[i] = carry&0xffffffffL;
+        dest[i] = carry & 0xffffffffL;
         carry >>= 32;
     }
     return (int32_t) carry;
@@ -26,10 +26,10 @@
     for (int64_t i = 0; i < len; i++) {
         carry += (x[i] & 0xffffffffL)
                 + (y[i] & 0xffffffffL);
-        dest[i] = carry&0xffffffffL;
+        dest[i] = carry & 0xffffffffL;
         carry >>= 32;
     }
-    return (int32_t) carry&0xffffffffL;
+    return (int32_t) carry & 0xffffffffL;
 }
 
 + (int64_t)sub_n:(int64_t *)dest x:(int64_t *)X y:(int64_t *)Y size:(int)size {
@@ -82,7 +82,7 @@
  * All operands are unsigned.
  * This function is basically the same gmp's mpn_mul. */
 
-+ (void)mul:(int64_t *)dest x:(int64_t *)x xlen:(int64_t)xlen   y:(int64_t *)y ylen:(int64_t)ylen {
++ (void)mul:(int64_t *)dest x:(int64_t *)x xlen:(int64_t)xlen y:(int64_t *)y ylen:(int64_t)ylen {
     dest[xlen] = [MPN mul_1:dest x:x len:xlen y:y[0]];
 
     for (int64_t i = 1; i < ylen; i++) {
@@ -176,7 +176,7 @@
  * OK for quotient==dividend.
  */
 
-+ (int64_t)divmod_1:(int64_t *)quotient divident:(int64_t *)dividend  len:(int64_t)len divisor:(int64_t)divisor {
++ (int64_t)divmod_1:(int64_t *)quotient divident:(int64_t *)dividend len:(int64_t)len divisor:(int64_t)divisor {
     int64_t i = len - 1;
     int64_t r = dividend[i];
     if ((r & 0xffffffffL) >= ((int64_t) divisor & 0xffffffffL))
@@ -344,14 +344,14 @@
             res_digit |= inp_digit << next_bitpos;
             next_bitpos += bits_per_indigit;
             if (next_bitpos >= 32) {
-                dest[size++] = res_digit&0xffffffffL;
+                dest[size++] = res_digit & 0xffffffffL;
                 next_bitpos -= 32;
                 res_digit = ((int64_t) inp_digit) >> (bits_per_indigit - next_bitpos);
             }
         }
 
         if (res_digit != 0)
-            dest[size++] = res_digit&0xffffffffL;
+            dest[size++] = res_digit & 0xffffffffL;
     }
     else {
         // General case.  The base is not a power of 2.
@@ -378,7 +378,7 @@
                 cy_limb += [MPN add_1:dest x:dest size:(int) size y:res_digit];
             }
             if (cy_limb != 0)
-                dest[size++] = cy_limb&0xffffffffL;
+                dest[size++] = cy_limb & 0xffffffffL;
         }
     }
     return size;
@@ -388,7 +388,7 @@
  * @result -1, 0, or 1 depending on if x&lt;y, x==y, or x&gt;y.
  * This is basically the same as gmp's mpn_cmp function.
  */
-+ (int) cmp:(int64_t *)x y:(int64_t *)y size:(int64_t)size {
++ (int)cmp:(int64_t *)x y:(int64_t *)y size:(int64_t)size {
     while (--size >= 0) {
         int64_t x_word = x[size];
         int64_t y_word = y[size];
@@ -591,6 +591,7 @@
             int64_t *tmp = odd_arg;
             odd_arg = other_arg;
             other_arg = tmp;
+            tmp = nil;
         }
         else { // other_arg > odd_arg
             [MPN sub_n:other_arg x:other_arg y:odd_arg size:len];
@@ -611,6 +612,8 @@
             x[i] = 0;
         len += initShiftWords;
     }
+    odd_arg = nil;
+    other_arg = nil;
     return len;
 }
 
