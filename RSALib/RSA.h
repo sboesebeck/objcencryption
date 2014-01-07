@@ -26,6 +26,8 @@
 
 - (id)initWithBitLen:(int)bits;
 
++ (BOOL)isValidData:(NSData *)data;
+
 - (id)initWithBitLen:(int)bits andThreads:(int)thr;
 
 - (id)initWithBitLen:(int)bits andThreads:(int)thr andProgressBlock:(void (^)(int))callbackBlock;

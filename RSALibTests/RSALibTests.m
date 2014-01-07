@@ -12,6 +12,7 @@
 #import "NSData+HexDump.h"
 #import "NSData+MD5.h"
 #import "NSData+BigInteger.h"
+#import "AES.h"
 
 @interface RSALibTests : XCTestCase
 
@@ -478,6 +479,7 @@
 
 }
 
+
 - (void)testRsaLargeCallback {
 
     void (^callback)(int) = ^(int prz) {
@@ -498,4 +500,66 @@
 }
 
 
+- (void)testAesBlock {
+    AES *aes = [[AES alloc] init];
+    [aes setEncryptionKey:[@"the secret key!!the secret key!!" dataUsingEncoding:NSUTF8StringEncoding]];
+    char *dat = malloc(16);
+    for (int i = 1; i <= 16; i++) {
+        dat[i - 1] = (char) i;
+    }
+    NSData *b = [[NSData alloc] initWithBytes:dat length:16];
+    NSLog(@"Cleartext: %@", [b hexDump:NO]);
+    char *enc = [aes encryptBlock:dat];
+    NSLog(@"Encrypted: %@", [[[NSData alloc] initWithBytes:enc length:16] hexDump:NO]);
+    char *dec = [aes decryptBlock:enc];
+    NSString *string = [[[NSData alloc] initWithBytes:dec length:16] hexDump:NO];
+    NSLog(@"Decrypted: %@", string);
+
+    XCTAssertEqualObjects(string, [b hexDump:NO], "%@ != %@", string, [b hexDump:NO]);
+
+    for (int i = 1; i <= 16; i++) {
+        if (i < 10) {
+            dat[i - 1] = (char) 0;
+        } else {
+            dat[i - 1] = (char) i;
+        }
+    }
+    b = [[NSData alloc] initWithBytes:dat length:16];
+    NSLog(@"Cleartext: %@", [b hexDump:NO]);
+    enc = [aes encryptBlock:dat];
+    NSLog(@"Encrypted: %@", [[[NSData alloc] initWithBytes:enc length:16] hexDump:NO]);
+    dec = [aes decryptBlock:enc];
+    string = [[[NSData alloc] initWithBytes:dec length:16] hexDump:NO];
+    NSLog(@"Decrypted: %@", string);
+    XCTAssertEqualObjects(string, [b hexDump:NO], "%@ != %@", string, [b hexDump:NO]);
+
+    for (int i = 1; i <= 16; i++) {
+        if (i > 10) {
+            dat[i - 1] = (char) 0;
+        } else {
+            dat[i - 1] = (char) i;
+        }
+    }
+    b = [[NSData alloc] initWithBytes:dat length:16];
+    NSLog(@"Cleartext: %@", [b hexDump:NO]);
+    enc = [aes encryptBlock:dat];
+    NSLog(@"Encrypted: %@", [[[NSData alloc] initWithBytes:enc length:16] hexDump:NO]);
+    dec = [aes decryptBlock:enc];
+    string = [[[NSData alloc] initWithBytes:dec length:16] hexDump:NO];
+    NSLog(@"Decrypted: %@", string);
+    XCTAssertEqualObjects(string, [b hexDump:NO], "%@ != %@", string, [b hexDump:NO]);
+}
+
+
+- (void)testAesBig {
+    NSString *str = @"This is a long text! This is a long text! This is a long text! This is a long text! This is a long text! This is a long text! This is a long text! ";
+    AES *aes = [[AES alloc] init];
+    [aes setEncryptionKey:[@"the secret key!!the secret key!!" dataUsingEncoding:NSUTF8StringEncoding]];
+
+    NSData *enc = [aes encrypt:[str dataUsingEncoding:NSUTF8StringEncoding]];
+//    NSLog(@"Encrypted: %@",[enc hexDump:NO]);
+    NSData *dec = [aes decrypt:enc];
+    NSString *decStr = [[NSString alloc] initWithData:dec encoding:NSUTF8StringEncoding];
+    NSLog(@"Decoded %@", decStr);
+}
 @end

@@ -31,7 +31,7 @@ void *NewBase64Decode(
 char *NewBase64Encode(
         const void *inputBuffer,
         size_t length,
-bool separateLines,
+        bool separateLines,
         size_t *outputLength);
 
 @interface NSData (Base64)

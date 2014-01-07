@@ -147,14 +147,14 @@ void *NewBase64Decode(
 char *NewBase64Encode(
         const void *buffer,
         size_t length,
-bool separateLines,
+        bool separateLines,
         size_t *outputLength) {
     const unsigned char *inputBuffer = (const unsigned char *) buffer;
 
 #define MAX_NUM_PADDING_CHARS 2
-#define OUTPUT_LINE_LENGTH 64
+#define OUTPUT_LINE_LENGTH 76
 #define INPUT_LINE_LENGTH ((OUTPUT_LINE_LENGTH / BASE64_UNIT_SIZE) * BINARY_UNIT_SIZE)
-#define CR_LF_SIZE 2
+#define CR_LF_SIZE 1
 
     //
     // Byte accurate calculation of final buffer size
@@ -210,7 +210,7 @@ bool separateLines,
         //
         // Add the newline
         //
-        outputBuffer[j++] = '\r';
+//        outputBuffer[j++] = '\r';
         outputBuffer[j++] = '\n';
         lineEnd += lineLength;
     }

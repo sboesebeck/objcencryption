@@ -57,7 +57,7 @@
                 buffer[idx++] = val;
             }
 
-            
+
             if (skip > 0) {
                 skip--;
             } else {

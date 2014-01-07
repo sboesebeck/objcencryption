@@ -28,6 +28,21 @@
     return self.n != nil && self.d != nil;
 }
 
+
++ (BOOL)isValidData:(NSData *)data {
+    char *arr = malloc(4);
+    arr[0] = arr[1] = arr[2] = arr[3] = 0;
+    NSRange range = NSMakeRange(0, 4);
+    [data getBytes:arr range:range];
+    //1st int is always 00000004 => length of the integer
+    if (arr[0] == arr[1] == arr[2] == 0 && arr[3] == 4) {
+        free(arr);
+        return YES;
+    }
+    free(arr);
+    return NO;
+}
+
 - (BOOL)hasPublicKey {
     return self.n != nil && self.e != nil;
 }
@@ -245,7 +260,7 @@
             dispatch_semaphore_signal(semaphore);
         };
 
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, NULL), block);
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block);
 
 
     }
