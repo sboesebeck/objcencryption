@@ -106,7 +106,14 @@ char *Kd;
  *  Used to implement multiplication in GF(2^8).
  */
 
+- (id)init {
+    self = [super init];
+    if (self) {
+        [self alog];
+    }
 
+    return self;
+}
 
 
 /**
@@ -378,10 +385,10 @@ char *Kd;
             t3 = (char) (S[old0 & 0xFF]);
         } else if ((Nk > 6) && (i % Nk == 4)) {
             // temp = SubWord(temp)
-            t0 = S[t0 & 0xFF];
-            t1 = S[t1 & 0xFF];
-            t2 = S[t2 & 0xFF];
-            t3 = S[t3 & 0xFF];
+            t0 = (char) S[t0 & 0xFF];
+            t1 = (char) S[t1 & 0xFF];
+            t2 = (char) S[t2 & 0xFF];
+            t3 = (char) S[t3 & 0xFF];
         }
         // w[i] = w[i-Nk] ^ temp
         w0[i] = (char) (w0[i - Nk] ^ t0);
@@ -408,6 +415,7 @@ char *Kd;
     free(w1);
     free(w2);
     free(w3);
+//    NSLog(@"wait");
 
 }
 
@@ -438,11 +446,13 @@ char *Kd;
 //        return static_byteArrayToString(res);
 //    }
 - (NSData *)encrypt:(NSData *)data {
+//    NSLog(@"Data: %@",[data hexDump:NO]);
+//    NSLog(@"Encrypted length: ");
+    NSMutableData *ret = [[NSMutableData alloc] init];
     char *r = malloc(data.length + 4);
     [AES fillInteger:data.length into:r atPos:0];
-    memcpy(r + 4, data.bytes, data.length);
-//    NSLog(@"Encrypted length: %d",data.length);
-    NSMutableData *ret = [[NSMutableData alloc] init];
+    char *dat = data.bytes;
+    memcpy(r + 4, dat, data.length);
     char *block = malloc(BLOCK_SIZE);
     for (int i = 0; i < data.length + 4; i += BLOCK_SIZE) {
         for (int j = 0; j < BLOCK_SIZE; j++) block[j] = 0;
@@ -457,7 +467,7 @@ char *Kd;
         NSLog(@"Clear: %@", [[[NSData alloc] initWithBytes:block length:BLOCK_SIZE] hexDump:NO]);
         NSLog(@"part : %@", [[[NSData alloc] initWithBytes:part length:BLOCK_SIZE] hexDump:NO]);
         char *dec = [self decryptBlock:part];
-        NSLog(@"dec : %@", [[[NSData alloc] initWithBytes:dec length:BLOCK_SIZE] hexDump:NO]);
+        NSLog(@"dec  : %@", [[[NSData alloc] initWithBytes:dec length:BLOCK_SIZE] hexDump:NO]);
         NSLog(@"\n");
         free(part);
     }

@@ -505,7 +505,7 @@
     [aes setEncryptionKey:[@"the secret key!!the secret key!!" dataUsingEncoding:NSUTF8StringEncoding]];
     char *dat = malloc(16);
     for (int i = 1; i <= 16; i++) {
-        dat[i - 1] = (char) i;
+        dat[i - 1] = (char) i * 16 - 1;
     }
     NSData *b = [[NSData alloc] initWithBytes:dat length:16];
     NSLog(@"Cleartext: %@", [b hexDump:NO]);
@@ -521,7 +521,7 @@
         if (i < 10) {
             dat[i - 1] = (char) 0;
         } else {
-            dat[i - 1] = (char) i;
+            dat[i - 1] = (char) i * 16 - 1;
         }
     }
     b = [[NSData alloc] initWithBytes:dat length:16];
@@ -537,7 +537,7 @@
         if (i > 10) {
             dat[i - 1] = (char) 0;
         } else {
-            dat[i - 1] = (char) i;
+            dat[i - 1] = (char) i * 16 - 1;
         }
     }
     b = [[NSData alloc] initWithBytes:dat length:16];
@@ -554,9 +554,11 @@
 - (void)testAesBig {
     NSString *str = @"This is a long text! This is a long text! This is a long text! This is a long text! This is a long text! This is a long text! This is a long text! ";
     AES *aes = [[AES alloc] init];
+//    NSLog(@"again");
     [aes setEncryptionKey:[@"the secret key!!the secret key!!" dataUsingEncoding:NSUTF8StringEncoding]];
-
-    NSData *enc = [aes encrypt:[str dataUsingEncoding:NSUTF8StringEncoding]];
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+//    NSLog(@"Set encryption key... finished");
+    NSData *enc = [aes encrypt:data];
 //    NSLog(@"Encrypted: %@",[enc hexDump:NO]);
     NSData *dec = [aes decrypt:enc];
     NSString *decStr = [[NSString alloc] initWithData:dec encoding:NSUTF8StringEncoding];
