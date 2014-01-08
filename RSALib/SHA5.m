@@ -96,7 +96,7 @@ const int64_t COUNT_MASK = 127; // block size - 1
  * @return x right shift for s times
  */
 + (int64_t)lf_R_x:(int64_t)x s:(int)s {
-    return (x >> s) & 0x7FFFFFFFFFFFFFFF;
+    return (((uint64_t) x) >> s) & 0x7FFFFFFFFFFFFFFF;
 }
 
 /**
@@ -106,8 +106,8 @@ const int64_t COUNT_MASK = 127; // block size - 1
  * @param s int
  * @return x circular right shift for s times
  */
-+ (int64_t)lf_S_x:(int64_t)x s:(int)s {
-    return ((x >> s) & 0x7FFFFFFFFFFFFFFF) | (x << (64 - s));
++ (int64_t)lfS_x:(int64_t)x s:(int)s {
+    return ((((uint64_t) x) >> s) & 0x7FFFFFFFFFFFFFFF) | (((uint64_t) x) << (64 - s));
 }
 
 /**
@@ -117,7 +117,7 @@ const int64_t COUNT_MASK = 127; // block size - 1
  * @return S(x, 28) xor S(x,34) xor S(x,39)
  */
 + (int64_t)lf_sigma0:(int64_t)x {
-    return [SHA5 lf_S_x:x s:28] ^ [SHA5 lf_S_x:x s:34] ^ [SHA5 lf_S_x:x s:39];
+    return [SHA5 lfS_x:x s:28] ^ [SHA5 lfS_x:x s:34] ^ [SHA5 lfS_x:x s:39];
 }
 
 /**
@@ -127,7 +127,7 @@ const int64_t COUNT_MASK = 127; // block size - 1
  * @return S(x, 14) xor S(x,18) xor S(x,41)
  */
 + (int64_t)lf_sigma1:(int64_t)x {
-    return [SHA5 lf_S_x:x s:14] ^ [SHA5 lf_S_x:x s:18] ^ [SHA5 lf_S_x:x s:41];
+    return [SHA5 lfS_x:x s:14] ^ [SHA5 lfS_x:x s:18] ^ [SHA5 lfS_x:x s:41];
 }
 
 /**
@@ -137,7 +137,7 @@ const int64_t COUNT_MASK = 127; // block size - 1
  * @return int64_t
  */
 + (int64_t)lf_delta0:(int64_t)x {
-    return [SHA5 lf_S_x:x s:1] ^ [SHA5 lf_S_x:x s:8] ^ [SHA5 lf_R_x:x s:7];
+    return [SHA5 lfS_x:x s:1] ^ [SHA5 lfS_x:x s:8] ^ [SHA5 lf_R_x:x s:7];
 }
 
 /**
@@ -147,7 +147,8 @@ const int64_t COUNT_MASK = 127; // block size - 1
  * @return int64_t
  */
 + (int64_t)lf_delta1:(int64_t)x {
-    return [SHA5 lf_S_x:x s:19] ^ [SHA5 lf_S_x:x s:61] ^ [SHA5 lf_R_x:x s:6];
+    int64_t d1 = [SHA5 lfS_x:x s:19];
+    return d1 ^ [SHA5 lfS_x:x s:61] ^ [SHA5 lf_R_x:x s:6];
 }
 
 
@@ -174,7 +175,7 @@ const int64_t COUNT_MASK = 127; // block size - 1
     /* compute word index within the block and bit offset within the word.
        block size is 128 bytes with word size is 8 bytes. offset is in
        terms of bits */
-    word = (int) ((self.count & COUNT_MASK) >> 3) & 0x7FFFFFFF;
+    word = (int) (((unsigned int) (self.count & COUNT_MASK)) >> 3) & 0x7FFFFFFF;
     offset = (int) (~self.count & 7) << 3;
 
     // clear the byte inside W[word] and then 'or' it with b's byte value
@@ -342,72 +343,72 @@ const int64_t COUNT_MASK = 127; // block size - 1
     // Copy out the result
     switch (resultLength) {
         case 64:
-            hashvalue[offset + 63] = (char) ((self.HH >> 0) & 0x7F);
-            hashvalue[offset + 62] = (char) ((self.HH >> 8)& 0x7F);
-            hashvalue[offset + 61] = (char) ((self.HH >> 16)& 0x7F);
-            hashvalue[offset + 60] = (char) ((self.HH >> 24)& 0x7F);
-            hashvalue[offset + 59] = (char) ((self.HH >> 32)& 0x7F);
-            hashvalue[offset + 58] = (char) ((self.HH >> 40)& 0x7F);
-            hashvalue[offset + 57] = (char) ((self.HH >> 48)& 0x7F);
-            hashvalue[offset + 56] = (char) ((self.HH >> 56)& 0x7F);
-            hashvalue[offset + 55] = (char) ((self.GG >> 0)& 0x7F);
-            hashvalue[offset + 54] = (char) ((self.GG >> 8)& 0x7F);
-            hashvalue[offset + 53] = (char) ((self.GG >> 16)& 0x7F);
-            hashvalue[offset + 52] = (char) ((self.GG >> 24)& 0x7F);
-            hashvalue[offset + 51] = (char) ((self.GG >> 32)& 0x7F);
-            hashvalue[offset + 50] = (char) ((self.GG >> 40)& 0x7F);
-            hashvalue[offset + 49] = (char) ((self.GG >> 48)& 0x7F);
-            hashvalue[offset + 48] = (char) ((self.GG >> 56)& 0x7F);
+            hashvalue[offset + 63] = (char) (((uint64_t) self.HH) >> 0);
+            hashvalue[offset + 62] = (char) (((uint64_t) self.HH) >> 8);
+            hashvalue[offset + 61] = (char) (((uint64_t) self.HH) >> 16);
+            hashvalue[offset + 60] = (char) (((uint64_t) self.HH) >> 24);
+            hashvalue[offset + 59] = (char) (((uint64_t) self.HH) >> 32);
+            hashvalue[offset + 58] = (char) (((uint64_t) self.HH) >> 40);
+            hashvalue[offset + 57] = (char) (((uint64_t) self.HH) >> 48);
+            hashvalue[offset + 56] = (char) (((uint64_t) self.HH) >> 56);
+            hashvalue[offset + 55] = (char) (((uint64_t) self.GG) >> 0);
+            hashvalue[offset + 54] = (char) (((uint64_t) self.GG) >> 8);
+            hashvalue[offset + 53] = (char) (((uint64_t) self.GG) >> 16);
+            hashvalue[offset + 52] = (char) (((uint64_t) self.GG) >> 24);
+            hashvalue[offset + 51] = (char) (((uint64_t) self.GG) >> 32);
+            hashvalue[offset + 50] = (char) (((uint64_t) self.GG) >> 40);
+            hashvalue[offset + 49] = (char) (((uint64_t) self.GG) >> 48);
+            hashvalue[offset + 48] = (char) (((uint64_t) self.GG) >> 56);
         case 48:
-            hashvalue[offset + 47] = (char) ((self.FF >> 0)& 0x7F);
-            hashvalue[offset + 46] = (char) ((self.FF >> 8)& 0x7F);
-            hashvalue[offset + 45] = (char) ((self.FF >> 16)& 0x7F);
-            hashvalue[offset + 44] = (char) ((self.FF >> 24) & 0x7F);
-            hashvalue[offset + 43] = (char) ((self.FF >> 32) & 0x7F);
-            hashvalue[offset + 42] = (char) ((self.FF >> 40) & 0x7F);
-            hashvalue[offset + 41] = (char) ((self.FF >> 48) & 0x7F);
-            hashvalue[offset + 40] = (char) ((self.FF >> 56) & 0x7F);
-            hashvalue[offset + 39] = (char) ((self.EE >> 0) & 0x7F);
-            hashvalue[offset + 38] = (char) ((self.EE >> 8) & 0x7F);
-            hashvalue[offset + 37] = (char) ((self.EE >> 16) & 0x7F);
-            hashvalue[offset + 36] = (char) ((self.EE >> 24) & 0x7F);
-            hashvalue[offset + 35] = (char) ((self.EE >> 32) & 0x7F);
-            hashvalue[offset + 34] = (char) ((self.EE >> 40) & 0x7F);
-            hashvalue[offset + 33] = (char) ((self.EE >> 48) & 0x7F);
-            hashvalue[offset + 32] = (char) ((self.EE >> 56) & 0x7F);
+            hashvalue[offset + 47] = (char) (((uint64_t) self.FF) >> 0);
+            hashvalue[offset + 46] = (char) (((uint64_t) self.FF) >> 8);
+            hashvalue[offset + 45] = (char) (((uint64_t) self.FF) >> 16);
+            hashvalue[offset + 44] = (char) (((uint64_t) self.FF) >> 24);
+            hashvalue[offset + 43] = (char) (((uint64_t) self.FF) >> 32);
+            hashvalue[offset + 42] = (char) (((uint64_t) self.FF) >> 40);
+            hashvalue[offset + 41] = (char) (((uint64_t) self.FF) >> 48);
+            hashvalue[offset + 40] = (char) (((uint64_t) self.FF) >> 56);
+            hashvalue[offset + 39] = (char) (((uint64_t) self.EE) >> 0);
+            hashvalue[offset + 38] = (char) (((uint64_t) self.EE) >> 8);
+            hashvalue[offset + 37] = (char) (((uint64_t) self.EE) >> 16);
+            hashvalue[offset + 36] = (char) (((uint64_t) self.EE) >> 24);
+            hashvalue[offset + 35] = (char) (((uint64_t) self.EE) >> 32);
+            hashvalue[offset + 34] = (char) (((uint64_t) self.EE) >> 40);
+            hashvalue[offset + 33] = (char) (((uint64_t) self.EE) >> 48);
+            hashvalue[offset + 32] = (char) (((uint64_t) self.EE) >> 56);
         case 32:
-            hashvalue[offset + 31] = (char) ((self.DD >> 0) & 0x7F);
-            hashvalue[offset + 30] = (char) ((self.DD >> 8) & 0x7F);
-            hashvalue[offset + 29] = (char) ((self.DD >> 16) & 0x7F);
-            hashvalue[offset + 28] = (char) ((self.DD >> 24) & 0x7F);
-            hashvalue[offset + 27] = (char) ((self.DD >> 32) & 0x7F);
-            hashvalue[offset + 26] = (char) ((self.DD >> 40) & 0x7F);
-            hashvalue[offset + 25] = (char) ((self.DD >> 48)& 0x7F);
-            hashvalue[offset + 24] = (char) ((self.DD >> 56)& 0x7F);
-            hashvalue[offset + 23] = (char) ((self.CC >> 0)& 0x7F);
-            hashvalue[offset + 22] = (char) ((self.CC >> 8)& 0x7F);
-            hashvalue[offset + 21] = (char) ((self.CC >> 16)& 0x7F);
-            hashvalue[offset + 20] = (char) ((self.CC >> 24)& 0x7F);
-            hashvalue[offset + 19] = (char) ((self.CC >> 32)& 0x7F);
-            hashvalue[offset + 18] = (char) ((self.CC >> 40)& 0x7F);
-            hashvalue[offset + 17] = (char) ((self.CC >> 48)& 0x7F);
-            hashvalue[offset + 16] = (char) ((self.CC >> 56)& 0x7F);
-            hashvalue[offset + 15] = (char) ((self.BB >> 0)& 0x7F);
-            hashvalue[offset + 14] = (char) ((self.BB >> 8)& 0x7F);
-            hashvalue[offset + 13] = (char) ((self.BB >> 16)& 0x7F);
-            hashvalue[offset + 12] = (char) ((self.BB >> 24)& 0x7F);
-            hashvalue[offset + 11] = (char) ((self.BB >> 32)& 0x7F);
-            hashvalue[offset + 10] = (char) ((self.BB >> 40)& 0x7F);
-            hashvalue[offset + 9] = (char) ((self.BB >> 48)& 0x7F);
-            hashvalue[offset + 8] = (char) ((self.BB >> 56)& 0x7F);
-            hashvalue[offset + 7] = (char) ((self.AA >> 0)& 0x7F);
-            hashvalue[offset + 6] = (char) ((self.AA >> 8)& 0x7F);
-            hashvalue[offset + 5] = (char) ((self.AA >> 16)& 0x7F);
-            hashvalue[offset + 4] = (char) ((self.AA >> 24)& 0x7F);
-            hashvalue[offset + 3] = (char) ((self.AA >> 32)& 0x7F);
-            hashvalue[offset + 2] = (char) ((self.AA >> 40)& 0x7F);
-            hashvalue[offset + 1] = (char) ((self.AA >> 48)& 0x7F);
-            hashvalue[offset + 0] = (char) ((self.AA >> 56)& 0x7F);
+            hashvalue[offset + 31] = (char) (((uint64_t) self.DD) >> 0);
+            hashvalue[offset + 30] = (char) (((uint64_t) self.DD) >> 8);
+            hashvalue[offset + 29] = (char) (((uint64_t) self.DD) >> 16);
+            hashvalue[offset + 28] = (char) (((uint64_t) self.DD) >> 24);
+            hashvalue[offset + 27] = (char) (((uint64_t) self.DD) >> 32);
+            hashvalue[offset + 26] = (char) (((uint64_t) self.DD) >> 40);
+            hashvalue[offset + 25] = (char) (((uint64_t) self.DD) >> 48);
+            hashvalue[offset + 24] = (char) (((uint64_t) self.DD) >> 56);
+            hashvalue[offset + 23] = (char) (((uint64_t) self.CC) >> 0);
+            hashvalue[offset + 22] = (char) (((uint64_t) self.CC) >> 8);
+            hashvalue[offset + 21] = (char) (((uint64_t) self.CC) >> 16);
+            hashvalue[offset + 20] = (char) (((uint64_t) self.CC) >> 24);
+            hashvalue[offset + 19] = (char) (((uint64_t) self.CC) >> 32);
+            hashvalue[offset + 18] = (char) (((uint64_t) self.CC) >> 40);
+            hashvalue[offset + 17] = (char) (((uint64_t) self.CC) >> 48);
+            hashvalue[offset + 16] = (char) (((uint64_t) self.CC) >> 56);
+            hashvalue[offset + 15] = (char) (((uint64_t) self.BB) >> 0);
+            hashvalue[offset + 14] = (char) (((uint64_t) self.BB) >> 8);
+            hashvalue[offset + 13] = (char) (((uint64_t) self.BB) >> 16);
+            hashvalue[offset + 12] = (char) (((uint64_t) self.BB) >> 24);
+            hashvalue[offset + 11] = (char) (((uint64_t) self.BB) >> 32);
+            hashvalue[offset + 10] = (char) (((uint64_t) self.BB) >> 40);
+            hashvalue[offset + 9] = (char) (((uint64_t) self.BB) >> 48);
+            hashvalue[offset + 8] = (char) (((uint64_t) self.BB) >> 56);
+            hashvalue[offset + 7] = (char) (((uint64_t) self.AA) >> 0);
+            hashvalue[offset + 6] = (char) (((uint64_t) self.AA) >> 8);
+            hashvalue[offset + 5] = (char) (((uint64_t) self.AA) >> 16);
+            hashvalue[offset + 4] = (char) (((uint64_t) self.AA) >> 24);
+            hashvalue[offset + 3] = (char) (((uint64_t) self.AA) >> 32);
+            hashvalue[offset + 2] = (char) (((uint64_t) self.AA) >> 40);
+            hashvalue[offset + 1] = (char) (((uint64_t) self.AA) >> 48);
+            hashvalue[offset + 0] = (char) (((uint64_t) self.AA) >> 56);
             break;
         default:
             @throw [NSException exceptionWithName:@"Error" reason:@"Unsupported Digest length" userInfo:nil];
@@ -428,7 +429,9 @@ const int64_t COUNT_MASK = 127; // block size - 1
     // The first 16 int64_ts are from the byte stream, compute the rest of
     // the W[]'s
     for (int t = 16; t < ITERATION; t++) {
-        self.W[t] = [SHA5 lf_delta1:self.W[t - 2]] + self.W[t - 7] + [SHA5 lf_delta0:self.W[t - 15]] + self.W[t - 16];
+        int64_t d1 = [SHA5 lf_delta1:self.W[t - 2]];
+        int64_t d2 = [SHA5 lf_delta0:self.W[t - 15]];
+        self.W[t] = d1 + self.W[t - 7] + d2 + self.W[t - 16];
     }
 
     a = self.AA;

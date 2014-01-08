@@ -9,6 +9,8 @@
 @interface SHA5 : NSObject
 + (NSData *)hash:(NSData *)data;
 
++ (int64_t)lf_delta1:(int64_t)x;
+
 - (void)engineUpdate:(char)b;
 
 - (void)engineUpdate:(char *)b off:(int)off len:(int)len;

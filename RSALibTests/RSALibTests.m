@@ -617,4 +617,10 @@
 
 }
 
+- (void)testlf_delta {
+    int64_t w = -6739068508724883454;
+    int64_t ret = [SHA5 lf_delta1:w];
+    NSLog(@"%D", ret);
+}
+
 @end
