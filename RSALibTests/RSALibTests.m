@@ -510,12 +510,14 @@
     NSData *b = [[NSData alloc] initWithBytes:dat length:16];
     NSLog(@"Cleartext: %@", [b hexDump:NO]);
     char *enc = [aes encryptBlock:dat];
-    NSLog(@"Encrypted: %@", [[[NSData alloc] initWithBytes:enc length:16] hexDump:NO]);
+    NSString *dump = [[[NSData alloc] initWithBytes:enc length:16] hexDump:NO];
+    NSLog(@"Encrypted: %@", dump);
+    XCTAssertEqualObjects(@"2C5D1AC49ABB4E3CC6E3E31524A03AEE", dump, @"Not equal");
     char *dec = [aes decryptBlock:enc];
     NSString *string = [[[NSData alloc] initWithBytes:dec length:16] hexDump:NO];
     NSLog(@"Decrypted: %@", string);
 
-    XCTAssertEqualObjects(string, [b hexDump:NO], "%@ != %@", string, [b hexDump:NO]);
+    XCTAssertEqualObjects(string, [b hexDump:NO], @"%@ != %@", string, [b hexDump:NO]);
 
     for (int i = 1; i <= 16; i++) {
         if (i < 10) {
@@ -554,7 +556,6 @@
 - (void)testAesBig {
     NSString *str = @"This is a long text! This is a long text! This is a long text! This is a long text! This is a long text! This is a long text! This is a long text! ";
     AES *aes = [[AES alloc] init];
-//    NSLog(@"again");
     [aes setEncryptionKey:[@"the secret key!!the secret key!!" dataUsingEncoding:NSUTF8StringEncoding]];
     NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
 //    NSLog(@"Set encryption key... finished");
@@ -563,5 +564,23 @@
     NSData *dec = [aes decrypt:enc];
     NSString *decStr = [[NSString alloc] initWithData:dec encoding:NSUTF8StringEncoding];
     NSLog(@"Decoded %@", decStr);
+    XCTAssertEqualObjects(decStr, str, @"Decryption failed");
+
+    NSLog(@"Creating very long string...");
+    //VERY long text
+    for (int i = 0; i < 10; i++) {
+        str = [str stringByAppendingString:str];
+    }
+    data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"Encrypting..");
+//    NSLog(@"Set encryption key... finished");
+    enc = [aes encrypt:data];
+//    NSLog(@"Encrypted: %@",[enc hexDump:NO]);
+    NSLog(@"Decrypting..");
+    dec = [aes decrypt:enc];
+    decStr = [[NSString alloc] initWithData:dec encoding:NSUTF8StringEncoding];
+    //NSLog(@"Decoded %@", decStr);
+    XCTAssertEqualObjects(decStr, str, @"Decryption failed");
+    NSLog(@"Done!");
 }
 @end

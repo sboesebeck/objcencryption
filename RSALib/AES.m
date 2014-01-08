@@ -4,7 +4,6 @@
 //
 
 #import "AES.h"
-#import "NSData+HexDump.h"
 
 @interface AES ()
 @property int *log;
@@ -109,7 +108,7 @@ char *Kd;
 - (id)init {
     self = [super init];
     if (self) {
-        [self alog];
+        self.alog;
     }
 
     return self;
@@ -160,6 +159,7 @@ char *Kd;
     // define working variables
     char *a = malloc(BLOCK_SIZE);    // AES state variable
     char *ta = malloc(BLOCK_SIZE);    // AES temp state variable
+    for (int i = 0; i < BLOCK_SIZE; i++) a[i] = ta[i] = 0;
     char *Ker;                // encrypt keys for current round
     int i, k, row, col;
 
@@ -178,7 +178,7 @@ char *Kd;
         Ker = Ke + r * BLOCK_SIZE;            // get session keys for this round
 
         // SubBytes(state) into ta using S-Box S
-        for (i = 0; i < BLOCK_SIZE; i++) ta[i] = S[a[i] & 0xFF];
+        for (i = 0; i < BLOCK_SIZE; i++) ta[i] = (char) S[a[i] & 0xFF];
 
         // ShiftRows(state) into a
         for (i = 0; i < BLOCK_SIZE; i++) {
@@ -252,6 +252,8 @@ char *Kd;
     // define working variables
     char *a = malloc(BLOCK_SIZE);    // AES state variable
     char *ta = malloc(BLOCK_SIZE);    // AES temp state variable
+    for (int i = 0; i < BLOCK_SIZE; i++) ta[i] = a[i] = 0;
+
     char *Kdr;                // encrypt keys for current round
     int i, j, k, row, col;
 
@@ -355,10 +357,12 @@ char *Kd;
     char *w1 = malloc((size_t) ROUND_KEY_COUNT);
     char *w2 = malloc((size_t) ROUND_KEY_COUNT);
     char *w3 = malloc((size_t) ROUND_KEY_COUNT);
+    for (int i = 0; i < ROUND_KEY_COUNT; i++) w0[i] = w1[i] = w2[i] = w3[i] = 0;
 
     // allocate arrays to hold en/decrypt session keys (by byte rather than word)
     Ke = malloc((size_t) ((numRounds + 1) * BLOCK_SIZE)); // encryption round keys
     Kd = malloc((size_t) ((numRounds + 1) * BLOCK_SIZE)); // decryption round keys
+    for (int i = 0; i < ((numRounds + 1) * BLOCK_SIZE); i++) Ke[i] = Kd[i] = 0;
 
     // copy key into start of session array (by word, each byte in own array)
     char *keyDat = key.bytes;
@@ -408,15 +412,19 @@ char *Kd;
             Kd[(numRounds - r) * BLOCK_SIZE + 4 * j + 1] = w1[i];
             Kd[(numRounds - r) * BLOCK_SIZE + 4 * j + 2] = w2[i];
             Kd[(numRounds - r) * BLOCK_SIZE + 4 * j + 3] = w3[i];
+
+
             i++;
         }
     }
+//    NSLog(@"WL0: %@", [[[NSData alloc] initWithBytes:w0 length:ROUND_KEY_COUNT] hexDump:NO]);
+//    NSLog(@"WL1: %@", [[[NSData alloc] initWithBytes:w1 length:ROUND_KEY_COUNT] hexDump:NO]);
+//    NSLog(@"WL2: %@", [[[NSData alloc] initWithBytes:w2 length:ROUND_KEY_COUNT] hexDump:NO]);
+//    NSLog(@"WL3: %@", [[[NSData alloc] initWithBytes:w3 length:ROUND_KEY_COUNT] hexDump:NO]);
     free(w0);
     free(w1);
     free(w2);
     free(w3);
-//    NSLog(@"wait");
-
 }
 
 
@@ -449,26 +457,28 @@ char *Kd;
 //    NSLog(@"Data: %@",[data hexDump:NO]);
 //    NSLog(@"Encrypted length: ");
     NSMutableData *ret = [[NSMutableData alloc] init];
-    char *r = malloc(data.length + 4);
+    NSUInteger newLen = data.length + 4;
+    char *r = malloc(newLen);
+    for (int i = 0; i < newLen; i++) r[i] = 0;
     [AES fillInteger:data.length into:r atPos:0];
     char *dat = data.bytes;
     memcpy(r + 4, dat, data.length);
     char *block = malloc(BLOCK_SIZE);
-    for (int i = 0; i < data.length + 4; i += BLOCK_SIZE) {
+    for (int i = 0; i < newLen; i += BLOCK_SIZE) {
         for (int j = 0; j < BLOCK_SIZE; j++) block[j] = 0;
 
         int l = BLOCK_SIZE;
-        if (i + BLOCK_SIZE > (data.length + 4)) {
-            l = (data.length + 4) - i;
+        if (i + BLOCK_SIZE > newLen) {
+            l = newLen - i;
         }
         memcpy(block, r + i, l);
         char *part = [self encryptBlock:block];
         [ret appendBytes:part length:BLOCK_SIZE];
-        NSLog(@"Clear: %@", [[[NSData alloc] initWithBytes:block length:BLOCK_SIZE] hexDump:NO]);
-        NSLog(@"part : %@", [[[NSData alloc] initWithBytes:part length:BLOCK_SIZE] hexDump:NO]);
-        char *dec = [self decryptBlock:part];
-        NSLog(@"dec  : %@", [[[NSData alloc] initWithBytes:dec length:BLOCK_SIZE] hexDump:NO]);
-        NSLog(@"\n");
+//        NSLog(@"Clear: %@", [[[NSData alloc] initWithBytes:block length:BLOCK_SIZE] hexDump:NO]);
+//        NSLog(@"part : %@", [[[NSData alloc] initWithBytes:part length:BLOCK_SIZE] hexDump:NO]);
+//        char *dec = [self decryptBlock:part];
+//        NSLog(@"dec  : %@", [[[NSData alloc] initWithBytes:dec length:BLOCK_SIZE] hexDump:NO]);
+//        NSLog(@"\n");
         free(part);
     }
     free(r);
@@ -541,6 +551,10 @@ char *Kd;
     if (!_log) {
         _log = malloc(sizeof(int) * 256);
         _alog = malloc(sizeof(int) * 256);
+        for (int i = 0; i < 256; i++) {
+            _log[i] = _alog[i] = 0;
+        }
+
         int i, j;
         // produce log and alog tables, needed for multiplying in the field GF(2^8)
         _alog[0] = 1;
