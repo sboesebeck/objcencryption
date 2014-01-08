@@ -2,12 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dff3438c-0a76-4b8f-ae57-662dbe925d61" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/RSALib/SHA3.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/RSALib/SHA3.m" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/RSALib/SHA5.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/RSALib/SHA5.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/RSALibTests/RSALibTests.m" afterPath="$PROJECT_DIR$/RSALibTests/RSALibTests.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/RSALib.xcodeproj/project.pbxproj" afterPath="$PROJECT_DIR$/RSALib.xcodeproj/project.pbxproj" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="RSALib.iws" />
@@ -34,7 +28,7 @@
       <file leaf-file-name="RSALibTests.m" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/RSALibTests/RSALibTests.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="596" column="82" selection-start="21705" selection-end="21705" vertical-scroll-proportion="0.7565543" vertical-offset="8416" max-vertical-offset="9285">
+            <state line="588" column="18" selection-start="21412" selection-end="21412" vertical-scroll-proportion="0.5318352" vertical-offset="8416" max-vertical-offset="9270">
               <folding />
             </state>
           </provider>
@@ -72,7 +66,7 @@
       <file leaf-file-name="SHA3.m" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/RSALib/SHA3.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="32" selection-start="175" selection-end="181" vertical-scroll-proportion="-4.8" vertical-offset="0" max-vertical-offset="1530">
+            <state line="8" column="31" selection-start="174" selection-end="180" vertical-scroll-proportion="-4.8" vertical-offset="0" max-vertical-offset="1530">
               <folding />
             </state>
           </provider>
@@ -81,7 +75,7 @@
       <file leaf-file-name="SHA5.m" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/RSALib/SHA5.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="315" column="0" selection-start="8622" selection-end="8622" vertical-scroll-proportion="0.0" vertical-offset="4528" max-vertical-offset="7200">
+            <state line="315" column="0" selection-start="8638" selection-end="8638" vertical-scroll-proportion="0.0" vertical-offset="4528" max-vertical-offset="7200">
               <folding />
             </state>
           </provider>
@@ -476,7 +470,11 @@
       <created>1389167857078</created>
       <updated>1389167857078</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="own implementation of SHA3/5.. works. but different to Java">
+      <created>1389178783076</created>
+      <updated>1389178783076</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -491,7 +489,7 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39768785" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33526012" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33526012" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32921812" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Dilbert" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -546,7 +544,8 @@
     <MESSAGE value="all fine for now" />
     <MESSAGE value="fixed memory holes" />
     <MESSAGE value="aes" />
-    <option name="LAST_COMMIT_MESSAGE" value="aes" />
+    <MESSAGE value="own implementation of SHA3/5.. works. but different to Java" />
+    <option name="LAST_COMMIT_MESSAGE" value="own implementation of SHA3/5.. works. but different to Java" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -652,7 +651,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/RSALib/SHA5.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="315" column="0" selection-start="8622" selection-end="8622" vertical-scroll-proportion="0.0" vertical-offset="4528" max-vertical-offset="7200">
+        <state line="315" column="0" selection-start="8638" selection-end="8638" vertical-scroll-proportion="0.0" vertical-offset="4528" max-vertical-offset="7200">
           <folding />
         </state>
       </provider>
@@ -668,14 +667,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/RSALib/SHA3.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="32" selection-start="175" selection-end="181" vertical-scroll-proportion="-4.8" vertical-offset="0" max-vertical-offset="1530">
+        <state line="8" column="31" selection-start="174" selection-end="180" vertical-scroll-proportion="-4.8" vertical-offset="0" max-vertical-offset="1530">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/RSALibTests/RSALibTests.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="596" column="82" selection-start="21705" selection-end="21705" vertical-scroll-proportion="0.7565543" vertical-offset="8416" max-vertical-offset="9285">
+        <state line="588" column="18" selection-start="21412" selection-end="21412" vertical-scroll-proportion="0.5318352" vertical-offset="8416" max-vertical-offset="9270">
           <folding />
         </state>
       </provider>
