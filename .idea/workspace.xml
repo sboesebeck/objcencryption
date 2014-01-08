@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dff3438c-0a76-4b8f-ae57-662dbe925d61" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/RSALib/SHA5.m" afterPath="$PROJECT_DIR$/RSALib/SHA5.m" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="RSALib.iws" />
@@ -74,7 +73,7 @@
       <file leaf-file-name="SHA5.m" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/RSALib/SHA5.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="349" column="68" selection-start="9859" selection-end="9859" vertical-scroll-proportion="0.48387095" vertical-offset="4995" max-vertical-offset="7200">
+            <state line="347" column="68" selection-start="9724" selection-end="9724" vertical-scroll-proportion="0.4233871" vertical-offset="4995" max-vertical-offset="7200">
               <folding />
             </state>
           </provider>
@@ -472,7 +471,11 @@
       <created>1389178783076</created>
       <updated>1389178783076</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="not working">
+      <created>1389197707555</created>
+      <updated>1389197707555</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -543,7 +546,8 @@
     <MESSAGE value="fixed memory holes" />
     <MESSAGE value="aes" />
     <MESSAGE value="own implementation of SHA3/5.. works. but different to Java" />
-    <option name="LAST_COMMIT_MESSAGE" value="own implementation of SHA3/5.. works. but different to Java" />
+    <MESSAGE value="not working" />
+    <option name="LAST_COMMIT_MESSAGE" value="not working" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -666,7 +670,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/RSALib/SHA5.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="349" column="68" selection-start="9859" selection-end="9859" vertical-scroll-proportion="0.48387095" vertical-offset="4995" max-vertical-offset="7200">
+        <state line="347" column="68" selection-start="9724" selection-end="9724" vertical-scroll-proportion="0.4233871" vertical-offset="4995" max-vertical-offset="7200">
           <folding />
         </state>
       </provider>
