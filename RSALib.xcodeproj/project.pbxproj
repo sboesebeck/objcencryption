@@ -8,12 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		8F2280A6FC0E62E1BF9E5C69 /* AES.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F22850A3A066568CC22CE57 /* AES.m */; };
+		8F2280EEA109D4A068B1C7CC /* SHA3.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F228572416CBD6B4B364869 /* SHA3.h */; };
 		8F22813E256EC3F56FF30717 /* BigInteger.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F22815A8FF8E85E12D8E37A /* BigInteger.m */; };
 		8F22817847915CA0B487314D /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F2287F741EA980785B703A1 /* NSData+MD5.m */; };
 		8F2281CD9454860A600AD128 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228C9950B6C3E4EEDC2FF3 /* NSString+MD5.m */; };
 		8F2281D10033531A9C0C33A4 /* RSA.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F2286325E144B24E23D8A32 /* RSA.h */; };
 		8F2281D5857E2B5B3CDB95FA /* NSData+AES.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F228CB5C60DA525D1C882EB /* NSData+AES.h */; };
 		8F2282D4D42534DFB15E64D3 /* MPN.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228E80F1A43E399A4A2B12 /* MPN.m */; };
+		8F2282FEF70FE37BBB86AF71 /* SHA5.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228434C4F1E351CD2BB414 /* SHA5.m */; };
+		8F228409608F4A3E6EAEF03A /* SHA5.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F228D338E33A6955B5F6651 /* SHA5.h */; };
 		8F22846582D3E00F768B67F0 /* MPN.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F22869B972D6C6C0F9A03FC /* MPN.h */; };
 		8F22849F269B999A86391A9E /* NSData+AES.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F2286AE2DD5E92CF3BDD711 /* NSData+AES.m */; };
 		8F228542E517C11775B6A4C4 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228C9950B6C3E4EEDC2FF3 /* NSString+MD5.m */; };
@@ -25,21 +28,28 @@
 		8F2286C483B9D53AE52F593A /* RSA.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F2287838750DC74BBF613CC /* RSA.m */; };
 		8F22871125400354C4B1A4E9 /* AES.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F22850A3A066568CC22CE57 /* AES.m */; };
 		8F2287175D3CFCEEC54BBCD4 /* NSData+MD5.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F228F21895C8678E98912F3 /* NSData+MD5.h */; };
+		8F228763DD0AF89C23EA5CF8 /* SHA3.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228E1FE55DCB4A293D2D8A /* SHA3.m */; };
+		8F22878B23FB586F3F6A576D /* SHA3.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228E1FE55DCB4A293D2D8A /* SHA3.m */; };
 		8F2287D808638E76A41DEE30 /* RSA.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F2287838750DC74BBF613CC /* RSA.m */; };
 		8F2287E1596B69F9FCBE58A5 /* RSA.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F2287838750DC74BBF613CC /* RSA.m */; };
 		8F22881C5CC85A402DDB3ABE /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228C9950B6C3E4EEDC2FF3 /* NSString+MD5.m */; };
+		8F228887D0CF5F43A73247C2 /* SHA3.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228E1FE55DCB4A293D2D8A /* SHA3.m */; };
 		8F2288CC432BC7F63D9F4A38 /* AES.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F22850A3A066568CC22CE57 /* AES.m */; };
 		8F228A45B4DB1E804165520A /* NSData+BigInteger.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228F97E6A9CF53912234D3 /* NSData+BigInteger.m */; };
 		8F228A4E0571A0EE8D7AB325 /* NSData+BigInteger.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228F97E6A9CF53912234D3 /* NSData+BigInteger.m */; };
 		8F228AA1F7E4CB1E4A4E26EF /* MPN.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228E80F1A43E399A4A2B12 /* MPN.m */; };
+		8F228AE810B56CBFB038C799 /* SHA5.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228434C4F1E351CD2BB414 /* SHA5.m */; };
 		8F228B3E81F57C54164152F9 /* RSA.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F2287838750DC74BBF613CC /* RSA.m */; };
 		8F228B9BA497B5B54B303F46 /* BigInteger.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F22815A8FF8E85E12D8E37A /* BigInteger.m */; };
 		8F228BC338EF17BEF3612732 /* NSData+HexDump.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F22823AE0B0641980648028 /* NSData+HexDump.m */; };
+		8F228BE7DEB610BB419683A6 /* SHA5.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228434C4F1E351CD2BB414 /* SHA5.m */; };
 		8F228BF800DB7094CBEDFBCE /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F22861636C55E1414179070 /* NSData+Base64.m */; };
 		8F228C11DFE6320DE458A0A4 /* BigInteger.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F22815A8FF8E85E12D8E37A /* BigInteger.m */; };
+		8F228C22C72C583EB69551CB /* SHA3.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228E1FE55DCB4A293D2D8A /* SHA3.m */; };
 		8F228C2581C58BB756DA56CC /* BigInteger.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F228023BFE58302289018F9 /* BigInteger.h */; };
 		8F228C31EC1FC6D91BB6039B /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F22861636C55E1414179070 /* NSData+Base64.m */; };
 		8F228C4BE5EC8E85A3AD1640 /* NSData+BigInteger.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228F97E6A9CF53912234D3 /* NSData+BigInteger.m */; };
+		8F228C5A3843319C41A215D2 /* SHA5.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228434C4F1E351CD2BB414 /* SHA5.m */; };
 		8F228C62CAB0883706BEA603 /* NSData+HexDump.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F228A87D8C5F086F81952A9 /* NSData+HexDump.h */; };
 		8F228C647FE4630DD15A72FA /* NSData+Base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F2286610730582E27FBC71C /* NSData+Base64.h */; };
 		8F228C8A1D5F580889D7CEB2 /* AES.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F2288E77C425D9B326DF9F7 /* AES.h */; };
@@ -110,8 +120,10 @@
 		8F22810F8BF28267F72185FF /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
 		8F22815A8FF8E85E12D8E37A /* BigInteger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BigInteger.m; sourceTree = "<group>"; };
 		8F22823AE0B0641980648028 /* NSData+HexDump.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+HexDump.m"; sourceTree = "<group>"; };
+		8F228434C4F1E351CD2BB414 /* SHA5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHA5.m; sourceTree = "<group>"; };
 		8F22850A3A066568CC22CE57 /* AES.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AES.m; sourceTree = "<group>"; };
 		8F22855BBB1D9BAB557E1816 /* NSData+BigInteger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+BigInteger.h"; sourceTree = "<group>"; };
+		8F228572416CBD6B4B364869 /* SHA3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHA3.h; sourceTree = "<group>"; };
 		8F22861636C55E1414179070 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		8F2286325E144B24E23D8A32 /* RSA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSA.h; sourceTree = "<group>"; };
 		8F2286610730582E27FBC71C /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
@@ -123,6 +135,8 @@
 		8F228A87D8C5F086F81952A9 /* NSData+HexDump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+HexDump.h"; sourceTree = "<group>"; };
 		8F228C9950B6C3E4EEDC2FF3 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
 		8F228CB5C60DA525D1C882EB /* NSData+AES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+AES.h"; sourceTree = "<group>"; };
+		8F228D338E33A6955B5F6651 /* SHA5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHA5.h; sourceTree = "<group>"; };
+		8F228E1FE55DCB4A293D2D8A /* SHA3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHA3.m; sourceTree = "<group>"; };
 		8F228E80F1A43E399A4A2B12 /* MPN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPN.m; sourceTree = "<group>"; };
 		8F228F21895C8678E98912F3 /* NSData+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+MD5.h"; sourceTree = "<group>"; };
 		8F228F97E6A9CF53912234D3 /* NSData+BigInteger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+BigInteger.m"; sourceTree = "<group>"; };
@@ -279,6 +293,10 @@
 				8F2287EEB4CFC1E64E135DA1 /* Categories */,
 				8F22850A3A066568CC22CE57 /* AES.m */,
 				8F2288E77C425D9B326DF9F7 /* AES.h */,
+				8F228434C4F1E351CD2BB414 /* SHA5.m */,
+				8F228D338E33A6955B5F6651 /* SHA5.h */,
+				8F228E1FE55DCB4A293D2D8A /* SHA3.m */,
+				8F228572416CBD6B4B364869 /* SHA3.h */,
 			);
 			path = RSALib;
 			sourceTree = "<group>";
@@ -398,6 +416,8 @@
 				8F2287175D3CFCEEC54BBCD4 /* NSData+MD5.h in Headers */,
 				8F228D992E05DE2EB9AB5DBB /* NSString+MD5.h in Headers */,
 				8F228C8A1D5F580889D7CEB2 /* AES.h in Headers */,
+				8F228409608F4A3E6EAEF03A /* SHA5.h in Headers */,
+				8F2280EEA109D4A068B1C7CC /* SHA3.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -538,6 +558,8 @@
 				8F22817847915CA0B487314D /* NSData+MD5.m in Sources */,
 				8F228FE3E1510F2B71A54CDD /* NSString+MD5.m in Sources */,
 				8F22871125400354C4B1A4E9 /* AES.m in Sources */,
+				8F2282FEF70FE37BBB86AF71 /* SHA5.m in Sources */,
+				8F22878B23FB586F3F6A576D /* SHA3.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -556,6 +578,8 @@
 				8F228660E6E7B6A0B9205C67 /* NSData+MD5.m in Sources */,
 				8F2281CD9454860A600AD128 /* NSString+MD5.m in Sources */,
 				8F2288CC432BC7F63D9F4A38 /* AES.m in Sources */,
+				8F228C5A3843319C41A215D2 /* SHA5.m in Sources */,
+				8F228C22C72C583EB69551CB /* SHA3.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -574,6 +598,8 @@
 				8F228E1CEACDD22375AF278E /* NSData+MD5.m in Sources */,
 				8F22881C5CC85A402DDB3ABE /* NSString+MD5.m in Sources */,
 				8F2280A6FC0E62E1BF9E5C69 /* AES.m in Sources */,
+				8F228AE810B56CBFB038C799 /* SHA5.m in Sources */,
+				8F228887D0CF5F43A73247C2 /* SHA3.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -592,6 +618,8 @@
 				8F228D51F45937ACA95BCA9D /* NSData+MD5.m in Sources */,
 				8F228542E517C11775B6A4C4 /* NSString+MD5.m in Sources */,
 				8F2286B784A2652D4FFC8F22 /* AES.m in Sources */,
+				8F228BE7DEB610BB419683A6 /* SHA5.m in Sources */,
+				8F228763DD0AF89C23EA5CF8 /* SHA3.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

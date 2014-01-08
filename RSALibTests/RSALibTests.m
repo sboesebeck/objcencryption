@@ -13,6 +13,8 @@
 #import "NSData+MD5.h"
 #import "NSData+BigInteger.h"
 #import "AES.h"
+#import "SHA5.h"
+#import "SHA3.h"
 
 @interface RSALibTests : XCTestCase
 
@@ -583,4 +585,36 @@
     XCTAssertEqualObjects(decStr, str, @"Decryption failed");
     NSLog(@"Done!");
 }
+
+- (void)testSha5 {
+
+    NSData *txt = [@"Test" dataUsingEncoding:NSUTF8StringEncoding];
+    SHA5 *sha = [[SHA5 alloc] init];
+    [sha setup];
+    [sha engineUpdate:txt.bytes off:0 len:txt.length];
+    char *dig = [sha engineDigest];
+
+    NSLog(@"Hash: %@", [[[NSData alloc] initWithBytes:dig length:64] hexDump:NO]);
+
+
+}
+
+
+- (void)testSha3 {
+
+    NSData *txt = [@"Test" dataUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"plain:      %@", [txt hexDump:NO]);
+    NSData *hash = [SHA3 createHashOf:txt length:64];
+    NSLog(@"Hash (512): %@", [hash hexDump:NO]);
+
+//    txt= [@"Test1" dataUsingEncoding:NSUTF8StringEncoding];
+//    hash= [SHA3 hash:txt];
+//    NSLog(@"Hash: %@", [hash hexDump:NO]);
+
+
+    hash = [SHA3 createHashOf:txt length:32];
+    NSLog(@"Hash (256): %@", [hash hexDump:NO]);
+
+}
+
 @end
