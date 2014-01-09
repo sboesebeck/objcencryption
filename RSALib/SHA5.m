@@ -96,7 +96,7 @@ const int64_t COUNT_MASK = 127; // block size - 1
  * @return x right shift for s times
  */
 + (int64_t)lf_R_x:(int64_t)x s:(int)s {
-    return (((uint64_t) x) >> s) & 0x7FFFFFFFFFFFFFFF;
+    return (((uint64_t) x) >> s);
 }
 
 /**
@@ -107,7 +107,7 @@ const int64_t COUNT_MASK = 127; // block size - 1
  * @return x circular right shift for s times
  */
 + (int64_t)lfS_x:(int64_t)x s:(int)s {
-    return ((((uint64_t) x) >> s) & 0x7FFFFFFFFFFFFFFF) | (((uint64_t) x) << (64 - s));
+    return ((((uint64_t) x) >> s)) | (((uint64_t) x) << (64 - s));
 }
 
 /**
@@ -165,17 +165,17 @@ const int64_t COUNT_MASK = 127; // block size - 1
  * @param b the byte
  */
 - (void)engineUpdate:(char)b {
-    [self update:(int) b];
+    [self update:(int64_t) b];
 }
 
-- (void)update:(int)b {
+- (void)update:(int64_t)b {
     int word;  // index inside this block, i.e. from 0 to 15.
     int offset; //offset of this byte inside the word
 
     /* compute word index within the block and bit offset within the word.
        block size is 128 bytes with word size is 8 bytes. offset is in
        terms of bits */
-    word = (int) (((unsigned int) (self.count & COUNT_MASK)) >> 3) & 0x7FFFFFFF;
+    word = (int) (((unsigned int) (self.count & COUNT_MASK)) >> 3);
     offset = (int) (~self.count & 7) << 3;
 
     // clear the byte inside W[word] and then 'or' it with b's byte value
@@ -222,14 +222,14 @@ const int64_t COUNT_MASK = 127; // block size - 1
     while (len >= 8) {
 
         word = (int) (self.count & COUNT_MASK) >> 3;
-        self.W[word] = ((b[off] & 0xffL) << 56) |
-                ((b[off + 1] & 0xffL) << 48) |
-                ((b[off + 2] & 0xffL) << 40) |
-                ((b[off + 3] & 0xffL) << 32) |
-                ((b[off + 4] & 0xffL) << 24) |
-                ((b[off + 5] & 0xffL) << 16) |
-                ((b[off + 6] & 0xffL) << 8) |
-                ((b[off + 7] & 0xffL));
+        self.W[word] = (((int64_t) b[off] & 0xffL) << 56) |
+                (((int64_t) b[off + 1] & 0xffL) << 48) |
+                (((int64_t) b[off + 2] & 0xffL) << 40) |
+                (((int64_t) b[off + 3] & 0xffL) << 32) |
+                (((int64_t) b[off + 4] & 0xffL) << 24) |
+                (((int64_t) b[off + 5] & 0xffL) << 16) |
+                (((int64_t) b[off + 6] & 0xffL) << 8) |
+                (((int64_t) b[off + 7] & 0xffL));
         self.count += 8;
         if ((self.count & COUNT_MASK) == 0) {
             [self computeBlock];
@@ -257,7 +257,7 @@ const int64_t COUNT_MASK = 127; // block size - 1
 }
 
 - (void)setup {
-    [self setInitialHash:INITIAL_HASHES];
+    [self setInitialHash:(int64_t *) INITIAL_HASHES];
     for (int i = 0; i < ITERATION; i++)
         self.W[i] = 0;
     self.count = 0;
@@ -433,6 +433,7 @@ const int64_t COUNT_MASK = 127; // block size - 1
         int64_t d2 = [SHA5 lf_delta0:self.W[t - 15]];
         self.W[t] = d1 + self.W[t - 7] + d2 + self.W[t - 16];
     }
+    NSLog(@"Dump: %@", [[NSData alloc] initWithBytes:self.W length:ITERATION]);
 
     a = self.AA;
     b = self.BB;
