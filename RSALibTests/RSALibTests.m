@@ -15,6 +15,8 @@
 #import "AES.h"
 #import "SHA5.h"
 #import "SHA3.h"
+#import "NSData+SHA3.h"
+#import "NSData+SHA5.h"
 
 @interface RSALibTests : XCTestCase
 
@@ -596,6 +598,9 @@
 
     NSLog(@"Hash: %@", [[[NSData alloc] initWithBytes:dig length:64] hexDump:NO]);
 
+    NSData *hash = [txt sha5];
+    NSLog(@"Hash: %@", [hash hexDump:NO]);
+
 
 }
 
@@ -615,6 +620,8 @@
     hash = [SHA3 createHashOf:txt length:32];
     NSLog(@"Hash (256): %@", [hash hexDump:NO]);
 
+    hash = [txt sha3OfBitlen:256];
+    NSLog(@"Hash (256): %@", [hash hexDump:NO]);
 }
 
 - (void)testlf_delta {

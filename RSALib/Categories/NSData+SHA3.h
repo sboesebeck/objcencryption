@@ -8,4 +8,5 @@
 
 @interface NSData (SHA3)
 
+- (NSData *)sha3OfBitlen:(int)length;
 @end

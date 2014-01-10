@@ -179,7 +179,7 @@ const int64_t COUNT_MASK = 127; // block size - 1
     offset = (int) (~self.count & 7) << 3;
 
     // clear the byte inside W[word] and then 'or' it with b's byte value
-    self.W[word] = (self.W[word] & ~(0xffL << offset)) | ((b & 0xffL) << offset);
+    self.W[word] = (self.W[word] & ~((int64_t) 0xffL << offset)) | ((b & 0xffL) << offset);
     self.count++;
 
     /* If this is the last byte of a block, compute the partial hash */
@@ -433,7 +433,7 @@ const int64_t COUNT_MASK = 127; // block size - 1
         int64_t d2 = [SHA5 lf_delta0:self.W[t - 15]];
         self.W[t] = d1 + self.W[t - 7] + d2 + self.W[t - 16];
     }
-    NSLog(@"Dump: %@", [[NSData alloc] initWithBytes:self.W length:ITERATION]);
+//    NSLog(@"Dump: %@", [[[NSData alloc] initWithBytes:self.W length:ITERATION] hexDump:NO]);
 
     a = self.AA;
     b = self.BB;
