@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dff3438c-0a76-4b8f-ae57-662dbe925d61" name="Default" comment="" />
+    <list default="true" id="dff3438c-0a76-4b8f-ae57-662dbe925d61" name="Default" comment="sha5-&gt;sha2&#10;•">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/RSALib.xcodeproj/xcuserdata/stephan.xcuserdatad/xcschemes/-[RSALibTests testAesBig].xcscheme" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/RSALib/Categories/NSData+SHA5.h" afterPath="$PROJECT_DIR$/RSALib/Categories/NSData+SHA2.h" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/RSALib/Categories/NSData+SHA5.m" afterPath="$PROJECT_DIR$/RSALib/Categories/NSData+SHA2.m" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/RSALib/SHA5.h" afterPath="$PROJECT_DIR$/RSALib/SHA2.h" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/RSALib/SHA5.m" afterPath="$PROJECT_DIR$/RSALib/SHA2.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/RSALibPhoneTests/RSALibPhoneTests.m" afterPath="$PROJECT_DIR$/RSALibPhoneTests/RSALibPhoneTests.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/RSALibTests/RSALibTests.m" afterPath="$PROJECT_DIR$/RSALibTests/RSALibTests.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/RSALib/SHA3.h" afterPath="$PROJECT_DIR$/RSALib/SHA3.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/RSALib.xcodeproj/project.pbxproj" afterPath="$PROJECT_DIR$/RSALib.xcodeproj/project.pbxproj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="RSALib.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -23,32 +34,59 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SHA5.m" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/RSALib/SHA5.m">
+      <file leaf-file-name="SHA3.m" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/RSALib/SHA3.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="440" column="16" selection-start="15261" selection-end="15261" vertical-scroll-proportion="0.0" vertical-offset="6326" max-vertical-offset="7260">
-              <folding>
-                <element signature="e#112#128#0" expanded="true" />
-                <marker date="1389359340000" expanded="true" signature="398:16095" placeholder="..." />
-                <marker date="1389359340000" expanded="true" signature="14741:15810" placeholder="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NSData+SHA3.m" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/RSALib/Categories/NSData+SHA3.m">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="14" selection-start="182" selection-end="182" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="330">
+            <state line="81" column="11" selection-start="2002" selection-end="2002" vertical-scroll-proportion="0.0" vertical-offset="977" max-vertical-offset="1530">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NSData+SHA3.h" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/RSALib/Categories/NSData+SHA3.h">
+      <file leaf-file-name="RSALibPhoneTests.m" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/RSALibPhoneTests/RSALibPhoneTests.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="0" selection-start="189" selection-end="189" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
+            <state line="604" column="0" selection-start="21965" selection-end="21965" vertical-scroll-proportion="0.0" vertical-offset="8495" max-vertical-offset="9360">
+              <folding>
+                <marker date="1389391942000" expanded="true" signature="21462:21967" placeholder="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RSALibTests.m" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/RSALibTests/RSALibTests.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="589" column="0" selection-start="21441" selection-end="21965" vertical-scroll-proportion="0.0" vertical-offset="8537" max-vertical-offset="9495">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NSData+SHA2.m" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/RSALib/Categories/NSData+SHA2.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="20" column="16" selection-start="500" selection-end="500" vertical-scroll-proportion="0.54744524" vertical-offset="0" max-vertical-offset="548">
+              <folding>
+                <element signature="e#112#135#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NSData+SHA2.h" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/RSALib/Categories/NSData+SHA2.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="7" column="24" selection-start="171" selection-end="171" vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="255">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SHA2.h" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/RSALib/SHA2.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="32" selection-start="207" selection-end="207" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="495">
               <folding />
             </state>
           </provider>
@@ -63,60 +101,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SHA5.h" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/RSALib/SHA5.h">
+      <file leaf-file-name="NSData+SHA3.h" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/RSALib/Categories/NSData+SHA3.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="11" selection-start="159" selection-end="159" vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="465">
+            <state line="9" column="0" selection-start="189" selection-end="189" vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="255">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AES.m" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/RSALib/AES.m">
+      <file leaf-file-name="NSData+SHA3.m" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/RSALib/Categories/NSData+SHA3.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="479" column="30" selection-start="19064" selection-end="19064" vertical-scroll-proportion="0.0" vertical-offset="7185" max-vertical-offset="8670">
+            <state line="9" column="14" selection-start="182" selection-end="182" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="330">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NSData+SHA5.h" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/RSALib/Categories/NSData+SHA5.h">
+      <file leaf-file-name="SHA2.m" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/RSALib/SHA2.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="24" selection-start="171" selection-end="171" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="225">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NSData+SHA5.m" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/RSALib/Categories/NSData+SHA5.m">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="14" selection-start="198" selection-end="198" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
+            <state line="304" column="9" selection-start="8366" selection-end="8366" vertical-scroll-proportion="0.0" vertical-offset="4378" max-vertical-offset="7425">
               <folding>
-                <element signature="e#112#135#0" expanded="true" />
-                <marker date="1389353858000" expanded="true" signature="176:411" placeholder="..." />
-                <marker date="1389353858000" expanded="true" signature="201:409" placeholder="{...}" />
+                <marker date="1389391942000" expanded="true" signature="8397:8603" placeholder="{...}" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RSALibTests.m" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/RSALibTests/RSALibTests.m">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="589" column="0" selection-start="17945" selection-end="21441" vertical-scroll-proportion="0.0" vertical-offset="8435" max-vertical-offset="9585">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RSALibPhoneTests.m" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/RSALibPhoneTests/RSALibPhoneTests.m">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="591" column="54" selection-start="21617" selection-end="21617" vertical-scroll-proportion="0.60925925" vertical-offset="8416" max-vertical-offset="9240">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -139,7 +148,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/RSALib/MPN.m" />
         <option value="$PROJECT_DIR$/RSALib/RSA.m" />
         <option value="$PROJECT_DIR$/RSALib/BigInteger.m" />
         <option value="$PROJECT_DIR$/RSALib/AES.m" />
@@ -149,18 +157,19 @@
         <option value="$PROJECT_DIR$/RSALib/SHA3.m" />
         <option value="$PROJECT_DIR$/RSALib/SHA5.h" />
         <option value="$PROJECT_DIR$/RSALib/Categories/NSData+SHA3.h" />
-        <option value="$PROJECT_DIR$/RSALib/SHA5.m" />
         <option value="$PROJECT_DIR$/RSALib/Categories/NSData+SHA3.m" />
         <option value="$PROJECT_DIR$/RSALib/Categories/NSData+SHA5.h" />
-        <option value="$PROJECT_DIR$/RSALib/Categories/NSData+SHA5.m" />
+        <option value="$PROJECT_DIR$/RSALib/SHA5.m" />
         <option value="$PROJECT_DIR$/RSALibTests/RSALibTests.m" />
         <option value="$PROJECT_DIR$/RSALibPhoneTests/RSALibPhoneTests.m" />
+        <option value="$PROJECT_DIR$/RSALib/Categories/NSData+SHA5.m" />
+        <option value="$PROJECT_DIR$/RSALib/Categories/NSData+SHA2.m" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="78" />
-    <option name="y" value="-1058" />
+    <option name="x" value="837" />
+    <option name="y" value="335" />
     <option name="width" value="1680" />
     <option name="height" value="959" />
   </component>
@@ -190,7 +199,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Cidr.FilesView" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -293,6 +301,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Cidr.FilesView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -310,25 +319,19 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="110" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="905" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="905" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="905" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="110" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="107" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
     <property name="FullScreen" value="false" />
     <property name="OBJC.PRESERVED_TARGET_SELECTION" value="RSALib,,,RSALibTests,,,RSALibPhone,,,RSALibPhoneTests" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
-  <component name="RunManager" selected="XCTest/Kiwi.-[RSALibPhoneTests testAesBlock]">
+  <component name="RunManager" selected="XCTest/Kiwi.-[RSALibPhoneTests testSha5]">
     <configuration default="false" name="-[RSALibTests testSha5]" type="OCUnitRunConfiguration" factoryName="XCTest/Kiwi" temporary="true" SCHEME_NAME="-[RSALibTests testSha5]" PROJECT_NAME="RSALib" TARGET_NAME="RSALibTests" CONFIG_NAME="Debug" WORKING_DIR="" PASS_PARENT_ENVS="FALSE" TEST_CLASS="RSALibTests" TEST_METHOD="testSha5" TEST_MODE="SUITE_TEST">
-      <envs />
-      <RunnerSettings RunnerId="AppRunner" />
-      <ConfigurationWrapper RunnerId="AppRunner" />
-      <method />
-    </configuration>
-    <configuration default="false" name="-[RSALibTests testAesBig]" type="OCUnitRunConfiguration" factoryName="XCTest/Kiwi" temporary="true" SCHEME_NAME="-[RSALibTests testAesBig]" PROJECT_NAME="RSALib" TARGET_NAME="RSALibTests" CONFIG_NAME="Debug" WORKING_DIR="" PASS_PARENT_ENVS="FALSE" TEST_CLASS="RSALibTests" TEST_METHOD="testAesBig" TEST_MODE="SUITE_TEST">
       <envs />
       <RunnerSettings RunnerId="AppRunner" />
       <ConfigurationWrapper RunnerId="AppRunner" />
@@ -347,6 +350,12 @@
       <method />
     </configuration>
     <configuration default="false" name="-[RSALibPhoneTests testAesBlock]" type="OCUnitRunConfiguration" factoryName="XCTest/Kiwi" temporary="true" SCHEME_NAME="-[RSALibPhoneTests testAesBlock]" PROJECT_NAME="RSALib" TARGET_NAME="RSALibPhoneTests" CONFIG_NAME="Debug" WORKING_DIR="" PASS_PARENT_ENVS="FALSE" TEST_CLASS="RSALibPhoneTests" TEST_METHOD="testAesBlock" TEST_MODE="SUITE_TEST">
+      <envs />
+      <RunnerSettings RunnerId="AppRunner" />
+      <ConfigurationWrapper RunnerId="AppRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="-[RSALibPhoneTests testSha5]" type="OCUnitRunConfiguration" factoryName="XCTest/Kiwi" temporary="true" SCHEME_NAME="-[RSALibPhoneTests testSha5]" PROJECT_NAME="RSALib" TARGET_NAME="RSALibPhoneTests" CONFIG_NAME="Debug" WORKING_DIR="" PASS_PARENT_ENVS="FALSE" TEST_CLASS="RSALibPhoneTests" TEST_METHOD="testSha5" TEST_MODE="SUITE_TEST">
       <envs />
       <RunnerSettings RunnerId="AppRunner" />
       <ConfigurationWrapper RunnerId="AppRunner" />
@@ -396,22 +405,22 @@
       <item index="0" class="java.lang.String" itemvalue="Application.RSALib" />
       <item index="1" class="java.lang.String" itemvalue="Application.RSALibPhone" />
       <item index="2" class="java.lang.String" itemvalue="Application.Release" />
-      <item index="3" class="java.lang.String" itemvalue="XCTest/Kiwi.-[RSALibTests testSha5]" />
-      <item index="4" class="java.lang.String" itemvalue="XCTest/Kiwi.-[RSALibTests testAesBig]" />
-      <item index="5" class="java.lang.String" itemvalue="XCTest/Kiwi.-[RSALibTests testAesBlock]" />
-      <item index="6" class="java.lang.String" itemvalue="XCTest/Kiwi.-[RSALibPhoneTests testAesBig]" />
-      <item index="7" class="java.lang.String" itemvalue="XCTest/Kiwi.-[RSALibPhoneTests testAesBlock]" />
-      <item index="8" class="java.lang.String" itemvalue="XCTest/Kiwi.-[RSALibTests testAes]" />
-      <item index="9" class="java.lang.String" itemvalue="XCTest/Kiwi.-[RSALibTests testEncryptionBigInteger]" />
-      <item index="10" class="java.lang.String" itemvalue="XCTest/Kiwi.All in RSALibTests.m" />
+      <item index="3" class="java.lang.String" itemvalue="XCTest/Kiwi.-[RSALibTests testAes]" />
+      <item index="4" class="java.lang.String" itemvalue="XCTest/Kiwi.-[RSALibTests testEncryptionBigInteger]" />
+      <item index="5" class="java.lang.String" itemvalue="XCTest/Kiwi.All in RSALibTests.m" />
+      <item index="6" class="java.lang.String" itemvalue="XCTest/Kiwi.-[RSALibTests testSha5]" />
+      <item index="7" class="java.lang.String" itemvalue="XCTest/Kiwi.-[RSALibTests testAesBlock]" />
+      <item index="8" class="java.lang.String" itemvalue="XCTest/Kiwi.-[RSALibPhoneTests testAesBig]" />
+      <item index="9" class="java.lang.String" itemvalue="XCTest/Kiwi.-[RSALibPhoneTests testAesBlock]" />
+      <item index="10" class="java.lang.String" itemvalue="XCTest/Kiwi.-[RSALibPhoneTests testSha5]" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="XCTest/Kiwi.-[RSALibPhoneTests testAesBlock]" />
-        <item index="1" class="java.lang.String" itemvalue="XCTest/Kiwi.-[RSALibPhoneTests testAesBig]" />
-        <item index="2" class="java.lang.String" itemvalue="XCTest/Kiwi.-[RSALibTests testAesBlock]" />
-        <item index="3" class="java.lang.String" itemvalue="XCTest/Kiwi.-[RSALibTests testAesBig]" />
-        <item index="4" class="java.lang.String" itemvalue="XCTest/Kiwi.-[RSALibTests testSha5]" />
+        <item index="0" class="java.lang.String" itemvalue="XCTest/Kiwi.-[RSALibPhoneTests testSha5]" />
+        <item index="1" class="java.lang.String" itemvalue="XCTest/Kiwi.-[RSALibTests testSha5]" />
+        <item index="2" class="java.lang.String" itemvalue="XCTest/Kiwi.-[RSALibPhoneTests testAesBlock]" />
+        <item index="3" class="java.lang.String" itemvalue="XCTest/Kiwi.-[RSALibPhoneTests testAesBig]" />
+        <item index="4" class="java.lang.String" itemvalue="XCTest/Kiwi.-[RSALibTests testAesBlock]" />
       </list>
     </recent_temporary>
   </component>
@@ -523,24 +532,24 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="78" y="-1058" width="1680" height="959" extended-state="0" />
+    <frame x="837" y="335" width="1680" height="959" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3213873" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32060185" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Dilbert" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32921812" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3275463" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1888956" sideWeight="0.6716763" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18869048" sideWeight="0.6666667" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39537573" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33410406" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3283237" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Dilbert" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33333334" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3275463" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32839507" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -561,9 +570,9 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12613323" sideWeight="0.60059613" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.304769" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -606,11 +615,6 @@
           <line>80</line>
           <option name="timeStamp" value="160" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/RSALib/SHA5.m</url>
-          <line>328</line>
-          <option name="timeStamp" value="183" />
-        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
@@ -633,21 +637,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/RSALib/Categories/NSData+AES.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="27" selection-start="225" selection-end="225" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="495">
-          <folding />
-        </state>
+        <state line="12" column="27" selection-start="225" selection-end="225" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="495" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/RSALib/Categories/NSData+AES.h">
       <provider selected="true" editor-type-id="text-editor">
         <state line="10" column="0" selection-start="192" selection-end="192" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/RSALib/SHA3.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="31" selection-start="174" selection-end="180" vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="1530">
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/RSALib/SHA3.h">
@@ -659,7 +654,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/RSALib/AES.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="479" column="30" selection-start="19064" selection-end="19064" vertical-scroll-proportion="0.0" vertical-offset="8123" max-vertical-offset="8670">
+        <state line="489" column="30" selection-start="19262" selection-end="19262" vertical-scroll-proportion="0.0" vertical-offset="7335" max-vertical-offset="8670">
           <folding />
         </state>
       </provider>
@@ -671,27 +666,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/RSALib/SHA5.h">
+    <entry file="file://$PROJECT_DIR$/RSALib/Categories/NSData+SHA3.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="11" selection-start="159" selection-end="159" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="465">
+        <state line="9" column="0" selection-start="189" selection-end="189" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/RSALib/SHA5.m">
+    <entry file="file://$PROJECT_DIR$/RSALib/Categories/NSData+SHA2.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="440" column="16" selection-start="15261" selection-end="15261" vertical-scroll-proportion="0.0" vertical-offset="6326" max-vertical-offset="7260">
-          <folding>
-            <element signature="e#112#128#0" expanded="true" />
-            <marker date="1389359340000" expanded="true" signature="398:16095" placeholder="..." />
-            <marker date="1389359340000" expanded="true" signature="14741:15810" placeholder="{...}" />
-          </folding>
+        <state line="7" column="24" selection-start="171" selection-end="171" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="225">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/RSALib/Categories/NSData+SHA3.h">
+    <entry file="file://$PROJECT_DIR$/RSALib/SHA2.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="189" selection-end="189" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
+        <state line="9" column="32" selection-start="207" selection-end="207" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="465">
           <folding />
         </state>
       </provider>
@@ -703,35 +694,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/RSALib/Categories/NSData+SHA5.h">
+    <entry file="file://$PROJECT_DIR$/RSALib/SHA3.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="24" selection-start="171" selection-end="171" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="225">
+        <state line="81" column="11" selection-start="2002" selection-end="2002" vertical-scroll-proportion="0.0" vertical-offset="977" max-vertical-offset="1530">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/RSALib/Categories/NSData+SHA5.m">
+    <entry file="file://$PROJECT_DIR$/RSALib/SHA2.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="14" selection-start="198" selection-end="198" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
+        <state line="304" column="9" selection-start="8366" selection-end="8366" vertical-scroll-proportion="0.0" vertical-offset="4378" max-vertical-offset="7425">
           <folding>
-            <element signature="e#112#135#0" expanded="true" />
-            <marker date="1389353858000" expanded="true" signature="176:411" placeholder="..." />
-            <marker date="1389353858000" expanded="true" signature="201:409" placeholder="{...}" />
+            <marker date="1389391942000" expanded="true" signature="8397:8603" placeholder="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/RSALibTests/RSALibTests.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="589" column="0" selection-start="17945" selection-end="21441" vertical-scroll-proportion="0.0" vertical-offset="8435" max-vertical-offset="9585">
+        <state line="589" column="0" selection-start="21441" selection-end="21965" vertical-scroll-proportion="0.0" vertical-offset="8537" max-vertical-offset="9495">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/RSALibPhoneTests/RSALibPhoneTests.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="591" column="54" selection-start="21617" selection-end="21617" vertical-scroll-proportion="0.60925925" vertical-offset="8416" max-vertical-offset="9240">
-          <folding />
+        <state line="604" column="0" selection-start="21965" selection-end="21965" vertical-scroll-proportion="0.0" vertical-offset="8495" max-vertical-offset="9360">
+          <folding>
+            <marker date="1389391942000" expanded="true" signature="21462:21967" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RSALib/Categories/NSData+SHA2.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="16" selection-start="500" selection-end="500" vertical-scroll-proportion="0.54744524" vertical-offset="0" max-vertical-offset="548">
+          <folding>
+            <element signature="e#112#135#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -4,10 +4,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SHA5.h"
+#import "SHA2.h"
 
 
-@interface SHA3 : SHA5
+@interface SHA3 : SHA2
 - (instancetype)initWithLength:(int)length;
 
 + (NSData *)createHashOf:(NSData *)data length:(int)l;

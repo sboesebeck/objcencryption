@@ -6,7 +6,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface SHA5 : NSObject
+@interface SHA2 : NSObject
 + (NSData *)hash:(NSData *)data;
 
 + (int64_t)lf_delta1:(int64_t)x;
@@ -20,6 +20,8 @@
 - (void)setInitialHash:(int64_t *)values;
 
 - (char *)engineDigest;
+
+- (char *)engineDigestOfBitLen:(int)len;
 
 - (void)performDigest:(char *)hashvalue off:(int)offset len:(int)resultLength;
 @end

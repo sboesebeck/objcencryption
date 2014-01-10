@@ -3,9 +3,9 @@
 // Copyright (c) 2014 Stephan Bösebeck. All rights reserved.
 //
 
-#import "SHA5.h"
+#import "SHA2.h"
 
-@interface SHA5 ()
+@interface SHA2 ()
 @property int64_t *W;
 @property int64_t count;
 @property int64_t AA;
@@ -18,7 +18,7 @@
 @property int64_t HH;
 @end
 
-@implementation SHA5
+@implementation SHA2
 
 
 static const int LENGTH = 64;
@@ -117,7 +117,7 @@ const int64_t COUNT_MASK = 127; // block size - 1
  * @return S(x, 28) xor S(x,34) xor S(x,39)
  */
 + (int64_t)lf_sigma0:(int64_t)x {
-    return [SHA5 lfS_x:x s:28] ^ [SHA5 lfS_x:x s:34] ^ [SHA5 lfS_x:x s:39];
+    return [SHA2 lfS_x:x s:28] ^ [SHA2 lfS_x:x s:34] ^ [SHA2 lfS_x:x s:39];
 }
 
 /**
@@ -127,7 +127,7 @@ const int64_t COUNT_MASK = 127; // block size - 1
  * @return S(x, 14) xor S(x,18) xor S(x,41)
  */
 + (int64_t)lf_sigma1:(int64_t)x {
-    return [SHA5 lfS_x:x s:14] ^ [SHA5 lfS_x:x s:18] ^ [SHA5 lfS_x:x s:41];
+    return [SHA2 lfS_x:x s:14] ^ [SHA2 lfS_x:x s:18] ^ [SHA2 lfS_x:x s:41];
 }
 
 /**
@@ -137,7 +137,7 @@ const int64_t COUNT_MASK = 127; // block size - 1
  * @return int64_t
  */
 + (int64_t)lf_delta0:(int64_t)x {
-    return [SHA5 lfS_x:x s:1] ^ [SHA5 lfS_x:x s:8] ^ [SHA5 lf_R_x:x s:7];
+    return [SHA2 lfS_x:x s:1] ^ [SHA2 lfS_x:x s:8] ^ [SHA2 lf_R_x:x s:7];
 }
 
 /**
@@ -147,8 +147,8 @@ const int64_t COUNT_MASK = 127; // block size - 1
  * @return int64_t
  */
 + (int64_t)lf_delta1:(int64_t)x {
-    int64_t d1 = [SHA5 lfS_x:x s:19];
-    return d1 ^ [SHA5 lfS_x:x s:61] ^ [SHA5 lf_R_x:x s:6];
+    int64_t d1 = [SHA2 lfS_x:x s:19];
+    return d1 ^ [SHA2 lfS_x:x s:61] ^ [SHA2 lf_R_x:x s:6];
 }
 
 
@@ -302,6 +302,17 @@ const int64_t COUNT_MASK = 127; // block size - 1
     return hashvalue;
 }
 
+- (char *)engineDigestOfBitLen:(int)len {
+    len = len / 8;
+    char *hashvalue = malloc(len);
+    for (int i = 0; i < len; i++) {
+        hashvalue[i] = 0;
+    }
+    int outLen = [self engineDigest:hashvalue off:0 len:len];
+
+    return hashvalue;
+}
+
 /**
  * Computes the const hash and places the const value in the
  * specified array. The object is reset to be ready for further
@@ -315,12 +326,12 @@ const int64_t COUNT_MASK = 127; // block size - 1
  */
 - (int)engineDigest:(char *)hashvalue off:(int)offset len:(int)len {
 
-    if (len < LENGTH) {
+    if (len > LENGTH) {
         @throw [NSException exceptionWithName:@"IllegalArgumentException" reason:@"Wrong length" userInfo:nil];
     }
 
-    [self performDigest:hashvalue off:offset len:LENGTH];
-    return LENGTH;
+    [self performDigest:hashvalue off:offset len:len];
+    return len;
 }
 
 - (void)performDigest:(char *)hashvalue off:(int)offset len:(int)resultLength {
@@ -429,8 +440,8 @@ const int64_t COUNT_MASK = 127; // block size - 1
     // The first 16 int64_ts are from the byte stream, compute the rest of
     // the W[]'s
     for (int t = 16; t < ITERATION; t++) {
-        int64_t d1 = [SHA5 lf_delta1:self.W[t - 2]];
-        int64_t d2 = [SHA5 lf_delta0:self.W[t - 15]];
+        int64_t d1 = [SHA2 lf_delta1:self.W[t - 2]];
+        int64_t d2 = [SHA2 lf_delta0:self.W[t - 15]];
         self.W[t] = d1 + self.W[t - 7] + d2 + self.W[t - 16];
     }
 //    NSLog(@"Dump: %@", [[[NSData alloc] initWithBytes:self.W length:ITERATION] hexDump:NO]);
@@ -445,8 +456,8 @@ const int64_t COUNT_MASK = 127; // block size - 1
     h = self.HH;
 
     for (int i = 0; i < ITERATION; i++) {
-        T1 = h + [SHA5 lf_sigma1:e] + [SHA5 lf_ch_x:e y:f z:g] + ROUND_CONSTS[i] + self.W[i];
-        T2 = [SHA5 lf_sigma0:a] + [SHA5 lf_maj_x:a y:b z:c];
+        T1 = h + [SHA2 lf_sigma1:e] + [SHA2 lf_ch_x:e y:f z:g] + ROUND_CONSTS[i] + self.W[i];
+        T2 = [SHA2 lf_sigma0:a] + [SHA2 lf_maj_x:a y:b z:c];
         h = g;
         g = f;
         f = e;
@@ -468,7 +479,7 @@ const int64_t COUNT_MASK = 127; // block size - 1
 
 
 + (NSData *)hash:(NSData *)data {
-    SHA5 *sha = [[SHA5 alloc] init];
+    SHA2 *sha = [[SHA2 alloc] init];
     [sha setup];
     [sha engineUpdate:data.bytes off:0 len:data.length];
     char *dig = [sha engineDigest];

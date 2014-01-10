@@ -5,6 +5,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSData (SHA5)
-- (NSData *)sha5;
+@interface NSData (SHA2)
+- (NSData *)sha2;
+
+- (NSData *)sha2OfBitLen:(int)len;
 @end

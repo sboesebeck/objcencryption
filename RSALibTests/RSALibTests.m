@@ -13,10 +13,10 @@
 #import "NSData+MD5.h"
 #import "NSData+BigInteger.h"
 #import "AES.h"
-#import "SHA5.h"
+#import "SHA2.h"
 #import "SHA3.h"
 #import "NSData+SHA3.h"
-#import "NSData+SHA5.h"
+#import "NSData+SHA2.h"
 
 @interface RSALibTests : XCTestCase
 
@@ -591,14 +591,18 @@
 - (void)testSha5 {
 
     NSData *txt = [@"Test" dataUsingEncoding:NSUTF8StringEncoding];
-    SHA5 *sha = [[SHA5 alloc] init];
+    SHA2 *sha = [[SHA2 alloc] init];
     [sha setup];
     [sha engineUpdate:txt.bytes off:0 len:txt.length];
     char *dig = [sha engineDigest];
 
     NSLog(@"Hash: %@", [[[NSData alloc] initWithBytes:dig length:64] hexDump:NO]);
 
-    NSData *hash = [txt sha5];
+    dig = [sha engineDigestOfBitLen:256];
+
+    NSLog(@"Hash: %@", [[[NSData alloc] initWithBytes:dig length:32] hexDump:NO]);
+
+    NSData *hash = [txt sha2];
     NSLog(@"Hash: %@", [hash hexDump:NO]);
 
 
@@ -626,7 +630,7 @@
 
 - (void)testlf_delta {
     int64_t w = -6739068508724883454;
-    int64_t ret = [SHA5 lf_delta1:w];
+    int64_t ret = [SHA2 lf_delta1:w];
     NSLog(@"%D", ret);
 }
 
