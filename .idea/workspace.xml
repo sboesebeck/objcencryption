@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dff3438c-0a76-4b8f-ae57-662dbe925d61" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/RSALib/Categories/NSData+SHA5.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/RSALib/Categories/NSData+SHA5.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/RSALib/Categories/NSData+SHA3.h" afterPath="$PROJECT_DIR$/RSALib/Categories/NSData+SHA3.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/RSALib/Categories/NSData+SHA3.m" afterPath="$PROJECT_DIR$/RSALib/Categories/NSData+SHA3.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/RSALibPhoneTests/RSALibPhoneTests.m" afterPath="$PROJECT_DIR$/RSALibPhoneTests/RSALibPhoneTests.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/RSALibTests/RSALibTests.m" afterPath="$PROJECT_DIR$/RSALibTests/RSALibTests.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/RSALib/SHA5.m" afterPath="$PROJECT_DIR$/RSALib/SHA5.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/RSALib.xcodeproj/project.pbxproj" afterPath="$PROJECT_DIR$/RSALib.xcodeproj/project.pbxproj" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="dff3438c-0a76-4b8f-ae57-662dbe925d61" name="Default" comment="" />
     <ignored path="RSALib.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -36,11 +26,11 @@
       <file leaf-file-name="SHA5.m" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/RSALib/SHA5.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="441" column="16" selection-start="15287" selection-end="15287" vertical-scroll-proportion="0.0" vertical-offset="6341" max-vertical-offset="7275">
+            <state line="440" column="16" selection-start="15261" selection-end="15261" vertical-scroll-proportion="0.0" vertical-offset="6326" max-vertical-offset="7260">
               <folding>
                 <element signature="e#112#128#0" expanded="true" />
-                <marker date="1389353353000" expanded="true" signature="425:16121" placeholder="..." />
-                <marker date="1389353353000" expanded="true" signature="14767:15836" placeholder="{...}" />
+                <marker date="1389359340000" expanded="true" signature="398:16095" placeholder="..." />
+                <marker date="1389359340000" expanded="true" signature="14741:15810" placeholder="{...}" />
               </folding>
             </state>
           </provider>
@@ -125,7 +115,7 @@
       <file leaf-file-name="RSALibPhoneTests.m" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/RSALibPhoneTests/RSALibPhoneTests.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="606" column="53" selection-start="21935" selection-end="21935" vertical-scroll-proportion="0.43925235" vertical-offset="8735" max-vertical-offset="9270">
+            <state line="604" column="53" selection-start="21933" selection-end="21933" vertical-scroll-proportion="0.43925235" vertical-offset="8705" max-vertical-offset="9240">
               <folding />
             </state>
           </provider>
@@ -510,12 +500,16 @@
       <created>1389290356019</created>
       <updated>1389290356019</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="working!">
+      <created>1389359340608</created>
+      <updated>1389359340608</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="78" y="-1058" width="1680" height="959" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3213873" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32921812" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -584,7 +578,8 @@
     <MESSAGE value="not working" />
     <MESSAGE value="working" />
     <MESSAGE value="still not working on 32Bit!!!!" />
-    <option name="LAST_COMMIT_MESSAGE" value="still not working on 32Bit!!!!" />
+    <MESSAGE value="working!" />
+    <option name="LAST_COMMIT_MESSAGE" value="working!" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -598,7 +593,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/RSALib/SHA5.m</url>
-          <line>329</line>
+          <line>328</line>
           <option name="timeStamp" value="183" />
         </line-breakpoint>
       </breakpoints>
@@ -670,11 +665,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/RSALib/SHA5.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="441" column="16" selection-start="15287" selection-end="15287" vertical-scroll-proportion="0.0" vertical-offset="6341" max-vertical-offset="7275">
+        <state line="440" column="16" selection-start="15261" selection-end="15261" vertical-scroll-proportion="0.0" vertical-offset="6326" max-vertical-offset="7260">
           <folding>
             <element signature="e#112#128#0" expanded="true" />
-            <marker date="1389353353000" expanded="true" signature="425:16121" placeholder="..." />
-            <marker date="1389353353000" expanded="true" signature="14767:15836" placeholder="{...}" />
+            <marker date="1389359340000" expanded="true" signature="398:16095" placeholder="..." />
+            <marker date="1389359340000" expanded="true" signature="14741:15810" placeholder="{...}" />
           </folding>
         </state>
       </provider>
@@ -720,7 +715,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/RSALibPhoneTests/RSALibPhoneTests.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="606" column="53" selection-start="21935" selection-end="21935" vertical-scroll-proportion="0.43925235" vertical-offset="8735" max-vertical-offset="9270">
+        <state line="604" column="53" selection-start="21933" selection-end="21933" vertical-scroll-proportion="0.43925235" vertical-offset="8705" max-vertical-offset="9240">
           <folding />
         </state>
       </provider>
