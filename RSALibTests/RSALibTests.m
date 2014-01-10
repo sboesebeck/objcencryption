@@ -592,7 +592,6 @@
 
     NSData *txt = [@"Test" dataUsingEncoding:NSUTF8StringEncoding];
     SHA2 *sha = [[SHA2 alloc] init];
-    [sha setup];
     [sha engineUpdate:txt.bytes off:0 len:txt.length];
     char *dig = [sha engineDigest];
 
@@ -608,6 +607,48 @@
 
 }
 
+- (void)testPerfomance {
+    int rounds = 1000;
+
+    NSString *txt = @"0123456789ABCDEF";
+    for (int i = 0; i < 10; i++) {
+        txt = [txt stringByAppendingString:txt];
+    }
+    NSData *longText = [txt dataUsingEncoding:NSUTF8StringEncoding];
+    //long text
+    NSLog(@"SHA2-512... %d x", rounds);
+    NSDate *start = [[NSDate alloc] init];
+    for (int i = 0; i < rounds; i++) {
+        NSData *sha2Hash = [longText sha2];
+    }
+    double timePassed_ms = [start timeIntervalSinceNow] * -1000.0;
+    NSLog(@"%dx sha2-512 bit took %f ms", rounds, timePassed_ms);
+
+    NSLog(@"SHA2-256... %d x", rounds);
+    start = [[NSDate alloc] init];
+    for (int i = 0; i < rounds; i++) {
+        NSData *sha2Hash = [longText sha2OfBitLen:256];
+    }
+    timePassed_ms = [start timeIntervalSinceNow] * -1000.0;
+    NSLog(@"%dx sha2-256 bit took %f ms", rounds, timePassed_ms);
+
+    NSLog(@"SHA3-512... %d x", rounds);
+    start = [[NSDate alloc] init];
+    for (int i = 0; i < rounds; i++) {
+        NSData *sha3Hash = [longText sha3OfBitlen:512];
+    }
+    timePassed_ms = [start timeIntervalSinceNow] * -1000.0;
+    NSLog(@"%dx sha3-512 bit took %f ms", rounds, timePassed_ms);
+
+    NSLog(@"SHA3-256... %d x", rounds);
+    start = [[NSDate alloc] init];
+    for (int i = 0; i < rounds; i++) {
+        NSData *sha3Hash = [longText sha3OfBitlen:256];
+    }
+    timePassed_ms = [start timeIntervalSinceNow] * -1000.0;
+    NSLog(@"%dx sha3-256 bit took %f ms", rounds, timePassed_ms);
+
+}
 
 - (void)testSha3 {
 
