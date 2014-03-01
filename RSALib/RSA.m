@@ -80,6 +80,9 @@
                 @autoreleasepool {
                     self.e = [BigInteger randomBigInt:bits];
                     prz++;
+                    if (prz > 99) {
+                        prz = 95;
+                    }
                     if (callbackBlock != nil) callbackBlock(prz);
                     while ([[m gcd:self.e] intValue] > 1) {
                         self.e = [self.e add:[BigInteger randomBigInt:bits]];
@@ -92,6 +95,9 @@
                     } @catch (NSException *ex) {
 //                        NSLog(@"Exception...");
                         prz -= 10;
+                        if (prz < 10) {
+                            prz = 15;
+                        }
                     }
                 }
             }
@@ -105,6 +111,9 @@
                 _e = nil;
                 _n = nil;
                 prz -= 20;
+                if (prz < 10) {
+                    prz = 15;
+                }
             } else {
 //                NSLog(@"done!");
                 if (callbackBlock != nil) callbackBlock(100);

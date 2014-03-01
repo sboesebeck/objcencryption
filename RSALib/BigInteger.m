@@ -9,83 +9,86 @@
 #import "BigInteger.h"
 #import "MPN.h"
 
+@interface BigInteger ()
+
+@end
 
 @implementation BigInteger
 
 static const int k[] = {100, 150, 200, 250, 300, 350, 400, 500, 600, 800, 1250, INT_MAX};
 
 static const int t[] = {27, 18, 15, 12, 9, 8, 7, 6, 5, 4, 3, 2};
-static const int primes[] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43,
-/*Primes*/       47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107,
-/*Primes*/       109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181,
-/*Primes*/       191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281,
-/*Primes*/       283, 293, 307, 311, 313, 317, 331, 337, 347, 349,
-/*Primes*/       353, 359, 367, 373, 379, 383, 389, 397, 401, 409,
-/*Primes*/       419, 421, 431, 433, 439, 443, 449, 457, 461, 463,
-/*Primes*/       467, 479, 487, 491, 499, 503, 509, 521, 523, 541,
-/*Primes*/       547, 557, 563, 569, 571, 577, 587, 593, 599, 601,
-/*Primes*/       607, 613, 617, 619, 631, 641, 643, 647, 653, 659,
-/*Primes*/       661, 673, 677, 683, 691, 701, 709, 719, 727, 733,
-/*Primes*/       739, 743, 751, 757, 761, 769, 773, 787, 797, 809,
-/*Primes*/       811, 821, 823, 827, 829, 839, 853, 857, 859, 863,
-/*Primes*/       877, 881, 883, 887, 907, 911, 919, 929, 937, 941,
-/*Primes*/       947, 953, 967, 971, 977, 983, 991, 997, 1009, 1013,
-/*Primes*/       1019, 1021, 1031, 1033, 1039, 1049, 1051, 1061, 1063, 1069,
-/*Primes*/       1087, 1091, 1093, 1097, 1103, 1109, 1117, 1123, 1129, 1151,
-/*Primes*/       1153, 1163, 1171, 1181, 1187, 1193, 1201, 1213, 1217, 1223,
-/*Primes*/       1229, 1231, 1237, 1249, 1259, 1277, 1279, 1283, 1289, 1291,
-/*Primes*/       1297, 1301, 1303, 1307, 1319, 1321, 1327, 1361, 1367, 1373,
-/*Primes*/       1381, 1399, 1409, 1423, 1427, 1429, 1433, 1439, 1447, 1451,
-/*Primes*/       1453, 1459, 1471, 1481, 1483, 1487, 1489, 1493, 1499, 1511,
-/*Primes*/       1523, 1531, 1543, 1549, 1553, 1559, 1567, 1571, 1579, 1583,
-/*Primes*/       1597, 1601, 1607, 1609, 1613, 1619, 1621, 1627, 1637, 1657,
-/*Primes*/       1663, 1667, 1669, 1693, 1697, 1699, 1709, 1721, 1723, 1733,
-/*Primes*/       1741, 1747, 1753, 1759, 1777, 1783, 1787, 1789, 1801, 1811,
-/*Primes*/       1823, 1831, 1847, 1861, 1867, 1871, 1873, 1877, 1879, 1889,
-/*Primes*/       1901, 1907, 1913, 1931, 1933, 1949, 1951, 1973, 1979, 1987,
-/*Primes*/       1993, 1997, 1999, 2003, 2011, 2017, 2027, 2029, 2039, 2053,
-/*Primes*/       2063, 2069, 2081, 2083, 2087, 2089, 2099, 2111, 2113, 2129,
-/*Primes*/       2131, 2137, 2141, 2143, 2153, 2161, 2179, 2203, 2207, 2213,
-/*Primes*/       2221, 2237, 2239, 2243, 2251, 2267, 2269, 2273, 2281, 2287,
-/*Primes*/       2293, 2297, 2309, 2311, 2333, 2339, 2341, 2347, 2351, 2357,
-/*Primes*/       2371, 2377, 2381, 2383, 2389, 2393, 2399, 2411, 2417, 2423,
-/*Primes*/       2437, 2441, 2447, 2459, 2467, 2473, 2477, 2503, 2521, 2531,
-/*Primes*/       2539, 2543, 2549, 2551, 2557, 2579, 2591, 2593, 2609, 2617,
-/*Primes*/       2621, 2633, 2647, 2657, 2659, 2663, 2671, 2677, 2683, 2687,
-/*Primes*/       2689, 2693, 2699, 2707, 2711, 2713, 2719, 2729, 2731, 2741,
-/*Primes*/       2749, 2753, 2767, 2777, 2789, 2791, 2797, 2801, 2803, 2819,
-/*Primes*/       2833, 2837, 2843, 2851, 2857, 2861, 2879, 2887, 2897, 2903,
-/*Primes*/       2909, 2917, 2927, 2939, 2953, 2957, 2963, 2969, 2971, 2999,
-/*Primes*/       3001, 3011, 3019, 3023, 3037, 3041, 3049, 3061, 3067, 3079,
-/*Primes*/       3083, 3089, 3109, 3119, 3121, 3137, 3163, 3167, 3169, 3181,
-/*Primes*/       3187, 3191, 3203, 3209, 3217, 3221, 3229, 3251, 3253, 3257,
-/*Primes*/       3259, 3271, 3299, 3301, 3307, 3313, 3319, 3323, 3329, 3331,
-/*Primes*/       3343, 3347, 3359, 3361, 3371, 3373, 3389, 3391, 3407, 3413,
-/*Primes*/       3433, 3449, 3457, 3461, 3463, 3467, 3469, 3491, 3499, 3511,
-/*Primes*/       3517, 3527, 3529, 3533, 3539, 3541, 3547, 3557, 3559, 3571,
-/*Primes*/       3581, 3583, 3593, 3607, 3613, 3617, 3623, 3631, 3637, 3643,
-/*Primes*/       3659, 3671, 3673, 3677, 3691, 3697, 3701, 3709, 3719, 3727,
-/*Primes*/       3733, 3739, 3761, 3767, 3769, 3779, 3793, 3797, 3803, 3821,
-/*Primes*/       3823, 3833, 3847, 3851, 3853, 3863, 3877, 3881, 3889, 3907,
-/*Primes*/       3911, 3917, 3919, 3923, 3929, 3931, 3943, 3947, 3967, 3989,
-/*Primes*/       4001, 4003, 4007, 4013, 4019, 4021, 4027, 4049, 4051, 4057,
-/*Primes*/       4073, 4079, 4091, 4093, 4099, 4111, 4127, 4129, 4133, 4139,
-/*Primes*/       4153, 4157, 4159, 4177, 4201, 4211, 4217, 4219, 4229, 4231,
-/*Primes*/       4241, 4243, 4253, 4259, 4261, 4271, 4273, 4283, 4289, 4297,
-/*Primes*/       4327, 4337, 4339, 4349, 4357, 4363, 4373, 4391, 4397, 4409,
-/*Primes*/       4421, 4423, 4441, 4447, 4451, 4457, 4463, 4481, 4483, 4493,
-/*Primes*/       4507, 4513, 4517, 4519, 4523, 4547, 4549, 4561, 4567, 4583,
-/*Primes*/       4591, 4597, 4603, 4621, 4637, 4639, 4643, 4649, 4651, 4657,
-/*Primes*/       4663, 4673, 4679, 4691, 4703, 4721, 4723, 4729, 4733, 4751,
-/*Primes*/       4759, 4783, 4787, 4789, 4793, 4799, 4801, 4813, 4817, 4831,
-/*Primes*/       4861, 4871, 4877, 4889, 4903, 4909, 4919, 4931, 4933, 4937,
-/*Primes*/       4943, 4951, 4957, 4967, 4969, 4973, 4987, 4993, 4999, 5003,
-/*Primes*/       5009, 5011, 5021, 5023, 5039, 5051, 5059, 5077, 5081, 5087,
-/*Primes*/       5099, 5101, 5107, 5113, 5119, 5147, 5153, 5167, 5171, 5179,
-/*Primes*/       5189, 5197, 5209, 5227, 5231, 5233, 5237, 5261, 5273, 5279,
-/*Primes*/       5281, 5297, 5303, 5309, 5323, 5333, 5347, 5351, 5381, 5387,
-/*Primes*/       5393, 5399, 5407, 5413, 5417, 5419, 5431, 5437, 5441, 5443,
-/*Primes*/       5449, 5471, 5477, 5479, 5483, 5501, 5503, 5507, 5519, 5521, -1};
+static int primes[] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43,
+        /*Primes*/       47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107,
+        /*Primes*/       109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181,
+        /*Primes*/       191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281,
+        /*Primes*/       283, 293, 307, 311, 313, 317, 331, 337, 347, 349,
+        /*Primes*/       353, 359, 367, 373, 379, 383, 389, 397, 401, 409,
+        /*Primes*/       419, 421, 431, 433, 439, 443, 449, 457, 461, 463,
+        /*Primes*/       467, 479, 487, 491, 499, 503, 509, 521, 523, 541,
+        /*Primes*/       547, 557, 563, 569, 571, 577, 587, 593, 599, 601,
+        /*Primes*/       607, 613, 617, 619, 631, 641, 643, 647, 653, 659,
+        /*Primes*/       661, 673, 677, 683, 691, 701, 709, 719, 727, 733,
+        /*Primes*/       739, 743, 751, 757, 761, 769, 773, 787, 797, 809,
+        /*Primes*/       811, 821, 823, 827, 829, 839, 853, 857, 859, 863,
+        /*Primes*/       877, 881, 883, 887, 907, 911, 919, 929, 937, 941,
+        /*Primes*/       947, 953, 967, 971, 977, 983, 991, 997, 1009, 1013,
+        /*Primes*/       1019, 1021, 1031, 1033, 1039, 1049, 1051, 1061, 1063, 1069,
+        /*Primes*/       1087, 1091, 1093, 1097, 1103, 1109, 1117, 1123, 1129, 1151,
+        /*Primes*/       1153, 1163, 1171, 1181, 1187, 1193, 1201, 1213, 1217, 1223,
+        /*Primes*/       1229, 1231, 1237, 1249, 1259, 1277, 1279, 1283, 1289, 1291,
+        /*Primes*/       1297, 1301, 1303, 1307, 1319, 1321, 1327, 1361, 1367, 1373,
+        /*Primes*/       1381, 1399, 1409, 1423, 1427, 1429, 1433, 1439, 1447, 1451,
+        /*Primes*/       1453, 1459, 1471, 1481, 1483, 1487, 1489, 1493, 1499, 1511,
+        /*Primes*/       1523, 1531, 1543, 1549, 1553, 1559, 1567, 1571, 1579, 1583,
+        /*Primes*/       1597, 1601, 1607, 1609, 1613, 1619, 1621, 1627, 1637, 1657,
+        /*Primes*/       1663, 1667, 1669, 1693, 1697, 1699, 1709, 1721, 1723, 1733,
+        /*Primes*/       1741, 1747, 1753, 1759, 1777, 1783, 1787, 1789, 1801, 1811,
+        /*Primes*/       1823, 1831, 1847, 1861, 1867, 1871, 1873, 1877, 1879, 1889,
+        /*Primes*/       1901, 1907, 1913, 1931, 1933, 1949, 1951, 1973, 1979, 1987,
+        /*Primes*/       1993, 1997, 1999, 2003, 2011, 2017, 2027, 2029, 2039, 2053,
+        /*Primes*/       2063, 2069, 2081, 2083, 2087, 2089, 2099, 2111, 2113, 2129,
+        /*Primes*/       2131, 2137, 2141, 2143, 2153, 2161, 2179, 2203, 2207, 2213,
+        /*Primes*/       2221, 2237, 2239, 2243, 2251, 2267, 2269, 2273, 2281, 2287,
+        /*Primes*/       2293, 2297, 2309, 2311, 2333, 2339, 2341, 2347, 2351, 2357,
+        /*Primes*/       2371, 2377, 2381, 2383, 2389, 2393, 2399, 2411, 2417, 2423,
+        /*Primes*/       2437, 2441, 2447, 2459, 2467, 2473, 2477, 2503, 2521, 2531,
+        /*Primes*/       2539, 2543, 2549, 2551, 2557, 2579, 2591, 2593, 2609, 2617,
+        /*Primes*/       2621, 2633, 2647, 2657, 2659, 2663, 2671, 2677, 2683, 2687,
+        /*Primes*/       2689, 2693, 2699, 2707, 2711, 2713, 2719, 2729, 2731, 2741,
+        /*Primes*/       2749, 2753, 2767, 2777, 2789, 2791, 2797, 2801, 2803, 2819,
+        /*Primes*/       2833, 2837, 2843, 2851, 2857, 2861, 2879, 2887, 2897, 2903,
+        /*Primes*/       2909, 2917, 2927, 2939, 2953, 2957, 2963, 2969, 2971, 2999,
+        /*Primes*/       3001, 3011, 3019, 3023, 3037, 3041, 3049, 3061, 3067, 3079,
+        /*Primes*/       3083, 3089, 3109, 3119, 3121, 3137, 3163, 3167, 3169, 3181,
+        /*Primes*/       3187, 3191, 3203, 3209, 3217, 3221, 3229, 3251, 3253, 3257,
+        /*Primes*/       3259, 3271, 3299, 3301, 3307, 3313, 3319, 3323, 3329, 3331,
+        /*Primes*/       3343, 3347, 3359, 3361, 3371, 3373, 3389, 3391, 3407, 3413,
+        /*Primes*/       3433, 3449, 3457, 3461, 3463, 3467, 3469, 3491, 3499, 3511,
+        /*Primes*/       3517, 3527, 3529, 3533, 3539, 3541, 3547, 3557, 3559, 3571,
+        /*Primes*/       3581, 3583, 3593, 3607, 3613, 3617, 3623, 3631, 3637, 3643,
+        /*Primes*/       3659, 3671, 3673, 3677, 3691, 3697, 3701, 3709, 3719, 3727,
+        /*Primes*/       3733, 3739, 3761, 3767, 3769, 3779, 3793, 3797, 3803, 3821,
+        /*Primes*/       3823, 3833, 3847, 3851, 3853, 3863, 3877, 3881, 3889, 3907,
+        /*Primes*/       3911, 3917, 3919, 3923, 3929, 3931, 3943, 3947, 3967, 3989,
+        /*Primes*/       4001, 4003, 4007, 4013, 4019, 4021, 4027, 4049, 4051, 4057,
+        /*Primes*/       4073, 4079, 4091, 4093, 4099, 4111, 4127, 4129, 4133, 4139,
+        /*Primes*/       4153, 4157, 4159, 4177, 4201, 4211, 4217, 4219, 4229, 4231,
+        /*Primes*/       4241, 4243, 4253, 4259, 4261, 4271, 4273, 4283, 4289, 4297,
+        /*Primes*/       4327, 4337, 4339, 4349, 4357, 4363, 4373, 4391, 4397, 4409,
+        /*Primes*/       4421, 4423, 4441, 4447, 4451, 4457, 4463, 4481, 4483, 4493,
+        /*Primes*/       4507, 4513, 4517, 4519, 4523, 4547, 4549, 4561, 4567, 4583,
+        /*Primes*/       4591, 4597, 4603, 4621, 4637, 4639, 4643, 4649, 4651, 4657,
+        /*Primes*/       4663, 4673, 4679, 4691, 4703, 4721, 4723, 4729, 4733, 4751,
+        /*Primes*/       4759, 4783, 4787, 4789, 4793, 4799, 4801, 4813, 4817, 4831,
+        /*Primes*/       4861, 4871, 4877, 4889, 4903, 4909, 4919, 4931, 4933, 4937,
+        /*Primes*/       4943, 4951, 4957, 4967, 4969, 4973, 4987, 4993, 4999, 5003,
+        /*Primes*/       5009, 5011, 5021, 5023, 5039, 5051, 5059, 5077, 5081, 5087,
+        /*Primes*/       5099, 5101, 5107, 5113, 5119, 5147, 5153, 5167, 5171, 5179,
+        /*Primes*/       5189, 5197, 5209, 5227, 5231, 5233, 5237, 5261, 5273, 5279,
+        /*Primes*/       5281, 5297, 5303, 5309, 5323, 5333, 5347, 5351, 5381, 5387,
+        /*Primes*/       5393, 5399, 5407, 5413, 5417, 5419, 5431, 5437, 5441, 5443,
+        /*Primes*/       5449, 5471, 5477, 5479, 5483, 5501, 5503, 5507, 5519, 5521, -1};
 
 //int64_t bitLength=0;
 //int64_t certainty=100;
@@ -101,6 +104,9 @@ static const int ROUND = 4;
 static int64_t instances = 0;
 static int64_t dealloc = 0;
 
+static uint8_t *randomData = nil;
+
+
 + (int64_t)getDealloc {
     return dealloc;
 }
@@ -111,23 +117,23 @@ static int64_t dealloc = 0;
 //}
 
 - (void)setData:(int64_t *)data {
-//    if (_data) {
-//        NSLog(@"Resetting -> Deallocating %x, iVal %lld, sz=%lld", _data,_iVal,_iVal* sizeof(int32_t));
+    //    if (_data) {
+    //        NSLog(@"Resetting -> Deallocating %x, iVal %lld, sz=%lld", _data,_iVal,_iVal* sizeof(int32_t));
     free(_data);
-//    }
+    //    }
     _data = data;
 }
 
 - (void)dealloc {
-//    if (_data) {
-//       NSLog(@"Deallocating iVal=%lld  sz=%lld", _iVal,_iVal* sizeof(int32_t));
+    //    if (_data) {
+    //       NSLog(@"Deallocating iVal=%lld  sz=%lld", _iVal,_iVal* sizeof(int32_t));
     free(_data);
     _data = nil;
     dealloc++;
-//    } else {
-//        NSLog(@"Deallocating nil object");
-//        free(_data);
-//    }
+    //    } else {
+    //        NSLog(@"Deallocating nil object");
+    //        free(_data);
+    //    }
 
 
 }
@@ -138,16 +144,16 @@ static int64_t dealloc = 0;
     for (int64_t i = 0; i < size; i++) {
         ptr[i] = 0;
     }
-//    NSLog(@"Allocated: %x size: %zu iVal: %d",ptr,sz,size);
+    //    NSLog(@"Allocated: %x size: %zu iVal: %d",ptr,sz,size);
     return ptr;
 }
 
 /**
-* data: 4 bytes length in bytes => data1... dataN where data1-4 = int1, data5-8 = int2,...
-*
-*/
+ * data: 4 bytes length in bytes => data1... dataN where data1-4 = int1, data5-8 = int2,...
+ *
+ */
 + (BigInteger *)fromBytes:(NSData *)dat atOffset:(int *)offset {
-//    char const *buffer = dat.bytes;
+    //    char const *buffer = dat.bytes;
     int length = (int) [BigInteger getIntFrom:dat atIndex:(*offset)];
 
     size_t sizeT = 4; //sizeof(int64_t);
@@ -171,21 +177,21 @@ static int64_t dealloc = 0;
     //first 4 bytes == integer show length of this integer
     // eg: 000004 => 4 bytes in length
     // if < then maxValueInt => 4 bytes
-//    if (self.data == nil) {
-//        //use iVal only
-//        [BigInteger fillInteger:4 into:buffer];
-//        [dat appendBytes:buffer length:4];
-//        [BigInteger fillInteger:self.iVal into:buffer];
-//        [dat appendBytes:buffer length:4];
-//        return dat;
-//    }
+    //    if (self.data == nil) {
+    //        //use iVal only
+    //        [BigInteger fillInteger:4 into:buffer];
+    //        [dat appendBytes:buffer length:4];
+    //        [BigInteger fillInteger:self.iVal into:buffer];
+    //        [dat appendBytes:buffer length:4];
+    //        return dat;
+    //    }
 
     [BigInteger fillInteger:self.iVal * 4 into:buffer];
     [dat appendBytes:buffer length:4];
 
     for (int64_t j = self.iVal - 1; j >= 0; j--) {
         int64_t v = (int32_t) self.data[j];
-//        if (j == self.dataSize - 1 && v == 0) continue; //Why!??!?!?
+        //        if (j == self.dataSize - 1 && v == 0) continue; //Why!??!?!?
         [BigInteger fillInteger:v into:buffer];
         [dat appendBytes:buffer length:4];
     }
@@ -245,10 +251,10 @@ static int64_t dealloc = 0;
                 break;
             }
         }
-//        if (size == 1) {
-//            self.iVal = data[0];
-//            self.data = nil;
-//        } else
+        //        if (size == 1) {
+        //            self.iVal = data[0];
+        //            self.data = nil;
+        //        } else
         if (size == 0 || isZero) {
             self.iVal = 0;
             self.data = nil;
@@ -379,14 +385,14 @@ static int64_t dealloc = 0;
 }
 
 - (int)intValue {
-//    if (self.isSimple)
-//        return (int) self.iVal;
+    //    if (self.isSimple)
+    //        return (int) self.iVal;
     return (int) self.data[0];
 }
 
 - (int64_t)longValue {
-//    if (self.isSimple)
-//        return self.iVal;
+    //    if (self.isSimple)
+    //        return self.iVal;
     if (self.iVal == 1)
         return self.data[0];
     return ((int64_t) self.data[1] << 32) + ((int64_t) self.data[0] & 0xffffffffL);
@@ -410,13 +416,13 @@ static int64_t dealloc = 0;
 }
 
 /** Divide two integers, yielding quotient and remainder.
-    * @param x the numerator in the division
-    * @param y the denominator in the division
-    * @param quotient is set to the quotient of the result (iff quotient!=nil)
-    * @param remainder is set to the remainder of the result
-    *  (iff remainder!=nil)
-    * @param rounding_mode one of FLOOR, CEILING, TRUNCATE, or ROUND.
-    */
+ * @param x the numerator in the division
+ * @param y the denominator in the division
+ * @param quotient is set to the quotient of the result (iff quotient!=nil)
+ * @param remainder is set to the remainder of the result
+ *  (iff remainder!=nil)
+ * @param rounding_mode one of FLOOR, CEILING, TRUNCATE, or ROUND.
+ */
 + (void)divideBig:(BigInteger *)x by:(BigInteger *)y quotient:(BigInteger *)quotient remainder:(BigInteger *)remainder usingRoundingMode:(int)rounding_mode {
     if ([x isEqualTo:y]) {
         if (remainder != nil) {
@@ -584,8 +590,8 @@ static int64_t dealloc = 0;
 }
 
 + (BigInteger *)neg:(BigInteger *)x {
-//    if (x.isSimple && ((int32_t)x.iVal) != INT_MIN)
-//        return [BigInteger valueOf:(-((int32_t)x.iVal))];
+    //    if (x.isSimple && ((int32_t)x.iVal) != INT_MIN)
+    //        return [BigInteger valueOf:(-((int32_t)x.iVal))];
     BigInteger *result = [[BigInteger alloc] init];
     [result setNegative:(x)];
     return [result canonicalize];
@@ -629,10 +635,10 @@ static int64_t dealloc = 0;
 }
 
 + (BigInteger *)times:(BigInteger *)x yBig:(BigInteger *)y {
-//    if (y.isSimple)
-//        return [BigInteger times:x y:y.iVal];
-//    if (x.isSimple)
-//        return [BigInteger times:y y:x.iVal];
+    //    if (y.isSimple)
+    //        return [BigInteger times:x y:y.iVal];
+    //    if (x.isSimple)
+    //        return [BigInteger times:y y:x.iVal];
     BOOL negative = NO;
     int64_t *xwords;
     int64_t *ywords;
@@ -704,18 +710,18 @@ static int64_t dealloc = 0;
 
 /** Add two BigIntegers, yielding their sum as another BigInteger. */
 + (BigInteger *)add:(BigInteger *)x y:(BigInteger *)y k:(int64_t)k {
-//    if (x.isSimple && y.isSimple)
-//        return [BigInteger valueOf:((long) k * (long) y.iVal + (long) x.iVal)];
+    //    if (x.isSimple && y.isSimple)
+    //        return [BigInteger valueOf:((long) k * (long) y.iVal + (long) x.iVal)];
     if (k != 1) {
         if (k == -1)
             y = [BigInteger neg:(y)];
         else
             y = [BigInteger times:y yBig:[[BigInteger alloc] initWith:k]];
     }
-//    if (x.isSimple)
-//        return [BigInteger addBig:y y:x.iVal];
-//    if (y.isSimple)
-//        return [BigInteger addBig:x y:y.iVal];
+    //    if (x.isSimple)
+    //        return [BigInteger addBig:y y:x.iVal];
+    //    if (y.isSimple)
+    //        return [BigInteger addBig:x y:y.iVal];
     // Both are big
     if (y.iVal > x.iVal) { // Swap so x is longer then y.
         BigInteger *tmp = x;
@@ -735,11 +741,11 @@ static int64_t dealloc = 0;
     }
     if (((int32_t) x.data[i - 1]) < 0)
         y_ext--;
-//    if ((x.isNegative && !y.isNegative) || (!x.isNegative && y.isNegative)) {
-//        if (carry>0) {
-//            carry--;
-//        }
-//    }
+    //    if ((x.isNegative && !y.isNegative) || (!x.isNegative && y.isNegative)) {
+    //        if (carry>0) {
+    //            carry--;
+    //        }
+    //    }
     result.data[i] = (carry + y_ext) & 0xffffffffL;
     result.iVal = i + 1;
     return [result canonicalize];
@@ -756,8 +762,8 @@ static int64_t dealloc = 0;
 
 /** Add a BigInteger and an int64_t, yielding a new BigInteger. */
 + (BigInteger *)addBig:(BigInteger *)x y:(int64_t)y {
-//    if (x.isSimple)
-//        return [BigInteger add:(x.iVal) y:y];
+    //    if (x.isSimple)
+    //        return [BigInteger add:(x.iVal) y:y];
     BigInteger *result = [[BigInteger alloc] init];
     [result setAdd:x y:y];
     return [result canonicalize];
@@ -766,10 +772,10 @@ static int64_t dealloc = 0;
 /** Set this to the sum of x and y.
  * OK if x==this. */
 - (void)setAdd:(BigInteger *)x y:(int64_t)y {
-//    if (x.isSimple) {
-//        [self set:((long) x.iVal + (long) y)];
-//        return;
-//    }
+    //    if (x.isSimple) {
+    //        [self set:((long) x.iVal + (long) y)];
+    //        return;
+    //    }
     int64_t len = x.iVal;
     [self realloc:(int) (len + 1)];
     int64_t carry = y;
@@ -791,12 +797,12 @@ static int64_t dealloc = 0;
 
 
 - (void)setInvert {
-//    if (self.isSimple)
-//        self.iVal = ~self.iVal;
-//    else {
+    //    if (self.isSimple)
+    //        self.iVal = ~self.iVal;
+    //    else {
     for (int64_t i = self.iVal; --i >= 0;)
         self.data[i] = ~self.data[i];
-//    }
+    //    }
 }
 
 
@@ -807,16 +813,16 @@ static int64_t dealloc = 0;
     if (y.isZero && !x.isZero) {
         return [x isNegative] ? -1 : 1;
     }
-//    if (x.isSimple && y.isSimple)
-//        return x.iVal < y.iVal ? -1 : x.iVal > y.iVal ? 1 : 0;
+    //    if (x.isSimple && y.isSimple)
+    //        return x.iVal < y.iVal ? -1 : x.iVal > y.iVal ? 1 : 0;
     BOOL x_negative = [x isNegative];
     BOOL y_negative = [y isNegative];
     if (x_negative != y_negative)
         return x_negative ? -1 : 1;
     int64_t x_len = x.iVal;// x.isSimple ? 1 : x.iVal;
-//    int64_t y_len = y.iVal; //y.isSimple ? 1 : y.iVal;
-//    if (x_len != y_len)
-//        return (x_len > y_len) != x_negative ? 1 : -1;
+    //    int64_t y_len = y.iVal; //y.isSimple ? 1 : y.iVal;
+    //    if (x_len != y_len)
+    //        return (x_len > y_len) != x_negative ? 1 : -1;
     return [MPN cmp:x.data y:y.data size:x_len];
 }
 
@@ -830,13 +836,13 @@ static int64_t dealloc = 0;
  * It is OK if x==this.*/
 - (void)setNegative:(BigInteger *)x {
     int64_t len = x.iVal;
-//    if (x.isSimple) {
-//        if (len == INT_MIN)
-//            [self set:-(int64_t) len];
-//        else
-//            [self set:(-len)];
-//        return;
-//    }
+    //    if (x.isSimple) {
+    //        if (len == INT_MIN)
+    //            [self set:-(int64_t) len];
+    //        else
+    //            [self set:(-len)];
+    //        return;
+    //    }
     [self realloc:(len + 1)];
     if ([BigInteger negate:self.data src:x.data len:len])
         self.data[len++] = 0;
@@ -889,18 +895,18 @@ static int64_t dealloc = 0;
 }
 
 /** Destructively set the value of this to the given words.
-   * The words array is reused, not copied. */
+ * The words array is reused, not copied. */
 - (void)set:(int64_t *)words len:(int64_t)length {
     self.iVal = length;
     self.data = words;
 }
 
 /** Calculates ceiling(log2(this < 0 ? -this : this+1))
-    * See Common Lisp: the Language, 2nd ed, p. 361.
-    */
+ * See Common Lisp: the Language, 2nd ed, p. 361.
+ */
 - (int)bitLength {
-//    if (self.isSimple)
-//        return [MPN intLength:(self.iVal)];
+    //    if (self.isSimple)
+    //        return [MPN intLength:(self.iVal)];
     return [MPN intLength:self.data len:self.iVal];
 }
 
@@ -962,7 +968,7 @@ static int64_t dealloc = 0;
     BigInteger *m = [pMinus1 divideBy:[[BigInteger alloc] initWith:val]];
     if ([m isNegative]) {
         m = [m negate];
-//        @throw [NSException exceptionWithName:@"Arithmeticexception" reason:@"non-positivve modulo" userInfo:nil];
+        //        @throw [NSException exceptionWithName:@"Arithmeticexception" reason:@"non-positivve modulo" userInfo:nil];
     }
 
     // The HAC (Handbook of Applied Cryptography), Alfred Menezes & al. Note
@@ -1093,7 +1099,7 @@ static int64_t dealloc = 0;
         @throw [NSException exceptionWithName:@"ArithmeticException" reason:@"b is null" userInfo:nil];
     }
 
-//    NSLog(@"in euclidInv a: %@ b: %@ preDiv:%@",a,b,prevDiv);
+    //    NSLog(@"in euclidInv a: %@ b: %@ preDiv:%@",a,b,prevDiv);
 
     if ([b isOne]) {
         xy[0] = [BigInteger neg:prevDiv];
@@ -1110,11 +1116,11 @@ static int64_t dealloc = 0;
     [rem canonicalize];
     [quot canonicalize];
     [BigInteger euclidInv:b b:rem preDiv:quot xy:xy];
-//        NSLog(@"Euclidinv returned %@,%@", xy[0], xy[1]);
-//    }
+    //        NSLog(@"Euclidinv returned %@,%@", xy[0], xy[1]);
+    //    }
 
     BigInteger *t = xy[0];
-//    NSLog(@"Processing data: xy1: %@ t:%@ prevdiv: %@", xy[1], t, prevDiv);
+    //    NSLog(@"Processing data: xy1: %@ t:%@ prevdiv: %@", xy[1], t, prevDiv);
     xy[0] = [BigInteger add:xy[1] y:[BigInteger times:t yBig:prevDiv] k:-1];
     xy[1] = t;
     t = nil;
@@ -1141,11 +1147,11 @@ static int64_t dealloc = 0;
             return;
         }
     }
-//    if (_iVal == 1) {
-//        _iVal = _data[0]&0xffffffffL;
-//        self.data = nil;
-//        return;
-//    }
+    //    if (_iVal == 1) {
+    //        _iVal = _data[0]&0xffffffffL;
+    //        self.data = nil;
+    //        return;
+    //    }
     if (_iVal == 0) {
         self.data = nil;
         return;
@@ -1183,7 +1189,7 @@ static int64_t dealloc = 0;
     // unwind from the recursion.
     // Used http://www.math.nmsu.edu/~crypto/EuclideanAlgo.html as reference.
     BigInteger *result = nil; //[[BigInteger alloc] init];
-//    result = swapped ? xy2[1] : xy2[2];
+    //    result = swapped ? xy2[1] : xy2[2];
     BOOL swapped = NO;
 
     // As above, force this to be a positive value via modulo math.
@@ -1201,28 +1207,28 @@ static int64_t dealloc = 0;
     NSArray *xy2 = [BigInteger euclidInv:x b:y];
     result = swapped ? xy2[2] : xy2[1];
 
-//    BigInteger *rem = [[BigInteger alloc] init];
-//    BigInteger *quot = [[BigInteger alloc] init];
-//    [BigInteger divideBig:x by:y quotient:quot remainder:rem usingRoundingMode:FLOOR];
-//    // quot and rem may not be in canonical form. ensure
-//    [rem canonicalize];
-//    [quot canonicalize];
-//    NSMutableArray *xy = [[NSMutableArray alloc] initWithCapacity:2];
-//    [BigInteger euclidInv:y b:rem preDiv:quot xy:xy];
-//    BigInteger *res=result = swapped ? xy[0] : xy[1];
-//    if (![res isEqual:result]) {
-//        NSLog(@"WRONG!");
-//    } else {
-//        NSLog(@"All ok!");
-//    }
+    //    BigInteger *rem = [[BigInteger alloc] init];
+    //    BigInteger *quot = [[BigInteger alloc] init];
+    //    [BigInteger divideBig:x by:y quotient:quot remainder:rem usingRoundingMode:FLOOR];
+    //    // quot and rem may not be in canonical form. ensure
+    //    [rem canonicalize];
+    //    [quot canonicalize];
+    //    NSMutableArray *xy = [[NSMutableArray alloc] initWithCapacity:2];
+    //    [BigInteger euclidInv:y b:rem preDiv:quot xy:xy];
+    //    BigInteger *res=result = swapped ? xy[0] : xy[1];
+    //    if (![res isEqual:result]) {
+    //        NSLog(@"WRONG!");
+    //    } else {
+    //        NSLog(@"All ok!");
+    //    }
 
 
     // Result can't be negative, so make it positive by adding the
     // original modulus, y (which is now x if they were swapped).
     if ([result isNegative])
         result = [BigInteger add:result y:swapped ? x : y k:1];
-//    rem=nil;
-//    quot=nil;
+    //    rem=nil;
+    //    quot=nil;
     x = nil;
 
     return result;
@@ -1295,24 +1301,24 @@ static int64_t dealloc = 0;
 - (BigInteger *)gcd:(BigInteger *)y {
     int64_t xval = self.iVal;
     int64_t yval = y.iVal;
-//    if (self.isSimple) {
-//        if (xval == 0)
-//            return [BigInteger abs:y];
-//        if (y.isSimple
-//                && xval != INT_MIN && yval != INT_MIN) {
-//            if (xval < 0)
-//                xval = -xval;
-//            if (yval < 0)
-//                yval = -yval;
-//            return [BigInteger valueOf:[BigInteger gcdInt:xval b:yval]];
-//        }
-//        xval = 1;
-//    }
-//    if (y.isSimple) {
-//        if (yval == 0)
-//            return [BigInteger abs:self];
-//        yval = 1;
-//    }
+    //    if (self.isSimple) {
+    //        if (xval == 0)
+    //            return [BigInteger abs:y];
+    //        if (y.isSimple
+    //                && xval != INT_MIN && yval != INT_MIN) {
+    //            if (xval < 0)
+    //                xval = -xval;
+    //            if (yval < 0)
+    //                yval = -yval;
+    //            return [BigInteger valueOf:[BigInteger gcdInt:xval b:yval]];
+    //        }
+    //        xval = 1;
+    //    }
+    //    if (y.isSimple) {
+    //        if (yval == 0)
+    //            return [BigInteger abs:self];
+    //        yval = 1;
+    //    }
     int64_t len = (xval > yval ? xval : yval) + 1;
     int64_t *xwords = [BigInteger allocData:(int) len];
     int64_t *ywords = [BigInteger allocData:(int) len];
@@ -1331,25 +1337,25 @@ static int64_t dealloc = 0;
 
 /* Assumes x and y are both canonicalized. */
 + (BOOL)equals:(BigInteger *)x y:(BigInteger *)y {
-//    if (x.isSimple && y.isSimple)
-//        return x.iVal == y.iVal;
-//    if ((x.isSimple && y.isSimple) && x.iVal != y.iVal)
-//        return NO;
-//
-//    if (x.isSimple) {
-//        BigInteger *tmp= [[BigInteger alloc] init];
-//        tmp.data= [BigInteger allocData:1];
-//        tmp.data[0]=x.iVal;
-//        tmp.iVal=1;
-//        x=tmp;
-//    }
-//    if (y.isSimple) {
-//        BigInteger *tmp= [[BigInteger alloc] init];
-//        tmp.data= [BigInteger allocData:1];
-//        tmp.data[0]=y.iVal;
-//        tmp.iVal=1;
-//        y=tmp;
-//    }
+    //    if (x.isSimple && y.isSimple)
+    //        return x.iVal == y.iVal;
+    //    if ((x.isSimple && y.isSimple) && x.iVal != y.iVal)
+    //        return NO;
+    //
+    //    if (x.isSimple) {
+    //        BigInteger *tmp= [[BigInteger alloc] init];
+    //        tmp.data= [BigInteger allocData:1];
+    //        tmp.data[0]=x.iVal;
+    //        tmp.iVal=1;
+    //        x=tmp;
+    //    }
+    //    if (y.isSimple) {
+    //        BigInteger *tmp= [[BigInteger alloc] init];
+    //        tmp.data= [BigInteger allocData:1];
+    //        tmp.data[0]=y.iVal;
+    //        tmp.iVal=1;
+    //        y=tmp;
+    //    }
 
     int end = (int) x.iVal;
     if (x.iVal != y.iVal) {
@@ -1400,8 +1406,44 @@ static int64_t dealloc = 0;
 }
 
 + (int64_t)nextRand {
-    return arc4random();
-//    return rand();
+//    return arc4random();
+
+    dispatch_block_t block = (dispatch_block_t) ^{
+        int err = 0;
+
+        // Don't ask for too many bytes in one go, that can lock up your system
+        err = SecRandomCopyBytes(kSecRandomDefault, 4, randomData);
+        if (err != noErr)
+            @throw [NSException exceptionWithName:@"..." reason:@"..." userInfo:nil];
+    };
+
+    if (!randomData) {
+        randomData = malloc(4); //4 bytes == 32 Bit
+        block(); //synchronous call....
+    } else {
+//        NSLog(@"Waiting for random number...");
+        while (randomData[0] == randomData[1]
+                && randomData[1] == randomData[2]
+                && randomData[2] == randomData[3]
+                && randomData[3] == 0) {
+//            NSLog(@"Waiting for new random data");
+//            [NSThread sleepForTimeInterval:0.01f];
+            //BUSY WAIT!!!
+        }
+    }
+
+
+    int64_t ret = randomData[0];
+    ret = ret | randomData[1] << 8;
+    ret = ret | randomData[2] << 16;
+    ret = ret | randomData[3] << 24;
+
+    randomData[0] = randomData[1] = randomData[2] = randomData[3] = 0;
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), block); //regenerate random data
+    return ret;
+    //    return arc4random();
+    //    return rand();
 }
 
 - (id)initWithRandomBits:(int)numBits {
@@ -1436,17 +1478,17 @@ static int64_t dealloc = 0;
             highbits = (uint64_t) [BigInteger nextRand];
             --nwords;
         }
-//        if (nwords == 0 && highbits >= 0) {
-//            self.iVal = highbits&0xffffffffL;
-//            self.data = nil;
-//        } else {
+        //        if (nwords == 0 && highbits >= 0) {
+        //            self.iVal = highbits&0xffffffffL;
+        //            self.data = nil;
+        //        } else {
         self.iVal = highbits < 0 ? nwords + 2 : nwords + 1;
         self.data = [BigInteger allocData:(int) self.iVal];
         self.data[nwords] = highbits;
         while (--nwords >= 0) {
             self.data[nwords] = [BigInteger nextRand];
         }
-//        }
+        //        }
         [self pack];
         if ([self isNegative]) {
             //Workaround - somehow negative randoms keep being created
@@ -1455,7 +1497,7 @@ static int64_t dealloc = 0;
             memcpy(dat, self.data, (size_t) ((self.iVal - 1) * (sizeof(int64_t))));
             self.data = dat;
             dat = nil;
-//            }
+            //            }
         }
         if (highBitByteCount > 0) {
             free(highBitBytes);
@@ -1479,8 +1521,8 @@ static int64_t dealloc = 0;
 
 + (BigInteger *)valueOf:(int64_t)val {
 
-//    if (val >= MINFIXNUMS && val < MAXFIXNUMS)
-//        return fixNum[(NSUInteger) ((int64_t) val - MINFIXNUMS)];
+    //    if (val >= MINFIXNUMS && val < MAXFIXNUMS)
+    //        return fixNum[(NSUInteger) ((int64_t) val - MINFIXNUMS)];
     int64_t i = (int32_t) val;
     if ((int32_t) i == val)
         return [[BigInteger alloc] initWith:i];
@@ -1499,16 +1541,16 @@ static int64_t dealloc = 0;
     int len = s.length;
     // Testing (len < MPN.chars_per_word(radix)) would be more accurate,
     // but slightly more expensive, for little practical gain.
-//    if (len <= 7 && (radix == 16 || radix == 10)) {
-//        NSScanner *scanner = [[NSScanner alloc] initWithString:s];
-//        uint64_t i;
-//        if (radix == 16) {
-//            [scanner scanHexInt:&i];
-//        } else {
-//            [scanner scanInt:&i];
-//        }
-//        return [BigInteger valueOf:i];
-//    }
+    //    if (len <= 7 && (radix == 16 || radix == 10)) {
+    //        NSScanner *scanner = [[NSScanner alloc] initWithString:s];
+    //        uint64_t i;
+    //        if (radix == 16) {
+    //            [scanner scanHexInt:&i];
+    //        } else {
+    //            [scanner scanInt:&i];
+    //        }
+    //        return [BigInteger valueOf:i];
+    //    }
 
     int64_t i, digit;
     BOOL negative;
@@ -1573,9 +1615,9 @@ static int64_t dealloc = 0;
 }
 
 /** Calculate how many words are significant in words[0:len-1].
-    * Returns the least value x such that x>0 && words[0:x-1]==words[0:len-1],
-    * when words is viewed as a 2's complement integer.
-    */
+ * Returns the least value x such that x>0 && words[0:x-1]==words[0:len-1],
+ * when words is viewed as a 2's complement integer.
+ */
 + (int64_t)wordsNeeded:(int64_t *)words len:(int)len {
     int i = len;
     if (i > 0) {
@@ -1745,13 +1787,13 @@ static int64_t dealloc = 0;
 }
 
 - (BigInteger *)canonicalize {
-//    if (self.data != nil && (self.iVal = [BigInteger wordsNeeded:self.data len:(int) self.iVal]) <= 1) {
-//        if (self.iVal == 1)
-//            self.iVal = self.data[0];
-//        self.data = nil;
-//    }
-//    if (self.isSimple && self.iVal >= MINFIXNUMS && self.iVal < MAXFIXNUMS)
-//        return fixNum[self.iVal - MINFIXNUMS];
+    //    if (self.data != nil && (self.iVal = [BigInteger wordsNeeded:self.data len:(int) self.iVal]) <= 1) {
+    //        if (self.iVal == 1)
+    //            self.iVal = self.data[0];
+    //        self.data = nil;
+    //    }
+    //    if (self.isSimple && self.iVal >= MINFIXNUMS && self.iVal < MAXFIXNUMS)
+    //        return fixNum[self.iVal - MINFIXNUMS];
     return self;
 }
 
@@ -1769,8 +1811,8 @@ static int64_t dealloc = 0;
 
 
 /**
-* Bitwise Operations
-*/
+ * Bitwise Operations
+ */
 /** Do one the the 16 possible bit-wise operations of two BigIntegers. */
 + (BigInteger *)bitOp:(int)op x:(BigInteger *)x y:(BigInteger *)y {
     switch (op) {
@@ -1999,8 +2041,8 @@ static int64_t dealloc = 0;
 
 /** Return the logical (bit-wise) "and" of a BigInteger and an int64_t. */
 + (BigInteger *)and:(BigInteger *)x y:(int64_t)y {
-//    if (x.isSimple)
-//        return [BigInteger valueOf:x.iVal & y];
+    //    if (x.isSimple)
+    //        return [BigInteger valueOf:x.iVal & y];
     if (y >= 0) {
         if (x.iVal == 0) {
             return [[BigInteger alloc] initWith:0];
@@ -2019,10 +2061,10 @@ static int64_t dealloc = 0;
 
 /** Return the logical (bit-wise) "and" of two BigIntegers. */
 - (BigInteger *)and:(BigInteger *)y {
-//    if (y.isSimple)
-//        return [BigInteger and:self y:y.iVal];
-//    else if (self.isSimple)
-//        return [BigInteger and:y y:self.iVal];
+    //    if (y.isSimple)
+    //        return [BigInteger and:self y:y.iVal];
+    //    else if (self.isSimple)
+    //        return [BigInteger and:y y:self.iVal];
 
     BigInteger *x = self;
     if (self.iVal < y.iVal) {
@@ -2098,12 +2140,12 @@ static int64_t dealloc = 0;
 }
 
 + (BigInteger *)shift:(BigInteger *)x count:(int64_t)count {
-//    if (x.isSimple) {
-//        if (count <= 0)
-//            return [BigInteger valueOf:(count > -32 ? x.iVal >> (-count) : x.iVal < 0 ? -1 : 0)];
-//        if (count < 32)
-//            return [BigInteger valueOf:((int64_t) x.iVal << count)];
-//    }
+    //    if (x.isSimple) {
+    //        if (count <= 0)
+    //            return [BigInteger valueOf:(count > -32 ? x.iVal >> (-count) : x.iVal < 0 ? -1 : 0)];
+    //        if (count < 32)
+    //            return [BigInteger valueOf:((int64_t) x.iVal << count)];
+    //    }
     if (count == 0)
         return x;
     BigInteger *result = [[BigInteger alloc] init];
@@ -2121,34 +2163,34 @@ static int64_t dealloc = 0;
 
 - (void)set:(int64_t)y {
     int32_t i = (int32_t) y;
-//    if ((int64_t) i == y) {
-//        self.iVal = i;
-//        self.data = nil;
-//    }
-//    else {
+    //    if ((int64_t) i == y) {
+    //        self.iVal = i;
+    //        self.data = nil;
+    //    }
+    //    else {
     [self realloc:2];
     self.data[0] = (int32_t) i;
     self.data[1] = (int64_t) (y >> 32);
     self.iVal = 2;
-//    }
+    //    }
 }
 
 - (void)setShiftLeft:(BigInteger *)x count:(int)count {
     int64_t *xwords;
     int64_t xlen;
-//    if (x.isSimple) {
-//        if (count < 32) {
-//            [self set:((long) x.iVal << count)];
-//            return;
-//        }
-//        xwords = [BigInteger allocData:1];
-//        xwords[0] = x.iVal;
-//        xlen = 1;
-//    }
-//    else {
+    //    if (x.isSimple) {
+    //        if (count < 32) {
+    //            [self set:((long) x.iVal << count)];
+    //            return;
+    //        }
+    //        xwords = [BigInteger allocData:1];
+    //        xwords[0] = x.iVal;
+    //        xlen = 1;
+    //    }
+    //    else {
     xwords = x.data;
     xlen = x.iVal;
-//    }
+    //    }
     int word_count = count >> 5;
     count &= 31;
     int new_len = (int) (xlen + word_count);
@@ -2172,9 +2214,9 @@ static int64_t dealloc = 0;
 }
 
 - (void)setShiftRight:(BigInteger *)x count:(int)count {
-//    if (x.isSimple)
-//        [self set:count < 32 ? x.iVal >> count : x.iVal < 0 ? -1 : 0];
-//    else
+    //    if (x.isSimple)
+    //        [self set:count < 32 ? x.iVal >> count : x.iVal < 0 ? -1 : 0];
+    //    else
     if (count == 0) {
         self.data = x.data;
         self.iVal = x.iVal;
@@ -2205,9 +2247,9 @@ static int64_t dealloc = 0;
     if ([self isZero])
         return -1;
 
-//    if (self.isSimple)
-//        return [MPN findLowestBit:self.iVal];
-//    else
+    //    if (self.isSimple)
+    //        return [MPN findLowestBit:self.iVal];
+    //    else
     return [MPN findLowestBitInArr:self.data];
 }
 
@@ -2219,7 +2261,7 @@ static int64_t dealloc = 0;
         if (self.data[i] != 0) return NO;
     }
     return YES;
-//    return (self.isSimple) && self.iVal == 0;
+    //    return (self.isSimple) && self.iVal == 0;
 }
 
 - (BOOL)isOne {
@@ -2229,7 +2271,7 @@ static int64_t dealloc = 0;
         if (self.data[i] != 0) return NO;
     }
     return YES;
-//    return (self.isSimple) && self.iVal == 1;
+    //    return (self.isSimple) && self.iVal == 1;
 }
 
 
@@ -2275,9 +2317,9 @@ static int64_t dealloc = 0;
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), block);
     }
 
-//    NSLog(@"Waiting...");
+    //    NSLog(@"Waiting...");
     dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-//    NSLog(@"Returning");
+    //    NSLog(@"Returning");
     return result;
 }
 
@@ -2300,7 +2342,7 @@ static int64_t dealloc = 0;
 
     BOOL skip = YES;
     for (long i = arcCnt - 1; i >= 0; i--) {
-//    for (long i = 0; i<[arc count]; i++) {
+        //    for (long i = 0; i<[arc count]; i++) {
         int64_t value = arc[i];
         int64_t idx;
 
