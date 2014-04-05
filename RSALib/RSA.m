@@ -239,64 +239,69 @@
 
 
 - (NSData *)encrypt:(NSData *)data withModPow:mp andMod:mod progressCallback:(void (^)(int))callbackBlock {
-    __block NSArray *bi = [data getIntegersofBitLength:self.bitLen - 8]; //PAdding problem - prefixed. Might be a problem, when biginteger > 255 ints
-    __block int progress = 0;
-    NSMutableArray *encryptedBis = [[NSMutableArray alloc] init];
-    int threads = self.threads;
-    int thrCount = bi.count / threads;
-    int rest = bi.count % threads;
+    @autoreleasepool {
 
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    if (bi.count < threads) {
-        rest = 0;
-        threads = bi.count;
-        thrCount = 1;
-    }
-    for (int t = 0; t < threads; t++) {
-        //start thread for 1/t_rd of
-        __block NSMutableArray *thrDat = [[NSMutableArray alloc] init];
-        [encryptedBis addObject:thrDat];
 
-        dispatch_block_t block = (dispatch_block_t) ^{
-            for (int i = t * thrCount; i < (t + 1) * thrCount; i++) {
-                @autoreleasepool {
-                    BigInteger *enc = [self cryptBigInteger:bi[i] withModPow:mp andMod:mod];
-                    progress++;
-                    if (callbackBlock != nil) callbackBlock(progress * 90 / bi.count);
-                    [thrDat addObject:enc];
+        __block NSArray *bi = [data getIntegersofBitLength:self.bitLen - 8]; //PAdding problem - prefixed. Might be a problem, when biginteger > 255 ints
+        __block int progress = 0;
+        NSMutableArray *encryptedBis = [[NSMutableArray alloc] init];
+        int threads = self.threads;
+        int thrCount = bi.count / threads;
+        int rest = bi.count % threads;
+
+        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+        if (bi.count < threads) {
+            rest = 0;
+            threads = bi.count;
+            thrCount = 1;
+        }
+        for (int t = 0; t < threads; t++) {
+            //start thread for 1/t_rd of
+            __block NSMutableArray *thrDat = [[NSMutableArray alloc] init];
+            [encryptedBis addObject:thrDat];
+
+            dispatch_block_t block = (dispatch_block_t) ^{
+                for (int i = t * thrCount; i < (t + 1) * thrCount; i++) {
+                    @autoreleasepool {
+                        BigInteger *enc = [self cryptBigInteger:bi[i] withModPow:mp andMod:mod];
+                        progress++;
+                        if (callbackBlock != nil) callbackBlock(progress * 90 / bi.count);
+                        [thrDat addObject:enc];
+                    }
                 }
-            }
-            dispatch_semaphore_signal(semaphore);
-        };
+                dispatch_semaphore_signal(semaphore);
+            };
 
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block);
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block);
 
 
-    }
+        }
 
-    NSMutableArray *thrDat = [[NSMutableArray alloc] init];
-    [encryptedBis addObject:thrDat];
-    //threads started
-    //process "rest"
-    for (int i = 0; i < rest; i++) {
-        BigInteger *enc = [self encryptBigInteger:bi[(NSUInteger) (threads * thrCount + i)]];
+        NSMutableArray *thrDat = [[NSMutableArray alloc] init];
+        [encryptedBis addObject:thrDat];
+        //threads started
+        //process "rest"
+        for (int i = 0; i < rest; i++) {
+            BigInteger *enc = [self encryptBigInteger:bi[(NSUInteger) (threads * thrCount + i)]];
+            if (callbackBlock != nil) callbackBlock(progress * 90 / bi.count);
+            [thrDat addObject:enc];
+
+        }
+
+        for (int i = 0; i < threads; i++) {
+            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+        }
+        NSMutableData *ret = [[NSMutableData alloc] init];
         if (callbackBlock != nil) callbackBlock(progress * 90 / bi.count);
-        [thrDat addObject:enc];
-
+        for (int i = 0; i < encryptedBis.count; i++) {
+            NSMutableArray *d = encryptedBis[i];
+            [ret appendData:[NSData serializeInts:d]];
+        }
+        if (callbackBlock != nil) callbackBlock(100);
+        thrDat = nil;
+        encryptedBis = nil;
+        return ret;
     }
-
-    for (int i = 0; i < threads; i++) {
-        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-    }
-    NSMutableData *ret = [[NSMutableData alloc] init];
-    if (callbackBlock != nil) callbackBlock(progress * 90 / bi.count);
-    for (int i = 0; i < encryptedBis.count; i++) {
-        NSMutableArray *d = encryptedBis[i];
-        [ret appendData:[NSData serializeInts:d]];
-    }
-    if (callbackBlock != nil) callbackBlock(100);
-    thrDat = nil;
-    return ret;
 }
 
 

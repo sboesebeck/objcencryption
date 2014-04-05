@@ -483,7 +483,7 @@
 - (void)testRsaLargeCallback {
 
     void (^callback)(int) = ^(int prz) {
-        NSLog(@"Perzentage %d %%", prz);
+        NSLog(@"Percentage %d %%", prz);
     };
     RSA *rsa = [[RSA alloc] initWithBitLen:2048 andThreads:8 andProgressBlock:callback];
 
@@ -622,5 +622,6 @@
     NSLog(@"Hash (256): %@", [hash hexDump:NO]);
 
 }
+
 
 @end

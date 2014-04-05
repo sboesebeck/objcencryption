@@ -424,7 +424,9 @@ static uint8_t *randomData = nil;
  * @param rounding_mode one of FLOOR, CEILING, TRUNCATE, or ROUND.
  */
 + (void)divideBig:(BigInteger *)x by:(BigInteger *)y quotient:(BigInteger *)quotient remainder:(BigInteger *)remainder usingRoundingMode:(int)rounding_mode {
-    if ([x isEqualTo:y]) {
+    @autoreleasepool {
+
+        if ([x isEqualTo:y]) {
         if (remainder != nil) {
             remainder.data = nil;
             remainder.iVal = 0;
@@ -587,6 +589,9 @@ static uint8_t *randomData = nil;
         free(ywords);
         ywords = nil;
     }
+
+    }
+
 }
 
 + (BigInteger *)neg:(BigInteger *)x {
@@ -944,16 +949,20 @@ static uint8_t *randomData = nil;
     BigInteger *rem = [[BigInteger alloc] init];
     int i;
     for (i = 0; i < primeCount; i++) {
-        [BigInteger divideBig:self
-                           by:[[BigInteger alloc] initWith:primes[i]]
-                     quotient:nil
-                    remainder:rem
-            usingRoundingMode:TRUNCATE];
+        @autoreleasepool {
+            [BigInteger divideBig:self
+                               by:[[BigInteger alloc] initWith:primes[i]]
+                         quotient:nil
+                        remainder:rem
+                usingRoundingMode:TRUNCATE];
 
-        if ([[rem canonicalize] isZero]) {
-            rem = nil;
-            return NO;
+            if ([[rem canonicalize] isZero]) {
+                rem = nil;
+                return NO;
+            }
         }
+
+
     }
 
     // Now perform the Rabin-Miller test.
@@ -1047,7 +1056,10 @@ static uint8_t *randomData = nil;
 
 //Non-Recursive implementation: result[0]=GCD, result[1]=coefficient of a, result[2]: coefficient of b
 + (NSArray *)euclidInv:(BigInteger *)a b:(BigInteger *)b {
-    //Throw an exception if either argument is not positive
+    @autoreleasepool {
+
+
+        //Throw an exception if either argument is not positive
     if ([a isZero] || [b isZero] || [a isNegative] || [b isNegative]) {
         @throw [NSException exceptionWithName:@"ArithmeticException" reason:@"not invertible" userInfo:nil];
     }
@@ -1091,11 +1103,14 @@ static uint8_t *randomData = nil;
     t1 = nil;
     t2 = nil;
     return answer;
-
+    }
 }
 
 + (void)euclidInv:(BigInteger *)a b:(BigInteger *)b preDiv:(BigInteger *)prevDiv xy:(NSMutableArray *)xy {
-    if ([b isZero]) {
+    @autoreleasepool {
+
+
+        if ([b isZero]) {
         @throw [NSException exceptionWithName:@"ArithmeticException" reason:@"b is null" userInfo:nil];
     }
 
@@ -1126,6 +1141,7 @@ static uint8_t *randomData = nil;
     t = nil;
     rem = nil;
     quot = nil;
+    }
 }
 
 - (void)pack {
