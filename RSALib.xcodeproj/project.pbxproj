@@ -9,19 +9,19 @@
 /* Begin PBXBuildFile section */
 		8F22802A830E97E64C03EF35 /* NSData+SHA2.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228BFE321FEE360114822D /* NSData+SHA2.m */; };
 		8F2280A6FC0E62E1BF9E5C69 /* AES.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F22850A3A066568CC22CE57 /* AES.m */; };
-		8F2280EEA109D4A068B1C7CC /* SHA3.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F228572416CBD6B4B364869 /* SHA3.h */; };
+		8F2280EEA109D4A068B1C7CC /* SHA3.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F228572416CBD6B4B364869 /* SHA3.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8F22813E256EC3F56FF30717 /* BigInteger.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F22815A8FF8E85E12D8E37A /* BigInteger.m */; };
 		8F2281681D0A6BA536F870CB /* NSData+SHA2.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228BFE321FEE360114822D /* NSData+SHA2.m */; };
 		8F22817847915CA0B487314D /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F2287F741EA980785B703A1 /* NSData+MD5.m */; };
 		8F2281AD37E7F7E5431594A1 /* NSData+SHA3.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F2281F81CAF620D5EA4C6D0 /* NSData+SHA3.m */; };
 		8F2281CD9454860A600AD128 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228C9950B6C3E4EEDC2FF3 /* NSString+MD5.m */; };
-		8F2281D10033531A9C0C33A4 /* RSA.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F2286325E144B24E23D8A32 /* RSA.h */; };
-		8F2281D5857E2B5B3CDB95FA /* NSData+AES.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F228CB5C60DA525D1C882EB /* NSData+AES.h */; };
+		8F2281D10033531A9C0C33A4 /* RSA.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F2286325E144B24E23D8A32 /* RSA.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8F2281D5857E2B5B3CDB95FA /* NSData+AES.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F228CB5C60DA525D1C882EB /* NSData+AES.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8F2282BE55BC59987BEEC5C1 /* NSData+SHA2.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228BFE321FEE360114822D /* NSData+SHA2.m */; };
 		8F2282D4D42534DFB15E64D3 /* MPN.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228E80F1A43E399A4A2B12 /* MPN.m */; };
 		8F2282FEF70FE37BBB86AF71 /* SHA2.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228434C4F1E351CD2BB414 /* SHA2.m */; };
-		8F228409608F4A3E6EAEF03A /* SHA2.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F228D338E33A6955B5F6651 /* SHA2.h */; };
-		8F22846582D3E00F768B67F0 /* MPN.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F22869B972D6C6C0F9A03FC /* MPN.h */; };
+		8F228409608F4A3E6EAEF03A /* SHA2.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F228D338E33A6955B5F6651 /* SHA2.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8F22846582D3E00F768B67F0 /* MPN.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F22869B972D6C6C0F9A03FC /* MPN.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8F22849F269B999A86391A9E /* NSData+AES.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F2286AE2DD5E92CF3BDD711 /* NSData+AES.m */; };
 		8F228542E517C11775B6A4C4 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228C9950B6C3E4EEDC2FF3 /* NSString+MD5.m */; };
 		8F22856474C43E21D8143556 /* BigInteger.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F22815A8FF8E85E12D8E37A /* BigInteger.m */; };
@@ -32,7 +32,7 @@
 		8F2286C483B9D53AE52F593A /* RSA.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F2287838750DC74BBF613CC /* RSA.m */; };
 		8F22870D4BFABE4BE8C9A6D3 /* NSData+SHA3.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F2281F81CAF620D5EA4C6D0 /* NSData+SHA3.m */; };
 		8F22871125400354C4B1A4E9 /* AES.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F22850A3A066568CC22CE57 /* AES.m */; };
-		8F2287175D3CFCEEC54BBCD4 /* NSData+MD5.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F228F21895C8678E98912F3 /* NSData+MD5.h */; };
+		8F2287175D3CFCEEC54BBCD4 /* NSData+MD5.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F228F21895C8678E98912F3 /* NSData+MD5.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8F228763DD0AF89C23EA5CF8 /* SHA3.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228E1FE55DCB4A293D2D8A /* SHA3.m */; };
 		8F22878B23FB586F3F6A576D /* SHA3.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228E1FE55DCB4A293D2D8A /* SHA3.m */; };
 		8F22879C451BFEB1AAD0EF74 /* NSData+SHA3.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F2281F81CAF620D5EA4C6D0 /* NSData+SHA3.m */; };
@@ -47,7 +47,7 @@
 		8F228AA1F7E4CB1E4A4E26EF /* MPN.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228E80F1A43E399A4A2B12 /* MPN.m */; };
 		8F228AE810B56CBFB038C799 /* SHA2.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228434C4F1E351CD2BB414 /* SHA2.m */; };
 		8F228B3E81F57C54164152F9 /* RSA.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F2287838750DC74BBF613CC /* RSA.m */; };
-		8F228B7A70EE62E6B64C7F7F /* NSData+SHA3.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F22843A2513C4698469071F /* NSData+SHA3.h */; };
+		8F228B7A70EE62E6B64C7F7F /* NSData+SHA3.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F22843A2513C4698469071F /* NSData+SHA3.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8F228B9BA497B5B54B303F46 /* BigInteger.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F22815A8FF8E85E12D8E37A /* BigInteger.m */; };
 		8F228BA499DCACE6C8F62EF9 /* NSData+SHA2.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228BFE321FEE360114822D /* NSData+SHA2.m */; };
 		8F228BC338EF17BEF3612732 /* NSData+HexDump.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F22823AE0B0641980648028 /* NSData+HexDump.m */; };
@@ -55,25 +55,25 @@
 		8F228BF800DB7094CBEDFBCE /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F22861636C55E1414179070 /* NSData+Base64.m */; };
 		8F228C11DFE6320DE458A0A4 /* BigInteger.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F22815A8FF8E85E12D8E37A /* BigInteger.m */; };
 		8F228C22C72C583EB69551CB /* SHA3.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228E1FE55DCB4A293D2D8A /* SHA3.m */; };
-		8F228C2581C58BB756DA56CC /* BigInteger.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F228023BFE58302289018F9 /* BigInteger.h */; };
+		8F228C2581C58BB756DA56CC /* BigInteger.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F228023BFE58302289018F9 /* BigInteger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8F228C31EC1FC6D91BB6039B /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F22861636C55E1414179070 /* NSData+Base64.m */; };
 		8F228C4BE5EC8E85A3AD1640 /* NSData+BigInteger.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228F97E6A9CF53912234D3 /* NSData+BigInteger.m */; };
 		8F228C5A3843319C41A215D2 /* SHA2.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228434C4F1E351CD2BB414 /* SHA2.m */; };
-		8F228C62CAB0883706BEA603 /* NSData+HexDump.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F228A87D8C5F086F81952A9 /* NSData+HexDump.h */; };
-		8F228C647FE4630DD15A72FA /* NSData+Base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F2286610730582E27FBC71C /* NSData+Base64.h */; };
-		8F228C8A1D5F580889D7CEB2 /* AES.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F2288E77C425D9B326DF9F7 /* AES.h */; };
+		8F228C62CAB0883706BEA603 /* NSData+HexDump.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F228A87D8C5F086F81952A9 /* NSData+HexDump.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8F228C647FE4630DD15A72FA /* NSData+Base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F2286610730582E27FBC71C /* NSData+Base64.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8F228C8A1D5F580889D7CEB2 /* AES.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F2288E77C425D9B326DF9F7 /* AES.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8F228CD97ADB5E21EFE3A26F /* NSData+HexDump.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F22823AE0B0641980648028 /* NSData+HexDump.m */; };
-		8F228D2AAF0B5AF92652C727 /* NSData+BigInteger.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F22855BBB1D9BAB557E1816 /* NSData+BigInteger.h */; };
+		8F228D2AAF0B5AF92652C727 /* NSData+BigInteger.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F22855BBB1D9BAB557E1816 /* NSData+BigInteger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8F228D51F45937ACA95BCA9D /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F2287F741EA980785B703A1 /* NSData+MD5.m */; };
 		8F228D737F19F2D657DEB6E1 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F22861636C55E1414179070 /* NSData+Base64.m */; };
-		8F228D992E05DE2EB9AB5DBB /* NSString+MD5.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F22810F8BF28267F72185FF /* NSString+MD5.h */; };
+		8F228D992E05DE2EB9AB5DBB /* NSString+MD5.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F22810F8BF28267F72185FF /* NSString+MD5.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8F228DFD2FBDF0FBCBB765EB /* NSData+AES.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F2286AE2DD5E92CF3BDD711 /* NSData+AES.m */; };
 		8F228E1CEACDD22375AF278E /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F2287F741EA980785B703A1 /* NSData+MD5.m */; };
 		8F228E5A0C4A1667B0FDDE6D /* NSData+AES.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F2286AE2DD5E92CF3BDD711 /* NSData+AES.m */; };
 		8F228EB388414647A230A3AA /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F22861636C55E1414179070 /* NSData+Base64.m */; };
 		8F228F5732015E44597B782B /* MPN.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228E80F1A43E399A4A2B12 /* MPN.m */; };
 		8F228F5C847F5F0EE28BA2A3 /* NSData+HexDump.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F22823AE0B0641980648028 /* NSData+HexDump.m */; };
-		8F228F74E296D04C3352DE9A /* NSData+SHA2.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F2283525AC2AFAB350A2A0F /* NSData+SHA2.h */; };
+		8F228F74E296D04C3352DE9A /* NSData+SHA2.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F2283525AC2AFAB350A2A0F /* NSData+SHA2.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8F228FE3E1510F2B71A54CDD /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228C9950B6C3E4EEDC2FF3 /* NSString+MD5.m */; };
 		8F228FEF9149B92B74E36004 /* NSData+AES.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F2286AE2DD5E92CF3BDD711 /* NSData+AES.m */; };
 		8F228FF24ADF448B7C293A2E /* NSData+BigInteger.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228F97E6A9CF53912234D3 /* NSData+BigInteger.m */; };
@@ -93,7 +93,25 @@
 		D468879A182040B000FCAFC8 /* libRSALibPhone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D4688785182040B000FCAFC8 /* libRSALibPhone.a */; };
 		D46887A0182040B000FCAFC8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D468879E182040B000FCAFC8 /* InfoPlist.strings */; };
 		D46887A2182040B000FCAFC8 /* RSALibPhoneTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D46887A1182040B000FCAFC8 /* RSALibPhoneTests.m */; };
-		D4F6F5401826990300984625 /* RSALib.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D46887631820409F00FCAFC8 /* RSALib.h */; };
+		D4812F51192B338000F9EFA7 /* MPN.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F22869B972D6C6C0F9A03FC /* MPN.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4812F52192B338000F9EFA7 /* BigInteger.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F228023BFE58302289018F9 /* BigInteger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4812F53192B338000F9EFA7 /* RSA.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F2286325E144B24E23D8A32 /* RSA.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4812F54192B338000F9EFA7 /* NSData+AES.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F228CB5C60DA525D1C882EB /* NSData+AES.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4812F55192B338000F9EFA7 /* NSData+Base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F2286610730582E27FBC71C /* NSData+Base64.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4812F56192B338000F9EFA7 /* NSData+BigInteger.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F22855BBB1D9BAB557E1816 /* NSData+BigInteger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4812F57192B338000F9EFA7 /* NSData+MD5.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F228F21895C8678E98912F3 /* NSData+MD5.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4812F58192B338000F9EFA7 /* NSString+MD5.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F22810F8BF28267F72185FF /* NSString+MD5.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4812F59192B338000F9EFA7 /* NSData+SHA3.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F22843A2513C4698469071F /* NSData+SHA3.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4812F5A192B338000F9EFA7 /* NSData+SHA2.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F2283525AC2AFAB350A2A0F /* NSData+SHA2.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4812F5B192B338000F9EFA7 /* AES.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F2288E77C425D9B326DF9F7 /* AES.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4812F5C192B338000F9EFA7 /* SHA2.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F228D338E33A6955B5F6651 /* SHA2.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4812F5D192B338000F9EFA7 /* SHA3.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F228572416CBD6B4B364869 /* SHA3.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4812F6D192B37CD00F9EFA7 /* NSData+HexDump.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F228A87D8C5F086F81952A9 /* NSData+HexDump.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4812F6E192B385B00F9EFA7 /* RSALib.h in Headers */ = {isa = PBXBuildFile; fileRef = D46887631820409F00FCAFC8 /* RSALib.h */; };
+		D4812F75192B3A4B00F9EFA7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4812F74192B3A4B00F9EFA7 /* Security.framework */; };
+		D4812F76192B3A5800F9EFA7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4812F70192B3A2300F9EFA7 /* Security.framework */; };
+		D4812F77192B3A5800F9EFA7 /* SecurityFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4812F71192B3A2300F9EFA7 /* SecurityFoundation.framework */; };
+		D4F6F5401826990300984625 /* RSALib.h in Headers */ = {isa = PBXBuildFile; fileRef = D46887631820409F00FCAFC8 /* RSALib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,7 +138,6 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				D4F6F5401826990300984625 /* RSALib.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,6 +196,9 @@
 		D468879D182040B000FCAFC8 /* RSALibPhoneTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RSALibPhoneTests-Info.plist"; sourceTree = "<group>"; };
 		D468879F182040B000FCAFC8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D46887A1182040B000FCAFC8 /* RSALibPhoneTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSALibPhoneTests.m; sourceTree = "<group>"; };
+		D4812F70192B3A2300F9EFA7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		D4812F71192B3A2300F9EFA7 /* SecurityFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityFoundation.framework; path = System/Library/Frameworks/SecurityFoundation.framework; sourceTree = SDKROOT; };
+		D4812F74192B3A4B00F9EFA7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		D4F6F51D1826970C00984625 /* rsaLibTouch-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "rsaLibTouch-Prefix.pch"; sourceTree = "<group>"; };
 		D4F6F51E1826970C00984625 /* rsaLibTouch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rsaLibTouch.h; sourceTree = "<group>"; };
 		D4F6F5201826970C00984625 /* rsaLibTouch.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = rsaLibTouch.m; sourceTree = "<group>"; };
@@ -200,6 +220,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4812F76192B3A5800F9EFA7 /* Security.framework in Frameworks */,
+				D4812F77192B3A5800F9EFA7 /* SecurityFoundation.framework in Frameworks */,
 				D46887701820409F00FCAFC8 /* libRSALib.a in Frameworks */,
 				D468876D1820409F00FCAFC8 /* Cocoa.framework in Frameworks */,
 				D468876C1820409F00FCAFC8 /* XCTest.framework in Frameworks */,
@@ -219,6 +241,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4812F75192B3A4B00F9EFA7 /* Security.framework in Frameworks */,
 				D4688794182040B000FCAFC8 /* XCTest.framework in Frameworks */,
 				D468879A182040B000FCAFC8 /* libRSALibPhone.a in Frameworks */,
 				D4688797182040B000FCAFC8 /* UIKit.framework in Frameworks */,
@@ -280,6 +303,9 @@
 		D46887591820409F00FCAFC8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D4812F74192B3A4B00F9EFA7 /* Security.framework */,
+				D4812F70192B3A2300F9EFA7 /* Security.framework */,
+				D4812F71192B3A2300F9EFA7 /* SecurityFoundation.framework */,
 				D40B852818C1329D00B8150E /* Security.framework */,
 				D468875A1820409F00FCAFC8 /* Cocoa.framework */,
 				D468876B1820409F00FCAFC8 /* XCTest.framework */,
@@ -428,20 +454,43 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F22846582D3E00F768B67F0 /* MPN.h in Headers */,
-				8F228C2581C58BB756DA56CC /* BigInteger.h in Headers */,
-				8F2281D10033531A9C0C33A4 /* RSA.h in Headers */,
-				8F2281D5857E2B5B3CDB95FA /* NSData+AES.h in Headers */,
-				8F228C647FE4630DD15A72FA /* NSData+Base64.h in Headers */,
-				8F228D2AAF0B5AF92652C727 /* NSData+BigInteger.h in Headers */,
 				8F228C62CAB0883706BEA603 /* NSData+HexDump.h in Headers */,
 				8F2287175D3CFCEEC54BBCD4 /* NSData+MD5.h in Headers */,
 				8F228D992E05DE2EB9AB5DBB /* NSString+MD5.h in Headers */,
-				8F228C8A1D5F580889D7CEB2 /* AES.h in Headers */,
-				8F228409608F4A3E6EAEF03A /* SHA2.h in Headers */,
-				8F2280EEA109D4A068B1C7CC /* SHA3.h in Headers */,
 				8F228B7A70EE62E6B64C7F7F /* NSData+SHA3.h in Headers */,
 				8F228F74E296D04C3352DE9A /* NSData+SHA2.h in Headers */,
+				8F228D2AAF0B5AF92652C727 /* NSData+BigInteger.h in Headers */,
+				8F228C8A1D5F580889D7CEB2 /* AES.h in Headers */,
+				8F2281D5857E2B5B3CDB95FA /* NSData+AES.h in Headers */,
+				8F228409608F4A3E6EAEF03A /* SHA2.h in Headers */,
+				8F228C647FE4630DD15A72FA /* NSData+Base64.h in Headers */,
+				8F2280EEA109D4A068B1C7CC /* SHA3.h in Headers */,
+				8F22846582D3E00F768B67F0 /* MPN.h in Headers */,
+				8F2281D10033531A9C0C33A4 /* RSA.h in Headers */,
+				8F228C2581C58BB756DA56CC /* BigInteger.h in Headers */,
+				D4812F6E192B385B00F9EFA7 /* RSALib.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4812F6F192B387100F9EFA7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4812F6D192B37CD00F9EFA7 /* NSData+HexDump.h in Headers */,
+				D4812F51192B338000F9EFA7 /* MPN.h in Headers */,
+				D4812F52192B338000F9EFA7 /* BigInteger.h in Headers */,
+				D4812F53192B338000F9EFA7 /* RSA.h in Headers */,
+				D4812F54192B338000F9EFA7 /* NSData+AES.h in Headers */,
+				D4812F55192B338000F9EFA7 /* NSData+Base64.h in Headers */,
+				D4812F56192B338000F9EFA7 /* NSData+BigInteger.h in Headers */,
+				D4812F57192B338000F9EFA7 /* NSData+MD5.h in Headers */,
+				D4812F58192B338000F9EFA7 /* NSString+MD5.h in Headers */,
+				D4812F59192B338000F9EFA7 /* NSData+SHA3.h in Headers */,
+				D4812F5A192B338000F9EFA7 /* NSData+SHA2.h in Headers */,
+				D4812F5B192B338000F9EFA7 /* AES.h in Headers */,
+				D4812F5C192B338000F9EFA7 /* SHA2.h in Headers */,
+				D4812F5D192B338000F9EFA7 /* SHA3.h in Headers */,
+				D4F6F5401826990300984625 /* RSALib.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,6 +539,7 @@
 				D4688781182040B000FCAFC8 /* Sources */,
 				D4688782182040B000FCAFC8 /* Frameworks */,
 				D4688783182040B000FCAFC8 /* CopyFiles */,
+				D4812F6F192B387100F9EFA7 /* Headers */,
 			);
 			buildRules = (
 			);
@@ -524,7 +574,7 @@
 		D468874F1820409F00FCAFC8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Stephan Bösebeck";
 			};
 			buildConfigurationList = D46887521820409F00FCAFC8 /* Build configuration list for PBXProject "RSALib" */;
@@ -701,7 +751,7 @@
 		D46887791820409F00FCAFC8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -739,7 +789,7 @@
 		D468877A1820409F00FCAFC8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -771,9 +821,12 @@
 		D468877C1820409F00FCAFC8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RSALib/RSALib-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 			};
 			name = Debug;
 		};
@@ -782,7 +835,9 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RSALib/RSALib-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 			};
 			name = Release;
 		};
@@ -825,7 +880,6 @@
 		D46887A4182040B000FCAFC8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_ENABLE_MODULES = YES;
 				DSTROOT = /tmp/RSALibPhone.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -834,38 +888,40 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				OTHER_LDFLAGS = "-ObjC";
+				PLIST_FILE_OUTPUT_FORMAT = "same-as-input";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				VALIDATE_PRODUCT = YES;
+				STRINGS_FILE_OUTPUT_ENCODING = "UTF-16";
+				VALIDATE_PRODUCT = NO;
 			};
 			name = Debug;
 		};
 		D46887A5182040B000FCAFC8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_ENABLE_MODULES = YES;
 				DSTROOT = /tmp/RSALibPhone.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RSALibPhone/RSALibPhone-Prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				OTHER_LDFLAGS = "-ObjC";
+				PLIST_FILE_OUTPUT_FORMAT = "same-as-input";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				VALIDATE_PRODUCT = YES;
+				STRINGS_FILE_OUTPUT_ENCODING = "UTF-16";
+				VALIDATE_PRODUCT = NO;
 			};
 			name = Release;
 		};
 		D46887A7182040B000FCAFC8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -890,7 +946,6 @@
 		D46887A8182040B000FCAFC8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
