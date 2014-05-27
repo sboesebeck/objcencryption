@@ -10,6 +10,7 @@
 #import "BigInteger.h"
 #import "NSData+BigInteger.h"
 #import "NSData+MD5.h"
+#import "RandomPrimeGenerator.h"
 
 
 @implementation RSA
@@ -49,11 +50,18 @@
 
 
 - (id)initWithBitLen:(int)bits andThreads:(int)thr {
-    return [self initWithBitLen:bits andThreads:thr andProgressBlock:nil];
+    return [self initWithBitLen:bits andThreads:thr andRandomPrimeGenerator:nil andProgressBlock:nil];
 }
 
-- (id)initWithBitLen:(int)bits andThreads:(int)thr andProgressBlock:(void (^)(int))callbackBlock {
+-(BigInteger*) nextPrime:(int) length {
+    return [BigInteger randomProbablePrime:length primeProbability:100 useThreads:self.threads];
+}
+
+- (id)initWithBitLen:(int)bits andThreads:(int)thr andRandomPrimeGenerator:(id<RandomPrimeGenerator>)primeGen andProgressBlock:(void (^)(int))callbackBlock {
     self = [super init];
+    if (!primeGen) {
+        primeGen=self;
+    }
     if (self) {
         self.threads = thr;
         self.d = [BigInteger valueOf:0];
@@ -65,12 +73,12 @@
             int length = bits / 2;
             _bitLen = length * 2;
 
-            BigInteger *p = [BigInteger randomProbablePrime:length primeProbability:100 useThreads:self.threads];
+            BigInteger *p = [primeGen nextPrime:length];
             prz += 20;
             if (callbackBlock != nil) callbackBlock(prz);
 
 
-            BigInteger *q = [BigInteger randomProbablePrime:length primeProbability:100 useThreads:self.threads];
+            BigInteger *q = [primeGen nextPrime:length];
             prz += 20;
             if (callbackBlock != nil) callbackBlock(prz);
 

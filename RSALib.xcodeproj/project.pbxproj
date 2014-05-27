@@ -173,6 +173,7 @@
 		8F228F21895C8678E98912F3 /* NSData+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+MD5.h"; sourceTree = "<group>"; };
 		8F228F97E6A9CF53912234D3 /* NSData+BigInteger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+BigInteger.m"; sourceTree = "<group>"; };
 		D40B852818C1329D00B8150E /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		D45B98D219353013000E3BD5 /* RandomPrimeGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RandomPrimeGenerator.h; sourceTree = "<group>"; };
 		D46887571820409F00FCAFC8 /* libRSALib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRSALib.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D468875A1820409F00FCAFC8 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		D468875D1820409F00FCAFC8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -336,6 +337,7 @@
 				8F228023BFE58302289018F9 /* BigInteger.h */,
 				8F2287838750DC74BBF613CC /* RSA.m */,
 				8F2286325E144B24E23D8A32 /* RSA.h */,
+				D45B98D219353013000E3BD5 /* RandomPrimeGenerator.h */,
 				8F228E80F1A43E399A4A2B12 /* MPN.m */,
 				8F22815A8FF8E85E12D8E37A /* BigInteger.m */,
 				8F2287EEB4CFC1E64E135DA1 /* Categories */,

@@ -7,11 +7,12 @@
 
 
 #import <Foundation/Foundation.h>
+#import "RandomPrimeGenerator.h"
 
 @class BigInteger;
 
 
-@interface RSA : NSObject
+@interface RSA : NSObject <RandomPrimeGenerator>
 @property(nonatomic, strong) BigInteger *n;
 @property(nonatomic, strong) BigInteger *d;
 @property(nonatomic, strong) BigInteger *e;
@@ -61,4 +62,7 @@
 - (NSData *)sign:(NSData *)clear;
 
 - (BOOL)isValidSinged:(NSData *)signature message:(NSData *)message;
+
+//RandomPrimeGenerator protocol
+- (BigInteger*) nextPrime:(int)length;
 @end
