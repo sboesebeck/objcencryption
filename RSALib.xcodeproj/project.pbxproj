@@ -78,6 +78,10 @@
 		8F228FEF9149B92B74E36004 /* NSData+AES.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F2286AE2DD5E92CF3BDD711 /* NSData+AES.m */; };
 		8F228FF24ADF448B7C293A2E /* NSData+BigInteger.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228F97E6A9CF53912234D3 /* NSData+BigInteger.m */; };
 		D40B852918C1329D00B8150E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D40B852818C1329D00B8150E /* Security.framework */; };
+		D429CB491947A66300DF0946 /* BigInteger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D429CB481947A66300DF0946 /* BigInteger.swift */; };
+		D429CB4A1947A66300DF0946 /* BigInteger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D429CB481947A66300DF0946 /* BigInteger.swift */; };
+		D429CB4B1947A66300DF0946 /* BigInteger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D429CB481947A66300DF0946 /* BigInteger.swift */; };
+		D429CB4C1947A66300DF0946 /* BigInteger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D429CB481947A66300DF0946 /* BigInteger.swift */; };
 		D468875B1820409F00FCAFC8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D468875A1820409F00FCAFC8 /* Cocoa.framework */; };
 		D46887651820409F00FCAFC8 /* RSALib.m in Sources */ = {isa = PBXBuildFile; fileRef = D46887641820409F00FCAFC8 /* RSALib.m */; };
 		D468876C1820409F00FCAFC8 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D468876B1820409F00FCAFC8 /* XCTest.framework */; };
@@ -173,6 +177,9 @@
 		8F228F21895C8678E98912F3 /* NSData+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+MD5.h"; sourceTree = "<group>"; };
 		8F228F97E6A9CF53912234D3 /* NSData+BigInteger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+BigInteger.m"; sourceTree = "<group>"; };
 		D40B852818C1329D00B8150E /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		D429CB441947A41300DF0946 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
+		D429CB451947A4F400DF0946 /* RSALib-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RSALib-Bridging-Header.h"; sourceTree = "<group>"; };
+		D429CB481947A66300DF0946 /* BigInteger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BigInteger.swift; sourceTree = "<group>"; };
 		D45B98D219353013000E3BD5 /* RandomPrimeGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RandomPrimeGenerator.h; sourceTree = "<group>"; };
 		D46887571820409F00FCAFC8 /* libRSALib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRSALib.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D468875A1820409F00FCAFC8 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -279,6 +286,7 @@
 		D468874E1820409F00FCAFC8 = {
 			isa = PBXGroup;
 			children = (
+				D429CB481947A66300DF0946 /* BigInteger.swift */,
 				D46887601820409F00FCAFC8 /* RSALib */,
 				D46887711820409F00FCAFC8 /* RSALibTests */,
 				D4688788182040B000FCAFC8 /* RSALibPhone */,
@@ -335,11 +343,12 @@
 				D46887611820409F00FCAFC8 /* Supporting Files */,
 				8F22869B972D6C6C0F9A03FC /* MPN.h */,
 				8F228023BFE58302289018F9 /* BigInteger.h */,
+				8F22815A8FF8E85E12D8E37A /* BigInteger.m */,
+				D429CB441947A41300DF0946 /* MyPlayground.playground */,
 				8F2287838750DC74BBF613CC /* RSA.m */,
 				8F2286325E144B24E23D8A32 /* RSA.h */,
 				D45B98D219353013000E3BD5 /* RandomPrimeGenerator.h */,
 				8F228E80F1A43E399A4A2B12 /* MPN.m */,
-				8F22815A8FF8E85E12D8E37A /* BigInteger.m */,
 				8F2287EEB4CFC1E64E135DA1 /* Categories */,
 				8F22850A3A066568CC22CE57 /* AES.m */,
 				8F2288E77C425D9B326DF9F7 /* AES.h */,
@@ -347,6 +356,7 @@
 				8F228D338E33A6955B5F6651 /* SHA2.h */,
 				8F228E1FE55DCB4A293D2D8A /* SHA3.m */,
 				8F228572416CBD6B4B364869 /* SHA3.h */,
+				D429CB451947A4F400DF0946 /* RSALib-Bridging-Header.h */,
 			);
 			path = RSALib;
 			sourceTree = "<group>";
@@ -634,6 +644,7 @@
 				8F22817847915CA0B487314D /* NSData+MD5.m in Sources */,
 				8F228FE3E1510F2B71A54CDD /* NSString+MD5.m in Sources */,
 				8F22871125400354C4B1A4E9 /* AES.m in Sources */,
+				D429CB491947A66300DF0946 /* BigInteger.swift in Sources */,
 				8F2282FEF70FE37BBB86AF71 /* SHA2.m in Sources */,
 				8F22878B23FB586F3F6A576D /* SHA3.m in Sources */,
 				8F22870D4BFABE4BE8C9A6D3 /* NSData+SHA3.m in Sources */,
@@ -656,6 +667,7 @@
 				8F228660E6E7B6A0B9205C67 /* NSData+MD5.m in Sources */,
 				8F2281CD9454860A600AD128 /* NSString+MD5.m in Sources */,
 				8F2288CC432BC7F63D9F4A38 /* AES.m in Sources */,
+				D429CB4A1947A66300DF0946 /* BigInteger.swift in Sources */,
 				8F228C5A3843319C41A215D2 /* SHA2.m in Sources */,
 				8F228C22C72C583EB69551CB /* SHA3.m in Sources */,
 				8F2281AD37E7F7E5431594A1 /* NSData+SHA3.m in Sources */,
@@ -678,6 +690,7 @@
 				8F228E1CEACDD22375AF278E /* NSData+MD5.m in Sources */,
 				8F22881C5CC85A402DDB3ABE /* NSString+MD5.m in Sources */,
 				8F2280A6FC0E62E1BF9E5C69 /* AES.m in Sources */,
+				D429CB4B1947A66300DF0946 /* BigInteger.swift in Sources */,
 				8F228AE810B56CBFB038C799 /* SHA2.m in Sources */,
 				8F228887D0CF5F43A73247C2 /* SHA3.m in Sources */,
 				8F22879C451BFEB1AAD0EF74 /* NSData+SHA3.m in Sources */,
@@ -700,6 +713,7 @@
 				8F228D51F45937ACA95BCA9D /* NSData+MD5.m in Sources */,
 				8F228542E517C11775B6A4C4 /* NSString+MD5.m in Sources */,
 				8F2286B784A2652D4FFC8F22 /* AES.m in Sources */,
+				D429CB4C1947A66300DF0946 /* BigInteger.swift in Sources */,
 				8F228BE7DEB610BB419683A6 /* SHA2.m in Sources */,
 				8F228763DD0AF89C23EA5CF8 /* SHA3.m in Sources */,
 				8F228916BF4DAE970DCC0C9A /* NSData+SHA3.m in Sources */,
@@ -823,29 +837,37 @@
 		D468877C1820409F00FCAFC8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RSALib/RSALib-Prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "RSALib/RSALib-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		D468877D1820409F00FCAFC8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RSALib/RSALib-Prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "RSALib/RSALib-Bridging-Header.h";
 			};
 			name = Release;
 		};
 		D468877F1820409F00FCAFC8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -858,7 +880,9 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "RSALibTests/RSALibTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
@@ -866,6 +890,7 @@
 		D46887801820409F00FCAFC8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -874,6 +899,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RSALib/RSALib-Prefix.pch";
 				INFOPLIST_FILE = "RSALibTests/RSALibTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -891,6 +917,7 @@
 					"$(inherited)",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PLIST_FILE_OUTPUT_FORMAT = "same-as-input";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -898,6 +925,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRINGS_FILE_OUTPUT_ENCODING = "UTF-16";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VALIDATE_PRODUCT = NO;
 			};
 			name = Debug;
@@ -910,6 +938,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RSALibPhone/RSALibPhone-Prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PLIST_FILE_OUTPUT_FORMAT = "same-as-input";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -938,9 +967,11 @@
 				);
 				INFOPLIST_FILE = "RSALibPhoneTests/RSALibPhoneTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
@@ -958,6 +989,7 @@
 				GCC_PREFIX_HEADER = "RSALibPhone/RSALibPhone-Prefix.pch";
 				INFOPLIST_FILE = "RSALibPhoneTests/RSALibPhoneTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = iphoneos;

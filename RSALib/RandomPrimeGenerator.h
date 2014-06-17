@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BigInteger.h"
 
 @protocol RandomPrimeGenerator <NSObject>
 
