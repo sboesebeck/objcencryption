@@ -77,23 +77,19 @@
 		8F228FE3E1510F2B71A54CDD /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228C9950B6C3E4EEDC2FF3 /* NSString+MD5.m */; };
 		8F228FEF9149B92B74E36004 /* NSData+AES.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F2286AE2DD5E92CF3BDD711 /* NSData+AES.m */; };
 		8F228FF24ADF448B7C293A2E /* NSData+BigInteger.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F228F97E6A9CF53912234D3 /* NSData+BigInteger.m */; };
-		D40B852918C1329D00B8150E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D40B852818C1329D00B8150E /* Security.framework */; };
 		D429CB491947A66300DF0946 /* BigInteger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D429CB481947A66300DF0946 /* BigInteger.swift */; };
 		D429CB4A1947A66300DF0946 /* BigInteger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D429CB481947A66300DF0946 /* BigInteger.swift */; };
 		D429CB4B1947A66300DF0946 /* BigInteger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D429CB481947A66300DF0946 /* BigInteger.swift */; };
 		D429CB4C1947A66300DF0946 /* BigInteger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D429CB481947A66300DF0946 /* BigInteger.swift */; };
 		D468875B1820409F00FCAFC8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D468875A1820409F00FCAFC8 /* Cocoa.framework */; };
 		D46887651820409F00FCAFC8 /* RSALib.m in Sources */ = {isa = PBXBuildFile; fileRef = D46887641820409F00FCAFC8 /* RSALib.m */; };
-		D468876C1820409F00FCAFC8 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D468876B1820409F00FCAFC8 /* XCTest.framework */; };
 		D468876D1820409F00FCAFC8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D468875A1820409F00FCAFC8 /* Cocoa.framework */; };
 		D46887701820409F00FCAFC8 /* libRSALib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D46887571820409F00FCAFC8 /* libRSALib.a */; };
 		D46887761820409F00FCAFC8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D46887741820409F00FCAFC8 /* InfoPlist.strings */; };
 		D46887781820409F00FCAFC8 /* RSALibTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D46887771820409F00FCAFC8 /* RSALibTests.m */; };
 		D4688787182040B000FCAFC8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4688786182040B000FCAFC8 /* Foundation.framework */; };
 		D468878E182040B000FCAFC8 /* RSALibPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = D468878D182040B000FCAFC8 /* RSALibPhone.m */; };
-		D4688794182040B000FCAFC8 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D468876B1820409F00FCAFC8 /* XCTest.framework */; };
 		D4688795182040B000FCAFC8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4688786182040B000FCAFC8 /* Foundation.framework */; };
-		D4688797182040B000FCAFC8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4688796182040B000FCAFC8 /* UIKit.framework */; };
 		D468879A182040B000FCAFC8 /* libRSALibPhone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D4688785182040B000FCAFC8 /* libRSALibPhone.a */; };
 		D46887A0182040B000FCAFC8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D468879E182040B000FCAFC8 /* InfoPlist.strings */; };
 		D46887A2182040B000FCAFC8 /* RSALibPhoneTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D46887A1182040B000FCAFC8 /* RSALibPhoneTests.m */; };
@@ -112,9 +108,11 @@
 		D4812F5D192B338000F9EFA7 /* SHA3.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F228572416CBD6B4B364869 /* SHA3.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4812F6D192B37CD00F9EFA7 /* NSData+HexDump.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F228A87D8C5F086F81952A9 /* NSData+HexDump.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4812F6E192B385B00F9EFA7 /* RSALib.h in Headers */ = {isa = PBXBuildFile; fileRef = D46887631820409F00FCAFC8 /* RSALib.h */; };
-		D4812F75192B3A4B00F9EFA7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4812F74192B3A4B00F9EFA7 /* Security.framework */; };
 		D4812F76192B3A5800F9EFA7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4812F70192B3A2300F9EFA7 /* Security.framework */; };
 		D4812F77192B3A5800F9EFA7 /* SecurityFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4812F71192B3A2300F9EFA7 /* SecurityFoundation.framework */; };
+		D4A882561A880E7D005E025D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4A882551A880E7D005E025D /* Security.framework */; };
+		D4A882571A880E8C005E025D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4812F70192B3A2300F9EFA7 /* Security.framework */; };
+		D4A882581A880E8C005E025D /* SecurityFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4812F71192B3A2300F9EFA7 /* SecurityFoundation.framework */; };
 		D4F6F5401826990300984625 /* RSALib.h in Headers */ = {isa = PBXBuildFile; fileRef = D46887631820409F00FCAFC8 /* RSALib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -176,8 +174,6 @@
 		8F228E80F1A43E399A4A2B12 /* MPN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPN.m; sourceTree = "<group>"; };
 		8F228F21895C8678E98912F3 /* NSData+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+MD5.h"; sourceTree = "<group>"; };
 		8F228F97E6A9CF53912234D3 /* NSData+BigInteger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+BigInteger.m"; sourceTree = "<group>"; };
-		D40B852818C1329D00B8150E /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
-		D429CB441947A41300DF0946 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		D429CB451947A4F400DF0946 /* RSALib-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RSALib-Bridging-Header.h"; sourceTree = "<group>"; };
 		D429CB481947A66300DF0946 /* BigInteger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BigInteger.swift; sourceTree = "<group>"; };
 		D45B98D219353013000E3BD5 /* RandomPrimeGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RandomPrimeGenerator.h; sourceTree = "<group>"; };
@@ -190,7 +186,6 @@
 		D46887631820409F00FCAFC8 /* RSALib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSALib.h; sourceTree = "<group>"; };
 		D46887641820409F00FCAFC8 /* RSALib.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSALib.m; sourceTree = "<group>"; };
 		D468876A1820409F00FCAFC8 /* RSALibTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RSALibTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D468876B1820409F00FCAFC8 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		D46887731820409F00FCAFC8 /* RSALibTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RSALibTests-Info.plist"; sourceTree = "<group>"; };
 		D46887751820409F00FCAFC8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D46887771820409F00FCAFC8 /* RSALibTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSALibTests.m; sourceTree = "<group>"; };
@@ -200,13 +195,12 @@
 		D468878B182040B000FCAFC8 /* RSALibPhone.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSALibPhone.h; sourceTree = "<group>"; };
 		D468878D182040B000FCAFC8 /* RSALibPhone.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSALibPhone.m; sourceTree = "<group>"; };
 		D4688793182040B000FCAFC8 /* RSALibPhoneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RSALibPhoneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D4688796182040B000FCAFC8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		D468879D182040B000FCAFC8 /* RSALibPhoneTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RSALibPhoneTests-Info.plist"; sourceTree = "<group>"; };
 		D468879F182040B000FCAFC8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D46887A1182040B000FCAFC8 /* RSALibPhoneTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSALibPhoneTests.m; sourceTree = "<group>"; };
 		D4812F70192B3A2300F9EFA7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		D4812F71192B3A2300F9EFA7 /* SecurityFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityFoundation.framework; path = System/Library/Frameworks/SecurityFoundation.framework; sourceTree = SDKROOT; };
-		D4812F74192B3A4B00F9EFA7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		D4A882551A880E7D005E025D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		D4F6F51D1826970C00984625 /* rsaLibTouch-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "rsaLibTouch-Prefix.pch"; sourceTree = "<group>"; };
 		D4F6F51E1826970C00984625 /* rsaLibTouch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rsaLibTouch.h; sourceTree = "<group>"; };
 		D4F6F5201826970C00984625 /* rsaLibTouch.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = rsaLibTouch.m; sourceTree = "<group>"; };
@@ -220,6 +214,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4A882571A880E8C005E025D /* Security.framework in Frameworks */,
+				D4A882581A880E8C005E025D /* SecurityFoundation.framework in Frameworks */,
 				D468875B1820409F00FCAFC8 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -232,7 +228,6 @@
 				D4812F77192B3A5800F9EFA7 /* SecurityFoundation.framework in Frameworks */,
 				D46887701820409F00FCAFC8 /* libRSALib.a in Frameworks */,
 				D468876D1820409F00FCAFC8 /* Cocoa.framework in Frameworks */,
-				D468876C1820409F00FCAFC8 /* XCTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,7 +235,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D40B852918C1329D00B8150E /* Security.framework in Frameworks */,
+				D4A882561A880E7D005E025D /* Security.framework in Frameworks */,
 				D4688787182040B000FCAFC8 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -249,10 +244,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4812F75192B3A4B00F9EFA7 /* Security.framework in Frameworks */,
-				D4688794182040B000FCAFC8 /* XCTest.framework in Frameworks */,
 				D468879A182040B000FCAFC8 /* libRSALibPhone.a in Frameworks */,
-				D4688797182040B000FCAFC8 /* UIKit.framework in Frameworks */,
 				D4688795182040B000FCAFC8 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -312,14 +304,11 @@
 		D46887591820409F00FCAFC8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D4812F74192B3A4B00F9EFA7 /* Security.framework */,
+				D4A882551A880E7D005E025D /* Security.framework */,
 				D4812F70192B3A2300F9EFA7 /* Security.framework */,
 				D4812F71192B3A2300F9EFA7 /* SecurityFoundation.framework */,
-				D40B852818C1329D00B8150E /* Security.framework */,
 				D468875A1820409F00FCAFC8 /* Cocoa.framework */,
-				D468876B1820409F00FCAFC8 /* XCTest.framework */,
 				D4688786182040B000FCAFC8 /* Foundation.framework */,
-				D4688796182040B000FCAFC8 /* UIKit.framework */,
 				D468875C1820409F00FCAFC8 /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -344,7 +333,6 @@
 				8F22869B972D6C6C0F9A03FC /* MPN.h */,
 				8F228023BFE58302289018F9 /* BigInteger.h */,
 				8F22815A8FF8E85E12D8E37A /* BigInteger.m */,
-				D429CB441947A41300DF0946 /* MyPlayground.playground */,
 				8F2287838750DC74BBF613CC /* RSA.m */,
 				8F2286325E144B24E23D8A32 /* RSA.h */,
 				D45B98D219353013000E3BD5 /* RandomPrimeGenerator.h */,
@@ -795,8 +783,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -828,8 +816,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				SDKROOT = macosx;
 			};
 			name = Release;

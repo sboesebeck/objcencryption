@@ -208,7 +208,7 @@ const int64_t COUNT_MASK = 127; // block size - 1
 
 - (void)engineUpdate:(char *)b off:(int)off len:(int)len {
     int word;
-    int offset;
+    //int offset;
 
     // Use single writes until integer aligned
     while ((len > 0) &&
@@ -297,7 +297,7 @@ const int64_t COUNT_MASK = 127; // block size - 1
     for (int i = 0; i < LENGTH; i++) {
         hashvalue[i] = 0;
     }
-    int outLen = [self engineDigest:hashvalue off:0 len:LENGTH];
+    //int outLen = [self engineDigest:hashvalue off:0 len:LENGTH];
 
     return hashvalue;
 }
@@ -308,7 +308,7 @@ const int64_t COUNT_MASK = 127; // block size - 1
     for (int i = 0; i < len; i++) {
         hashvalue[i] = 0;
     }
-    int outLen = [self engineDigest:hashvalue off:0 len:len];
+    //int outLen = [self engineDigest:hashvalue off:0 len:len];
 
     return hashvalue;
 }

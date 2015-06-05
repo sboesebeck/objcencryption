@@ -10,29 +10,29 @@
 	<string>RSALib</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>5B11A37B-7E4E-4DCD-8CEF-907A70185A3D</key>
-		<string>stephan@192.168.2.2:/share/devel/git/RSALib/</string>
+		<key>BD03FA01177974FFBF1843FB8F689E064C396946</key>
+		<string>192.168.2.2:/share/devel/git/RSALib/</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>RSALib.xcodeproj/project.xcworkspace</string>
+	<string>RSALib.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>5B11A37B-7E4E-4DCD-8CEF-907A70185A3D</key>
+		<key>BD03FA01177974FFBF1843FB8F689E064C396946</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>stephan@192.168.2.2:/share/devel/git/RSALib/</string>
+	<string>192.168.2.2:/share/devel/git/RSALib/</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>5B11A37B-7E4E-4DCD-8CEF-907A70185A3D</string>
+	<string>BD03FA01177974FFBF1843FB8F689E064C396946</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>5B11A37B-7E4E-4DCD-8CEF-907A70185A3D</string>
+			<string>BD03FA01177974FFBF1843FB8F689E064C396946</string>
 			<key>IDESourceControlWCCName</key>
 			<string>RSALib</string>
 		</dict>
