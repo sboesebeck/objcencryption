@@ -6,3 +6,4 @@ This implementation is based on the OpenJava implementation of BigInteger, and n
 
 Disclaimer: This is not tested against security errors or alike. If you find anything, let me know
 
+Binary compatible with RSAJava library: https://github.com/sboesebeck/rsajava
